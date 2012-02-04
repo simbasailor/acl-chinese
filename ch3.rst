@@ -519,7 +519,7 @@ Common Lisp 有幾個內建的給樹使用的函數。舉例來說， ``copy-tre
    > (member-if #'oddp '(2 3 4))
    (3 4)
 
-我們可以想像一個 Limited 版本 ``member-if`` 是這樣寫成的：
+我們可以想像一個限制性的版本 ``member-if`` 是這樣寫成的：
 
 ::
    
@@ -548,10 +548,8 @@ Common Lisp 有幾個內建的給樹使用的函數。舉例來說， ``copy-tre
 
    > (union '(a b c) '(c b s))
    (A C B S)
-   
    > (intersection '(a b c) '(b b c))
    (B C)
-
    > (set-difference '(a b c d e) '(b e))
    (A C D)
 
@@ -559,6 +557,72 @@ Common Lisp 有幾個內建的給樹使用的函數。舉例來說， ``copy-tre
 
 3.11 序列 (Sequences)
 =================================
+
+另一種考慮一個列表的方式是想成一系列有特定順序的物件。在 Common Lisp 裡，*序列* ( *sequences* )包括了列表與向量 (vectors)。本節介紹了一些可以運用在列表上的序列函數。更深入的序列的操作在 4.4 節討論。
+
+函數 ``length`` 回傳序列中元素的數目。
+
+::
+   
+   > (length '(a b c))
+   3
+
+我們在 page 24 (譯註：2.13節 ``our-length`` )寫過這種函數的一個版本（僅可用於列表）。
+
+要複製序列的一部分，我們使用 ``subseq`` 。第二個（需要的）引數是第一個開始引用進來的元素位置，第三個（選擇性的）引數是第一個不引用進來的元素位置。
+
+::
+
+   > (subseq '(a b c d) 1 2)
+   (B)
+   >(subseq '(a b c d) 1)
+   (B C D)
+
+如果省略了第三個引數，子序列會從第二個引數給定的位置引用到序列尾端。
+
+函數 ``reverse`` 回傳與其引數相同元素的一個序列，但順序顛倒。
+
+::
+
+   > (reverse '(a b c))
+   (C B A)
+
+一個迴文 (palindrome) 是一個正讀反讀都一樣的序列 ─ 舉例來說， ``(a b b a)`` 。如果一個迴文有偶數個元素，那麼後半段會是前半段的鏡射 (mirror)。使用 ``length`` 、 ``subseg`` 以及 ``reverse`` ，我們可以定義一個函數
+
+::
+
+   (defun mirror? (s)
+     (let ((len (length s)))
+       (and (evenp len)
+            (let ((mid (/ len 2)))
+              (equal (subseq s 0 mid)
+                     (reverse (subseq s mid)))))))
+
+來檢測是否是迴文：
+
+::
+
+   > (mirror? '(a b b a))
+   T
+   
+Common Lisp 有一個內建的排序函數叫做 ``sort`` 。它接受一個序列及一個比較兩個引數的函數，回傳一個有同樣元素的序列，根據比較函數來排序：
+
+::
+
+   > (sort '(0 2 1 3 8) #'>)
+   (8 3 2 1 0) 
+
+你要小心使用 ``sort`` ，因為它是 *破壞性的* ( *destructive* )。考慮到效率的因素， ``sort`` 被允許修改傳入的序列。所以如果你不想你本來的序列被改動，傳入一個副本。
+
+使用 ``sort`` 及 ``nth`` ，我們可以寫一個函數，接受一個整數 ``n`` ，回傳列表中第 n 大的元素：
+
+::
+
+   (defun nthmost (n lst)
+     (nth (- n 1)
+          (sort (copy-list lst) #'>)))
+          
+  
 
 3.12 堆疊 (Stacks)
 =================================
