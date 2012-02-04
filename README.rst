@@ -50,3 +50,14 @@ All rights reserved. No part of this book may be reproduced, in any form or by a
 ------
 
 你可以在不侵犯原文版權要求的情況下免費下載、非商業用途使用和修改本譯文。
+
+貢獻者
+========
+
+Juanito Fatas Huang
+---------------------------
+Feng Di 
+---------
+HuangZ
+---------
+
