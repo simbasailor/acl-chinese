@@ -1,7 +1,7 @@
 .. highlight:: cl
    :linenothreshold: 0
 
-`PDF Beta Download <https://github.com/JuanitoFatas/acl-chinese/blob/master/pdf/acl-zhTW-ch01.pdf>`_
+`PDF Beta Download <https://github.com/JuanitoFatas/acl-chinese/raw/master/pdf/acl-zhTW-ch01.pdf>`_
 
 Chapter 1 簡介 (Introduction)
 *******************************
