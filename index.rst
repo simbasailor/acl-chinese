@@ -6,32 +6,32 @@
 Ansi Common Lisp 中文翻譯版
 ===============================================
 
-目前已完成章節（繁簡同步）: 3.11
-
-PDF 製作中...
+目前已完成章節: 繁體 3.14 簡體 3.11
 
 繁體中文:
 
 .. toctree::
    :maxdepth: 1
    
+   preface
    ch1
    ch2
    ch3
    ch4
    terminology
    about
-   pdf-zhTW
+
 
 简体中文:
 
 .. toctree::
    :maxdepth: 1
    
+   preface-cn
    ch1-cn
    ch2-cn
    ch3-cn
    ch4-cn
    terminology-cn
    about-cn
-   pdf-zhCN
+
