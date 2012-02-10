@@ -15,7 +15,7 @@ ANSI Common Lisp 这本书适合学生或者是专业的程序员去读。本书
 
 学习 Lisp 最好的办法就是拿它来编程。况且，在学习的同时用你学到的技术进行编程也是非常有趣的一件事。本书的编写目的就是让读者尽快的入门，在对 Lisp 进行简短的介绍之后，
 第 2 章开始用 21 页的容量介绍了着手编写 Lisp 程序时可能用到所有知识。
-3--9 章讲解了 Lisp 里面一些重要的知识点。这些章节特别强调了一些重要的概念比如 Lisp 里面指针的角色，如何使用递归来解决问题，以及第一级函数 (first-class function)的重要性。
+3-9 章讲解了 Lisp 里面一些重要的知识点。这些章节特别强调了一些重要的概念比如 Lisp 里面指针的角色，如何使用递归来解决问题，以及第一级函数 (first-class function)的重要性。
 
 针对那些想要更深层地了解 Lisp 的读者：
 10-14 章包含了宏 (macro)，CLOS (Common Lisp Object System)，列表操作 (list operation)，程序优化 (optimization)，以及一些更高级的课题比如包 (package)和读取宏 (read-macro)。
