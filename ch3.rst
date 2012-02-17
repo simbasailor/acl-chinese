@@ -46,7 +46,7 @@ Cons 物件提供了一個方便的表示法來表示任何型態的物件。一
 
 產生的結構見圖3.2。現在當我們想得到這個列表的 ``cdr`` 時，它是一個兩個元素的列表。
 
-.. figure:: https://dl-web.dropbox.com/get/Juanito/acl-images/Figure-3.2.png?w=b42e4db9
+.. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-3.2.png
    
 圖 3.2 三個元素的列表
 
@@ -71,7 +71,7 @@ Cons 物件提供了一個方便的表示法來表示任何型態的物件。一
   > (car (cdr z))
   (B C)
 
-.. figure:: https://dl-web.dropbox.com/get/Juanito/acl-images/Figure-3.3.png?w=10d193e0
+.. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-3.3.png
     
 圖 3.3 巢狀列表
 
@@ -146,7 +146,7 @@ Cons 物件提供了一個方便的表示法來表示任何型態的物件。一
    > (setf y x)
    (A B C)
 
-.. figure:: https://dl-web.dropbox.com/get/Juanito/acl-images/Figure-3.4.png?w=72840b32
+.. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-3.4.png
     
 圖3.4 兩個變數設為相同的列表
 
@@ -164,7 +164,7 @@ Lisp 沒有指標的原因是因為每一個值，其實概念上來說都是一
 3.4 建立列表 (Building Lists)
 =================================
 
-.. figure:: https://dl-web.dropbox.com/get/Juanito/acl-images/Figure-3.5.png?w=d1e830b3
+.. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-3.5.png
 
 圖 3.5 複製的結果
 
@@ -375,7 +375,7 @@ Conses 物件可以想成是二元樹， ``car`` 代表右子樹，而 ``cdr`` �
 
 (a (b c) d) 也是一棵由圖 3.8 所代表的樹。（如果你逆時針旋轉45度，你會發現跟圖 3.3 一模一樣）
 
-.. figure:: https://dl-web.dropbox.com/get/Juanito/acl-images/Figure-3.8.png?w=a854542a
+.. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-3.8.png
 
 圖 3.8 二元樹 (Binary Tree)
 
@@ -655,7 +655,7 @@ Common Lisp 有一個內建的排序函數叫做 ``sort`` 。它接受一個序�
 
 ``(setf lst (cons obj lst))``
 
-.. figure:: https://dl-web.dropbox.com/get/Juanito/acl-images/Figure-3.9.png?w=b3e48d33
+.. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-3.9.png
     
 圖 3.9 push 及 pop 的效果
 
@@ -741,7 +741,7 @@ Common Lisp 有一個內建的排序函數叫做 ``sort`` 。它接受一個序�
 
 因為這個 Cons 物件不是一個屬性列表，它用點狀表示法來顯示。在點狀表示法， 每個 Cons 物件 的 ``car`` 與 ``cdr`` 由一個句點隔開來表示。這個 Cons 物件的結構展示在圖 3.10 。
 
-.. figure:: https://dl-web.dropbox.com/get/Juanito/acl-images/Figure-3.10.png?w=2edbb4f1
+.. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-3.10.png
     
 圖 3.10 一個成對的 Cons 物件 (A cons used as a pair)
 
@@ -763,7 +763,7 @@ Common Lisp 有一個內建的排序函數叫做 ``sort`` 。它接受一個序�
    > (cons 'a (cons 'b (cons 'c 'd)))
    (A B C . D)
 
-.. figure:: https://dl-web.dropbox.com/get/Juanito/acl-images/Figure-3.11.png?w=8f95b674
+.. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-3.11.png
     
 圖 3.11 一個點狀列表 (A dotted list)
 
@@ -817,44 +817,8 @@ Common Lisp 有一個內建的排序函數叫做 ``sort`` 。它接受一個序�
 3.15 範例：最短路徑 (Example: Shortest Path)
 ==================================================
 
-
-圖 
-
-
-.. figure:: https://dl-web.dropbox.com/get/Juanito/acl-images/Figure-3.13.png?w=5e99d591
-
-圖 3.13 最小網路
-
-
 3.16 垃圾 (Garbages)
 =========================
-
-列表可能因為很多原因而變慢。列表提供了循序存取而不是隨機存取，所以在列表中取出一個指定的元素比陣列慢，同樣的原因，在錄音帶取出某些東西，比在光碟上慢。在內部， Cons 物件傾向於用物件表示，所以走訪一個列表意味著走訪一系列的指標，而不是簡單地像陣列一樣增加索引值。但這兩個所花的代價與配置及回收 Cons 核 (cons cells)比起來小多了。
-
-*自動記憶體管理* ( *Automatic memory management* )是 Lisp 最有價值的特色之一。 Lisp 系統維護著一段記憶體稱之為堆 ( *Heap* )。系統持續追蹤堆當中沒有使用的記憶體，把這些記憶體發放給新產生的物件。 函數 ``cons`` ，舉例來說，回傳一個新配置的 Cons 物件。從堆中配置記憶體有時候籠統稱為 *consing* 。
-
-如果記憶體永遠沒有釋放， Lisp 會因為創建新物件把記憶體用完，而必須要關閉。所以系統必須週期性地通過搜索堆 (heap)，尋找不需要再使用的記憶體。不需要再使用的記憶體稱之為垃圾 ( *garbage* )，而清除垃圾的動作稱為垃圾回收 (*garbage collection* 或 GC)。
-
-垃圾是從哪來的？讓我們來創造一些垃圾：
-
-::
-
-   > (setf lst (list 'a 'b 'c))
-   (A B C)
-   > (setf lst nil)
-   NIL
-
-一開始我們呼叫 ``list``， ``list`` 呼叫 ``cons`` ，在堆上配置了一個新的 Cons 物件。在這個情況我們創出三個 Cons 物件。之後當我們把 ``lst`` 設為 ``nil`` ，我們不再有任何方式可以取得 ``lst`` ，列表 ``(a b c)`` 。[#5]_
-
-因為我們沒有任何方法存取列表，它也有可能是不存在的。我們不再有任何方式可以存取的物件叫做垃圾。系統可以安全地重新使用這三個 cons 核。
-
-.. [#5] 事實上，我們有一種方式來存取列表，for a bit。全域變數 ``*`` , ``**`` , 以及 ``***`` 總是設定為最後三個頂層所回傳的值。這些變數在除錯的時候很有用。
-
-這種管理記憶體的方法，給程式設計師帶來極大的便利性。你不用顯式地配置 (allocate)或釋放 (dellocate)記憶體。這也表示了你不需要處理因為這麼做可能產生的臭蟲。記憶體洩漏 (Memory leaks)以及迷途指標 (dangling pointer)在 Lisp 根本不可能發生。
-
-但是像任何的科技進步，如果你不小心的話，自動記憶體管理也有可能對你不利。使用及回收堆所帶來的代價有時可以看做 ``cons`` 的代價。這是有理的，除非一個程式從來不丟棄任何東西，不然所有的 Cons 物件終究要變成垃圾。Consing 的問題是，配置空間與清除記憶體與程式的運作比起來花費可能比較高。近期的研究提出了大幅改善記憶體回收的演算法，但是 consing 總是需要代價的，在某些現有的 Lisp 系統中，代價是昂貴的。
-
-除非你很小心，不然很容易寫出過度創建 cons 物件的程式。舉例來說， ``remove`` 需要複製所有的 ``cons`` ，直到最後一個元素被列表移除。你可以藉由使用破壞性的函數避免某些 consing，它試著去重用列表的結構作為引數傳給它們。破壞性函數在 12.4 節討論。
 
 Chapter 3 總結 (Summary)
 ============================
