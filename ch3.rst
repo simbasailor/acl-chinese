@@ -24,7 +24,7 @@ Cons 物件提供了一個方便的表示法來表示任何型態的物件。一
    > (setf x (cons 'a nil))
    (A)
 
-.. figure:: https://dl-web.dropbox.com/get/Public/acl-images/Figure-3.1.png?w=98ce480b
+.. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-3.1.png
 
 圖 3.1 一個元素的列表
 
