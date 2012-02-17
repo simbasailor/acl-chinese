@@ -18,7 +18,6 @@ Ansi Common Lisp 中文翻譯版
    ch2
    ch3
    ch4
-   terminology
    about
 
 
