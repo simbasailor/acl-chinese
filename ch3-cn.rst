@@ -24,7 +24,7 @@ Cons 对象提供了一个方便的表示法来表示任何类型的对象。一
    > (setf x (cons 'a nil))
    (A)
 
-.. figure:: https://dl-web.dropbox.com/get/Juanito/acl-images/Figure-3.1.png?w=903fbe8f
+.. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-3.9.png
     
 图3.1 一个元素的列表
 
@@ -46,7 +46,7 @@ Cons 对象提供了一个方便的表示法来表示任何类型的对象。一
 
 产生的结构见图3.2。现在当我们想得到这个列表的 ``cdr`` 时，它是一个两个元素的列表。
 
-.. figure:: https://dl-web.dropbox.com/get/Juanito/acl-images/Figure-3.2.png?w=b42e4db9
+.. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-3.2.png
    
 图3.2 三个元素的列表
 
@@ -73,7 +73,7 @@ Cons 对象提供了一个方便的表示法来表示任何类型的对象。一
 
 \
 
-.. figure:: https://dl-web.dropbox.com/get/Juanito/acl-images/Figure-3.3.png?w=10d193e0
+.. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-3.3.png
     
 图3.3 嵌套列表
 
@@ -148,7 +148,7 @@ Cons 对象提供了一个方便的表示法来表示任何类型的对象。一
    > (setf y x)
    (A B C)
 
-.. figure:: https://dl-web.dropbox.com/get/Juanito/acl-images/Figure-3.4.png?w=72840b32
+.. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-3.4.png
     
 图 3.4 两个变量设为相同的列表
 
@@ -166,7 +166,7 @@ Lisp 没有指针的原因是因为每一个值，其实概念上来说都是一
 3.4 建立列表 (Building Lists)
 =================================
 
-.. figure:: https://dl-web.dropbox.com/get/Juanito/acl-images/Figure-3.5.png?w=d1e830b3
+.. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-3.5.png
 
 图 3.5 复制的结果
 
@@ -376,7 +376,7 @@ Conses 对象可以想成是二元树， ``car`` 代表右子树，而 ``cdr`` �
 
 (a (b c) d) 也是一棵由图 3.8 所代表的树。 （如果你逆时针旋转45度，你会发现跟图 3.3 一模一样）
 
-.. figure:: https://dl-web.dropbox.com/get/Juanito/acl-images/Figure-3.8.png?w=a854542a
+.. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-3.8.png
 
 图 3.8 二元树 (Binary Tree)
 
