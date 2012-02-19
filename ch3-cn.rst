@@ -522,7 +522,7 @@ Common Lisp 有几个内置的操作树的函数。举例来说， ``copy-tree``
 
 我们可以想像一个限制性的版本 ``member-if`` 是这样写成的：
 
-:
+::
 
    defun our-member-if (fn lst)
      (and (consp lst)
