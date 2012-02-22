@@ -1,6 +1,6 @@
 .. highlight:: cl
    :linenothreshold: 0
-   
+
 Chapter 4 特殊数据结构 (Specialized Data Structure)
 ***************************************************
 
@@ -122,3 +122,7 @@ Common Lisp 有另一个数据结构：实例(instance)。实体在 11 章讨论
 
 4.8 哈希表 (Hash Table)
 =====================================
+
+.. rubric:: 脚注
+
+.. [1] 一个简单的数组是不可调整的(neither adjustable)、不可替换的(nor displaced)，且没有填充指针(fill-pointer)。数组预设是简单的。一个简单向量是一个一维简单数组，可以含有任何类型的元素。
