@@ -496,7 +496,7 @@ Common Lisp 有幾個內建的給樹使用的函數。舉例來說， ``copy-tre
 
 ::
 
-   > (member 'a '((a b) (c d) :key #'car)
+   > (member 'a '((a b) (c d)) :key #'car)
    ((A B) (C D))
 
 在這個例子裡，我們詢問是否有一個元素的 ``car`` 是 ``a`` 。

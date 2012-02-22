@@ -497,7 +497,7 @@ Common Lisp 有几个内置的操作树的函数。举例来说， ``copy-tree``
 
 ::
 
-   > (member 'a '((a b) (c d) :key #'car)
+   > (member 'a '((a b) (c d)) :key #'car)
    ((A B) (C D))
 
 在这个例子里，我们询问是否有一个元素的 ``car`` 是 ``a`` ​​。
