@@ -1,3 +1,6 @@
+.. highlight:: cl
+   :linenothreshold: 0
+   
 Chapter 4 特殊数据结构 (Specialized Data Structure)
 ***************************************************
 
