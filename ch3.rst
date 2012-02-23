@@ -828,7 +828,7 @@ Common Lisp 有一個內建的排序函數叫做 ``sort`` 。它接受一個序�
 ::
 
    (defun shortest-path (start end net)
-     (bfs end (list (list start) net)))
+     (bfs end (list (list start)) net))
 
    (defun bfs (end queue net)
      (if (null queue)

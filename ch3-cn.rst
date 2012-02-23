@@ -829,7 +829,7 @@ Common Lisp 有一个内置的排序函数叫做 ``sort`` 。它接受一个序�
 ::
 
    (defun shortest-path (start end net)
-     (bfs end (list (list start) net)))
+     (bfs end (list (list start)) net))
 
    (defun bfs (end queue net)
      (if (null queue)
