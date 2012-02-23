@@ -78,36 +78,36 @@ Common Lisp 有另一个数据结构：实例(instance)。实体在 11 章讨论
 
 在 ``svref`` 内的 "sv" 代表 "简单向量" ("simple vector") ，它是所有向量的预设值。 [1]_
 
-::
-
-	(defun bin-search (obj vec)
-	  (let ((len (length vec)))
-	    (and (not (zerop len))
-	         (finder obj vec 0 (- len 1)))))
-
-	(defun finder (obj vec start end)
-	  (let ((range (- end start)))
-	    (if (zerop range)
-	        (if (eql obj (aref vec start))
-	            obj
-	            nil)
-	        (let ((mid (+ start (round (/ range 2)))))
-	          (let ((obj2 (aref vec mid)))
-	            (if (< obj obj2)
-	                (finder obj vec start (- mid 1))
-	                (if (> obj obj2)
-	                    (finder obj vec (+ mid 1) end)
-	                    obj)))))))
-            
-
-图 4.1: 搜索一个排序好的向量
-
 4.2 示例：二分搜索 (Example: Binary Search)
 =============================================
 
 作为一个示例，这小节演示如何写一个在排序好的向量里搜索一个对象的函数。如果我们知道一个向量是排序好的，我们可以比 ``find`` (65页）做的更好， ``find`` 必须依序检视每一个元素。取而代之的，我们跳到向量中间开始。如果中间的元素是我们要找的对象，搜索完毕。不然，我们持续往左半部或往右半部搜索，取决于​​物件是小于或大于中间的元素。
 
 图 4.1 包含了一个这样工作的函数。其实这两个函数： ``bin-search`` 设置初始范围及发送控制信号给 ``finder`` ，它寻找向量 ``vec`` 内 ``obj`` 是否介于 ``start`` 及 ``end`` 之间。
+
+::
+
+   (defun bin-search (obj vec)
+     (let ((len (length vec)))
+       (and (not (zerop len))
+            (finder obj vec 0 (- len 1)))))
+
+   (defun finder (obj vec start end)
+     (let ((range (- end start)))
+       (if (zerop range)
+           (if (eql obj (aref vec start))
+               obj
+               nil)
+           (let ((mid (+ start (round (/ range 2)))))
+             (let ((obj2 (aref vec mid)))
+               (if (< obj obj2)
+                   (finder obj vec start (- mid 1))
+                   (if (> obj obj2)
+                       (finder obj vec (+ mid 1) end)
+                       obj)))))))
+            
+
+图 4.1: 搜索一个排序好的向量
 
 如果要找的 ``range`` 缩小至一个元素，而如果这个元素是 ``obj`` 的话，则 ``finder`` 返回这个元素，反之返回 ``nil`` 。如果 ``range`` 包含了数个元素，我们設置 ``middle`` ( ``round`` 返回离参数最近的整数) 為 ``obj2`` 。如果 ``obj`` 小于 ``obj2`` ，则继续递归地往向量的左半部寻找。如果 ``obj`` 大于 ``obj2`` ，则继续递回地往向量的右半部寻找。剩下的一个选择是 ``obj=obj2`` ，这个情况我们找到要找的元素，直接返回这个元素。
 
