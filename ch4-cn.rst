@@ -130,6 +130,66 @@ Common Lisp 有另一个数据结构：实例(instance)。实体在 11 章讨论
 4.3 字符与字串 (Strings and Characters)
 =============================================
 
+字串是字符向量。我们用一系列由双引号包住的字符来表示一个字串常量，一个字符 ``c`` 用 ``#\c`` 表示。
+
+每个字符都有一个相关的整数--，通常是用ASCII码，但不一定是。在多数的Lisp 实现里，函数``char-code`` 返回与字符相关的数字，而 ``code-char`` 返回与数字相关的字符。
+
+字符比较函数 ``char<`` (小于)， ``char<=`` (小于等于)， ``char=`` (等于)， ``char>=`` (大于等于) ， ``char>`` (大于)，以及 ``char/=`` (不同)。他们的工作方式和 146 页(译注 9.3 节)的数字比较操作符一样。
+
+::
+
+   > (sort "elbow" #'char<)
+   "below"
+
+因为字串是向量，序列与数组的函数都可以给字串使用。你可以使用 ``aref`` 来取出元素，举例来说，
+
+::
+
+   > (aref "abc" 1)
+   #\b
+
+但对一个字串，你可以使用更快的 ``char`` 函数：
+
+::
+
+   > (char "abc" 1)
+   #\b
+
+你可以使用 ``setf`` 搭配 ``char`` (或 ``aref`` )来替换元素：
+
+::
+
+   > (let ((str (copy-seq "Merlin")))
+       (setf (char str 3) #\k)
+       str)
+
+如果你想要比较两个字串，你可以使用通用的 ``equal`` 函数，但还有一个忽略大小写的比较函数 ``string-equal`` ：
+
+::
+
+   > (equal "fred "fred")
+   T
+   > (equal "fred" "Fred")
+   NIL
+   >(string-equal "fred" "Fred")
+   T
+
+Common Lisp 提供大量的操控及比较字串的函数。他们收录在附录 D，从 364 页开始。
+
+有很多种方式可以创造一个字串。最普遍的方式是使用 ``format`` 。将第一个参数设为 ``nil`` 来呼叫 ``format`` ，使它返回一个它本来会印出来的字串：
+
+::
+   
+   > (format nil "~A or ~A" "truth" "dare")
+   "truth or dare"
+
+但若你只想把数个字串连结起来，你可以使用 ``concatenate`` ，它接受一个指定類型的符号，加上一个或多个序列：
+
+::
+
+   > (concatenate 'string "not " "to worry")
+   "not to worry"
+
 4.4 序列 (Sequences)
 ===========================
 

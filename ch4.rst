@@ -130,6 +130,66 @@ Common Lisp 有另一個資料結構：實體 (instance)。實體在 11 章討�
 4.3 字元與字串 (Strings and Characters)
 =============================================
 
+字串是字元向量。我們用一系列由雙引號包住的字元來表示一個字串常數，一個字元 ``c`` 用 ``#\c`` 表示。
+
+每個字元都有一個相關的整數--，通常是用ASCII碼，但不一定是。在多數的 Lisp 實現裡，函數 ``char-code`` 回傳與字元相關的數字，而 ``code-char`` 回傳與數字相關的字元。
+
+字元比較函數 ``char<`` (小於)， ``char<=`` (小於等於)， ``char=`` (等於)， ``char>=`` (大於等於)， ``char>`` (大於)，以及 ``char/=`` (不同)。他們的工作方式和 146 頁(譯註 9.3 節)的數字比較運算元一樣。
+
+::
+
+   > (sort "elbow" #'char<)
+   "below"
+
+因為字串是向量，序列與陣列的函數都可以給字串使用。你可以使用 ``aref`` 來取出元素，舉例來說，
+
+::
+
+   > (aref "abc" 1)
+   #\b
+
+但對一個字串，你可以使用更快的 ``char`` 函數：
+
+::
+
+   > (char "abc" 1)
+   #\b
+
+你可以使用 ``setf`` 搭配 ``char`` (或 ``aref`` )來替換元素：
+
+::
+
+   > (let ((str (copy-seq "Merlin")))
+       (setf (char str 3) #\k)
+       str)
+
+如果你想要比較兩個字串，你可以使用通用的 ``equal`` 函數，但還有一個忽略大小寫的比較函數 ``string-equal`` ：
+
+::
+
+   > (equal "fred "fred")
+   T
+   > (equal "fred" "Fred")
+   NIL
+   >(string-equal "fred" "Fred")
+   T
+
+Common Lisp 提供大量的操控及比較字串的函數。他們收錄在附錄D，從 364 頁開始。
+
+有很多種方式可以創造一個字串。最普遍的方式是使用 ``format`` 。將第一個參數設為 ``nil`` 來呼叫 ``format`` ，使它回傳一個它本來會印出來的字串：
+
+::
+   
+   > (format nil "~A or ~A" "truth" "dare")
+   "truth or dare"
+
+但若你只想把數個字串連結起來，你可以使用 ``concatenate`` ，它接受一個指定型態的符號，加上一個或多個序列：
+
+::
+
+   > (concatenate 'string "not " "to worry")
+   "not to worry"
+
 4.4 序列 (Sequences)
 ===========================
 
