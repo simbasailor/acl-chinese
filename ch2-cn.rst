@@ -522,7 +522,7 @@ Lisp 不对 程序、过程(procedure)及函数来作区别。函数作了所有
 
 ::
 
-   > (boundp '*glob)
+   > (boundp '*glob*)
    T
 
 2.11 赋值 (Assignment)

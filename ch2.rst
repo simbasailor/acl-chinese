@@ -523,7 +523,7 @@ Lisp 不對程式、過程 (procedure)及函數來作區別。函數作了所有
 
 ::
 
-   > (boundp '*glob)
+   > (boundp '*glob*)
    T
 
 2.11 賦值 (Assignment)
