@@ -408,8 +408,8 @@ Common Lisp 有幾個內建的給樹使用的函數。舉例來說， ``copy-tre
 
 ::
 
-   > (subst 'x 'y '(and (integerp x) (zerop (mod x 2))))
-   (AND (INTEGERP Y)(ZEROP (MOD Y 2)))
+   > (subst 'y 'x '(and (integerp x) (zerop (mod x 2))))
+   (AND (INTEGERP X) (ZEROP (MOD Y 2)))
 
 如果我們定義一個 ``subst`` 的版本，它看起來跟 ``copy-tree`` 很相似：
 

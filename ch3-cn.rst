@@ -409,8 +409,8 @@ Common Lisp 有几个内置的操作树的函数。举例来说， ``copy-tree``
 
 ::
 
-   > (subst 'x 'y '(and (integerp x) (zerop (mod x 2))))
-   (AND (INTEGERP Y)(ZEROP (MOD Y 2)))
+   > (subst 'y 'x '(and (integerp x) (zerop (mod x 2))))
+   (AND (INTEGERP X)(ZEROP (MOD X 2)))
 
 如果我们定义一个 ``subst`` 的版本，它看起来跟 ``copy-tree`` 很相似：
 
