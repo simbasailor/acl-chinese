@@ -85,7 +85,7 @@ Cons 对象提供了一个方便的表示法来表示任何类型的对象。一
 ::
 
   (defun our-listp (x)
-  (or (null x) (consp x)))
+    (or (null x) (consp x)))
 
 因为所有不是 Cons 对象的东西就是一个原子 (atom)，判断式 ``atom`` 可以这样定义：
 
@@ -402,15 +402,15 @@ Common Lisp 有几个内置的操作树的函数。举例来说， ``copy-tree``
 
 ::
 
-   > (substitute 'x 'y '(and (integerp x) (zerop (mod x 2))))
-   (AND (INTEGERP X)(ZEROP (MOD X 2)))
+   > (substitute 'y 'x '(and (integerp x) (zerop (mod x 2))))
+   (AND (INTEGERP X) (ZEROP (MOD X 2)))
 
 这个调用是无效的，因为列表有三个元素，没有一个元素是 x 。我们在这所需要的是 ``subst`` ，它替换树中的元素。
 
 ::
 
    > (subst 'y 'x '(and (integerp x) (zerop (mod x 2))))
-   (AND (INTEGERP X)(ZEROP (MOD X 2)))
+   (AND (INTEGERP Y) (ZEROP (MOD Y 2)))
 
 如果我们定义一个 ``subst`` 的版本，它看起来跟 ``copy-tree`` 很相似：
 

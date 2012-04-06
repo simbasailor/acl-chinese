@@ -402,14 +402,14 @@ Common Lisp 有幾個內建的給樹使用的函數。舉例來說， ``copy-tre
 :: 
 
    > (substitute 'x 'y '(and (integerp x) (zerop (mod x 2))))
-   (AND (INTEGERP X)(ZEROP (MOD X 2)))
+   (AND (INTEGERP X) (ZEROP (MOD X 2)))
 
 這個呼叫是無效的，因為列表有三個元素，沒有一個元素是 x 。我們在這所需要的是 ``subst`` ，它替換樹中的元素。
 
 ::
 
    > (subst 'y 'x '(and (integerp x) (zerop (mod x 2))))
-   (AND (INTEGERP X) (ZEROP (MOD Y 2)))
+   (AND (INTEGERP Y) (ZEROP (MOD Y 2)))
 
 如果我們定義一個 ``subst`` 的版本，它看起來跟 ``copy-tree`` 很相似：
 
@@ -806,9 +806,9 @@ Common Lisp 有一個內建的排序函數叫做 ``sort`` 。它接受一個序�
    (defun our-assoc (key alist)
      (and (consp alist)
           (let ((pair (car alist)))
-           (if (eql key (car pair))
-               pair
-               (our-assoc key (cdr alist))))))
+          (if (eql key (car pair))
+              pair
+              (our-assoc key (cdr alist))))))
 
 和 ``member`` 一樣，實際上的 ``assoc`` 接受關鍵字引數，包括 ``:test`` 和 ``:key`` 。Common Lisp 也定義了一個 ``assoc-if`` 之於 ``assoc`` ，如同 ``member-if`` 之於 ``member`` 一樣。
 
