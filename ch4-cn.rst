@@ -15,8 +15,8 @@ Common Lisp 有另一个数据结构：实例(instance)。实例在 11 章讨论
 
 ::
 
-   > (setf arr (make-array '(2 3) :initial-element nil))
-   #<Simple-Array T (2 3) BFC4FE>
+  > (setf arr (make-array '(2 3) :initial-element nil))
+  #<Simple-Array T (2 3) BFC4FE>
 
 数组在 Common Lisp 里至少可以有七个维度，每个维度至少可以有 1023 个元素。
 
@@ -26,46 +26,46 @@ Common Lisp 有另一个数据结构：实例(instance)。实例在 11 章讨论
 
 ::
 
-   > (aref arr 0 0)
-   NIL
+  > (aref arr 0 0)
+  NIL
 
 要替换数组的某个元素，我们使用 ``setf`` 和 ``aref`` ：
 
 ::
 
-   > (setf (aref arr 0 0) 'b)
-   B
-   > (aref arr 0 0)
-   B
+  > (setf (aref arr 0 0) 'b)
+  B
+  > (aref arr 0 0)
+  B
 
 要表示一个字面量数组 (literal array)，我们使用 ``#na`` 语法，其中 n 是数组的维度。举例来说，我们可以这样表示一个跟 ``arr`` 一样的数组：
 
 ::
 
-   #2a((b nil nil) (nil nil nil))
+  #2a((b nil nil) (nil nil nil))
 
 如果全局变量 ``*print-array*`` 为真，数组会用这种形式显示：
 
 ::
 
-   > (setf *print-array* t)
-   T
-   > arr
-   #2A((B NIL NIL) (NIL NIL NIL))
+  > (setf *print-array* t)
+  T
+  > arr
+  #2A((B NIL NIL) (NIL NIL NIL))
 
 如果我们只想要一个一维的数组，你可以给 ``make-array`` 第一个参数一个整数，而不是一个列表：
 
 ::
 
-   > (setf vec (make-array 4 :initial-elment nil))
-   #(NIL NIL NIL NIL)
+  > (setf vec (make-array 4 :initial-elment nil))
+  #(NIL NIL NIL NIL)
 
 一个一维数组又称为向量 ( *vector* )。你可以用一个步骤来创建及填满向量，藉由调用 ``vector`` ，它会返回一个无论你给入什么参数的向量：
 
 ::
 
-   > (vector "a" 'b 3)
-   #("a" b 3)
+  > (vector "a" 'b 3)
+  #("a" b 3)
 
 一个字面量向量 (literal vector)可以用这种语法表达，如同字面量数组可以表示成 ``#na`` 。
 
@@ -73,8 +73,8 @@ Common Lisp 有另一个数据结构：实例(instance)。实例在 11 章讨论
 
 ::
 
-   > (svref vec 0)
-   NIL
+  > (svref vec 0)
+  NIL
 
 在 ``svref`` 内的 "sv" 代表 "简单向量" ("simple vector") ，它是所有向量的缺省值。 [1]_
 
@@ -87,24 +87,24 @@ Common Lisp 有另一个数据结构：实例(instance)。实例在 11 章讨论
 
 ::
 
-   (defun bin-search (obj vec)
-     (let ((len (length vec)))
-       (and (not (zerop len))
-            (finder obj vec 0 (- len 1)))))
+  (defun bin-search (obj vec)
+    (let ((len (length vec)))
+      (and (not (zerop len))
+           (finder obj vec 0 (- len 1)))))
 
-   (defun finder (obj vec start end)
-     (let ((range (- end start)))
-       (if (zerop range)
-           (if (eql obj (aref vec start))
-               obj
-               nil)
-           (let ((mid (+ start (round (/ range 2)))))
-             (let ((obj2 (aref vec mid)))
-               (if (< obj obj2)
-                   (finder obj vec start (- mid 1))
-                   (if (> obj obj2)
-                       (finder obj vec (+ mid 1) end)
-                       obj)))))))
+  (defun finder (obj vec start end)
+    (let ((range (- end start)))
+      (if (zerop range)
+          (if (eql obj (aref vec start))
+              obj
+              nil)
+          (let ((mid (+ start (round (/ range 2)))))
+            (let ((obj2 (aref vec mid)))
+              (if (< obj obj2)
+                  (finder obj vec start (- mid 1))
+                  (if (> obj obj2)
+                      (finder obj vec (+ mid 1) end)
+                      obj)))))))
             
 
 图 4.1: 搜索一个排序好的向量
@@ -115,17 +115,17 @@ Common Lisp 有另一个数据结构：实例(instance)。实例在 11 章讨论
 
 ::
 
-   (format t "~A~%" (subseq vec start (+ end 1)))
+  (format t "~A~%" (subseq vec start (+ end 1)))
 
 我们可以观察被搜索的元素的数量是每一步往左减半的：
 
 ::
 
-   > (bin-search 3 #(0 1 2 3 4 5 6 7 8 9))
-   #(0 1 2 3 4 5 6 7 8 9)
-   #(0 1 2 3)
-   #(3)
-   3
+  > (bin-search 3 #(0 1 2 3 4 5 6 7 8 9))
+  #(0 1 2 3 4 5 6 7 8 9)
+  #(0 1 2 3)
+  #(3)
+  3
 
 4.3 字符与字串 (Strings and Characters)
 =============================================
@@ -138,41 +138,41 @@ Common Lisp 有另一个数据结构：实例(instance)。实例在 11 章讨论
 
 ::
 
-   > (sort "elbow" #'char<)
-   "below"
+  > (sort "elbow" #'char<)
+  "below"
 
 因为字串是向量，序列与数组的函数都可以给字串使用。你可以使用 ``aref`` 来取出元素，举例来说，
 
 ::
 
-   > (aref "abc" 1)
-   #\b
+  > (aref "abc" 1)
+  #\b
 
 但对一个字串，你可以使用更快的 ``char`` 函数：
 
 ::
 
-   > (char "abc" 1)
-   #\b
+  > (char "abc" 1)
+  #\b
 
 你可以使用 ``setf`` 搭配 ``char`` (或 ``aref`` )来替换元素：
 
 ::
 
-   > (let ((str (copy-seq "Merlin")))
-       (setf (char str 3) #\k)
-       str)
+  > (let ((str (copy-seq "Merlin")))
+     (setf (char str 3) #\k)
+     str)
 
 如果你想要比较两个字串，你可以使用通用的 ``equal`` 函数，但还有一个忽略大小写的比较函数 ``string-equal`` ：
 
 ::
 
-   > (equal "fred "fred")
-   T
-   > (equal "fred" "Fred")
-   NIL
-   >(string-equal "fred" "Fred")
-   T
+  > (equal "fred "fred")
+  T
+  > (equal "fred" "Fred")
+  NIL
+  >(string-equal "fred" "Fred")
+  T
 
 Common Lisp 提供大量的操控及比较字串的函数。他们收录在附录 D，从 364 页开始。
 
@@ -180,15 +180,15 @@ Common Lisp 提供大量的操控及比较字串的函数。他们收录在附�
 
 ::
    
-   > (format nil "~A or ~A" "truth" "dare")
-   "truth or dare"
+  > (format nil "~A or ~A" "truth" "dare")
+  "truth or dare"
 
 但若你只想把数个字串连结起来，你可以使用 ``concatenate`` ，它接受一个指定類型的符号，加上一个或多个序列：
 
 ::
 
-   > (concatenate 'string "not " "to worry")
-   "not to worry"
+  > (concatenate 'string "not " "to worry")
+  "not to worry"
 
 4.4 序列 (Sequences)
 ===========================
@@ -197,15 +197,15 @@ Common Lisp 提供大量的操控及比较字串的函数。他们收录在附�
 
 ::
 
-   > (mirror? "abba")
-   T
+  > (mirror? "abba")
+  T
 
 我们已经看过四个用来取出序列元素的函数： 给列表使用的 ``nth`` ， 给向量使用的 ``aref`` 及 ``svref`` ，以及给字串使用的 ``char`` 。 Common Lisp 也提供了函数 ``elt`` ，对任何种类的序列都有效：
 
 ::
 
-   > (elt '(a b c) 1)
-   B
+  > (elt '(a b c) 1)
+  B
 
 针对特定类型的序列，我们已经见过的存取函数应当比较快，所以使用 ``elt`` 是没有意义的，除非在代码中，有要通用地支援序列的地方。
 
@@ -213,15 +213,15 @@ Common Lisp 提供大量的操控及比较字串的函数。他们收录在附�
 
 ::
 
-   (defun mirror? (s)
-     (let ((len (length s)))
-       (and (evenp len)
-            (do ((forward 0 (+ forward 1))
-                 (back (- len 1) (- back 1)))
-                ((or (> forward back)
-                     (not (eql (elt s forward)
-                               (elt s back))))
-                 (> forward back))))))
+  (defun mirror? (s)
+    (let ((len (length s)))
+      (and (evenp len)
+           (do ((forward 0 (+ forward 1))
+                (back (- len 1) (- back 1)))
+               ((or (> forward back)
+                    (not (eql (elt s forward)
+                              (elt s back))))
+                (> forward back))))))
 
 这个版本也可以给列表使用，但这个实现更适合给向量使用。频繁的对列表调用 ``elt`` 的代价是昂贵的，因为列表仅允许循序存取。而向量允许随机存取，从任何元素来存取每一个元素都是廉价的(cheap)。
 
@@ -256,8 +256,8 @@ Common Lisp 提供大量的操控及比较字串的函数。他们收录在附�
 
 ::
 
-   > (position #\a "fantasia" :from-end t)
-   7
+  > (position #\a "fantasia" :from-end t)
+  7
 
 我们得到最靠近结尾的 ``a`` ​​的位置。但位置是用平常的方式计算；它不代表从结尾算回来的距离。
 

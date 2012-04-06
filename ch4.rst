@@ -15,8 +15,8 @@ Common Lisp 有另一個資料結構：實體(instance)。實體在 11 章討論
 
 ::
 
-   > (setf arr (make-array '(2 3) :initial-element nil))
-   #<Simple-Array T (2 3) BFC4FE>
+  > (setf arr (make-array '(2 3) :initial-element nil))
+  #<Simple-Array T (2 3) BFC4FE>
 
 陣列在 Common Lisp 裡至少可以有七個維度，每個維度至少可以有 1023 個元素。
 
@@ -26,46 +26,46 @@ Common Lisp 有另一個資料結構：實體(instance)。實體在 11 章討論
 
 ::
 
-   > (aref arr 0 0)
-   NIL
+  > (aref arr 0 0)
+  NIL
 
 要替換陣列的某個元素，我們使用 ``setf`` 和 ``aref`` ：
 
 ::
 
-   > (setf (aref arr 0 0) 'b)
-   B
-   > (aref arr 0 0) 
-   B
+  > (setf (aref arr 0 0) 'b)
+  B
+  > (aref arr 0 0) 
+  B
 
 要表示一個字面陣列(literal array)，我們使用 ``#na`` 語法，其中 n 是陣列的維度。舉例來說，我們可以這樣表示一個跟 ``arr`` 一樣的陣列：
 
 ::
 
-   #2a((b nil nil) (nil nil nil))
+  #2a((b nil nil) (nil nil nil))
 
 如果全域變數 ``*print-array*`` 為真，陣列會用這種形式顯示：
 
 ::
 
-   > (setf *print-array* t)
-   T
-   > arr
-   #2A((B NIL NIL) (NIL NIL NIL))
+  > (setf *print-array* t)
+  T
+  > arr
+  #2A((B NIL NIL) (NIL NIL NIL))
 
 如果我們只想要一個一維的陣列，你可以給 ``make-array`` 第一個參數一個整數，而不是一個列表：
 
 ::
 
-   > (setf vec (make-array 4 :initial-elment nil))
-   #(NIL NIL NIL NIL)
+  > (setf vec (make-array 4 :initial-elment nil))
+  #(NIL NIL NIL NIL)
 
 一個一維陣列又稱為向量( *vector* )。你可以用一個步驟來創建及填滿向量，藉由呼叫 ``vector`` ，它會回傳一個無論你給入什麼參數的向量：
 
 ::
 
-   > (vector "a" 'b 3)
-   #("a" b 3)
+  > (vector "a" 'b 3)
+  #("a" b 3)
 
 一個字面向量(literal vector)可以用這種語法表達，如同字面陣列可以表示成 ``#na`` 。
 
@@ -73,8 +73,8 @@ Common Lisp 有另一個資料結構：實體(instance)。實體在 11 章討論
 
 ::
 
-   > (svref vec 0)
-   NIL
+  > (svref vec 0)
+  NIL
 
 在 ``svref`` 內的 "sv" 代表 "簡單向量" ("simple vector") ，它是所有向量的預設值。 [1]_
 
@@ -87,24 +87,24 @@ Common Lisp 有另一個資料結構：實體(instance)。實體在 11 章討論
 
 ::
 
-   (defun bin-search (obj vec)
-     (let ((len (length vec)))
-       (and (not (zerop len))
-            (finder obj vec 0 (- len 1)))))
+  (defun bin-search (obj vec)
+    (let ((len (length vec)))
+      (and (not (zerop len))
+           (finder obj vec 0 (- len 1)))))
 
-   (defun finder (obj vec start end)
-     (let ((range (- end start)))
-       (if (zerop range)
-           (if (eql obj (aref vec start))
-               obj
-               nil)
-           (let ((mid (+ start (round (/ range 2)))))
-             (let ((obj2 (aref vec mid)))
-               (if (< obj obj2)
-                   (finder obj vec start (- mid 1))
-                   (if (> obj obj2)
-                       (finder obj vec (+ mid 1) end)
-                       obj)))))))
+  (defun finder (obj vec start end)
+    (let ((range (- end start)))
+      (if (zerop range)
+          (if (eql obj (aref vec start))
+              obj
+              nil)
+          (let ((mid (+ start (round (/ range 2)))))
+            (let ((obj2 (aref vec mid)))
+              (if (< obj obj2)
+                  (finder obj vec start (- mid 1))
+                  (if (> obj obj2)
+                      (finder obj vec (+ mid 1) end)
+                      obj)))))))
 
 圖 4.1: 搜索一個排序好的向量
 
@@ -114,17 +114,17 @@ Common Lisp 有另一個資料結構：實體(instance)。實體在 11 章討論
 
 ::
 
-   (format t "~A~%" (subseq vec start (+ end 1)))
+  (format t "~A~%" (subseq vec start (+ end 1)))
 
 我們可以觀察被搜索的元素的數量是每一步往左減半的：
 
 ::
 
-   > (bin-search 3 #(0 1 2 3 4 5 6 7 8 9))
-   #(0 1 2 3 4 5 6 7 8 9)
-   #(0 1 2 3)
-   #(3)
-   3
+  > (bin-search 3 #(0 1 2 3 4 5 6 7 8 9))
+  #(0 1 2 3 4 5 6 7 8 9)
+  #(0 1 2 3)
+  #(3)
+  3
 
 
 4.3 字元與字串 (Strings and Characters)
@@ -138,41 +138,41 @@ Common Lisp 有另一個資料結構：實體(instance)。實體在 11 章討論
 
 ::
 
-   > (sort "elbow" #'char<)
-   "below"
+  > (sort "elbow" #'char<)
+  "below"
 
 因為字串是向量，序列與陣列的函數都可以給字串使用。你可以使用 ``aref`` 來取出元素，舉例來說，
 
 ::
 
-   > (aref "abc" 1)
-   #\b
+  > (aref "abc" 1)
+  #\b
 
 但對一個字串，你可以使用更快的 ``char`` 函數：
 
 ::
 
-   > (char "abc" 1)
-   #\b
+  > (char "abc" 1)
+  #\b
 
 你可以使用 ``setf`` 搭配 ``char`` (或 ``aref`` )來替換元素：
 
 ::
 
-   > (let ((str (copy-seq "Merlin")))
-       (setf (char str 3) #\k)
-       str)
+  > (let ((str (copy-seq "Merlin")))
+      (setf (char str 3) #\k)
+      str)
 
 如果你想要比較兩個字串，你可以使用通用的 ``equal`` 函數，但還有一個忽略大小寫的比較函數 ``string-equal`` ：
 
 ::
 
-   > (equal "fred "fred")
-   T
-   > (equal "fred" "Fred")
-   NIL
-   >(string-equal "fred" "Fred")
-   T
+  > (equal "fred "fred")
+  T
+  > (equal "fred" "Fred")
+  NIL
+  >(string-equal "fred" "Fred")
+  T
 
 Common Lisp 提供大量的操控及比較字串的函數。他們收錄在附錄D，從 364 頁開始。
 
@@ -180,8 +180,8 @@ Common Lisp 提供大量的操控及比較字串的函數。他們收錄在附�
 
 ::
    
-   > (format nil "~A or ~A" "truth" "dare")
-   "truth or dare"
+  > (format nil "~A or ~A" "truth" "dare")
+  "truth or dare"
 
 但若你只想把數個字串連結起來，你可以使用 ``concatenate`` ，它接受一個指定型態的符號，加上一個或多個序列：
 
@@ -197,15 +197,15 @@ Common Lisp 提供大量的操控及比較字串的函數。他們收錄在附�
 
 ::
 
-   > (mirror? "abba")
-   T
+  > (mirror? "abba")
+  T
 
 我們已經看過四個用來取出序列元素的函數： 給列表使用的 ``nth`` ， 給向量使用的 ``aref`` 及 ``svref`` ，以及給字串使用的 ``char`` 。 Common Lisp 也提供了函數 ``elt`` ，對任何種類的序列都有效：
 
 ::
 
-   > (elt '(a b c) 1)
-   B
+  > (elt '(a b c) 1)
+  B
 
 針對特定型態的序列，我們已經見過的存取函數應當比較快，所以使用 ``elt`` 是沒有意義的，除非在程式碼中，有要通用地支援序列的地方。
 
@@ -213,15 +213,15 @@ Common Lisp 提供大量的操控及比較字串的函數。他們收錄在附�
 
 ::
 
-   (defun mirror? (s)
-     (let ((len (length s)))
-       (and (evenp len)
-            (do ((forward 0 (+ forward 1))
-                 (back (- len 1) (- back 1)))
-                ((or (> forward back)
-                     (not (eql (elt s forward)
-                               (elt s back))))
-                 (> forward back))))))
+  (defun mirror? (s)
+    (let ((len (length s)))
+      (and (evenp len)
+           (do ((forward 0 (+ forward 1))
+                (back (- len 1) (- back 1)))
+               ((or (> forward back)
+                    (not (eql (elt s forward)
+                              (elt s back))))
+                (> forward back))))))
 
 這個版本也可以給列表使用，但這個實現更適合給向量使用。頻繁的對列表呼叫 ``elt`` 的代價是昂貴的，因為列表僅允許循序存取。而向量允許隨機存取，從任何元素來存取每一個元素都是廉價的 (cheap)。
 
@@ -256,8 +256,8 @@ Common Lisp 提供大量的操控及比較字串的函數。他們收錄在附�
 
 ::
 
-   > (position #\a "fantasia" :from-end t)
-   7
+  > (position #\a "fantasia" :from-end t)
+  7
 
 我們得到最靠近結尾的 ``a`` 的位置。但位置是用平常的方式計算；它不代表從結尾算回來的距離。
 
