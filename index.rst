@@ -6,7 +6,7 @@
 Ansi Common Lisp 中文翻譯版
 ===============================================
 
-目前已完成章節: 繁體 ch 4.5 简体 ch 4.5
+目前已完成章節: 繁體 ch 4 简体 ch 4
 
 繁體中文:
 
@@ -18,6 +18,7 @@ Ansi Common Lisp 中文翻譯版
    ch2
    ch3
    ch4
+   ch5
    about
 
 
@@ -31,6 +32,7 @@ Ansi Common Lisp 中文翻譯版
    ch2-cn
    ch3-cn
    ch4-cn
+   ch5-cn
    terminology-cn
    about-cn
 
