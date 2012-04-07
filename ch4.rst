@@ -473,7 +473,7 @@ Common Lisp 提供大量的操控及比較字串的函數。他們收錄在附�
     x
     y)
 
-這定義了一個``point`` 具有兩個欄位 x 與 y 。它也隱性地定義了 ``make-point`` , ``point-p`` , ``copy-point`` , ``point-x`` 及 ``point-y`` 函數。
+這定義了一個 ``point`` 具有兩個欄位 x 與 y 。它也隱性地定義了 ``make-point`` , ``point-p`` , ``copy-point`` , ``point-x`` 及 ``point-y`` 函數。
 
 2.3 節提到 Lisp 程式可以寫 Lisp 程式。這是我們目前所看過的明顯例子之一。當你呼叫 ``defstruct`` 時，它自動寫好了其它幾個函數的定義。有了巨集，你將能夠自己來辦到同樣的事情（如果你需要的話，你甚至可以自己寫 ``defstruct`` ）。
 
