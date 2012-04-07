@@ -25,7 +25,7 @@ Cons 对象提供了一个方便的表示法来表示任何类型的对象。一
    (A)
 
 .. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-3.9.png
-    
+
 图3.1 一个元素的列表
 
 产生的列表由一个 Cons 所组成，见图3.1。这种表达 Cons 的方式叫做箱子表示法 (box notation)，因为每一个 Cons 是用一个箱子表示，内含一个 ``car`` 和 ``cdr`` 的指针。当我们调用 ``car`` 与 ``cdr`` 时，我们得到指针指向的地方：
@@ -622,8 +622,14 @@ Common Lisp 有一个内置的排序函数叫做 ``sort`` 。它接受一个序�
    (defun nthmost (n lst)
      (nth (- n 1)
           (sort (copy-list lst) #'>)))
-          
-再努力一点我们可以写出这个函数的一个更有效率的版本。
+
+我们把整数减一因为``nth`` 是零索引的，但如果 ``nthmost`` 是这样的话，会变得很不直观。
+
+::
+
+  (nthmost 2 '(0 2 1 3 8))       
+
+多努力一点，我们可以写出这个函数的一个更有效率的版本。
 
 函数 ``every`` 和 ``some`` 接受一个判断式及一个或多个序列。当我们仅输入一个序列时，它们测试序列元素是否满足判断式：
 
@@ -668,7 +674,7 @@ Common Lisp 有一个内置的排序函数叫做 ``sort`` 。它接受一个序�
 
 ::
 
-   (let ((x car lst)))
+   (let ((x (car lst)))
      (setf lst (cdr lst))
      x)
 
