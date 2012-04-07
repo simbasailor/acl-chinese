@@ -4,9 +4,9 @@
 Chapter 4 特殊資料結構 (Specialized Data Structure)
 ***************************************************
 
-在之前的章節裡，我們討論了列表，Lisp 最多功能的資料結構。本章展示如何使用 Lisp 其它的資料結構：陣列(包含向量與字串)，結構以及雜湊表。他們或許不像列表這麼彈性，但他們可以更快地存取並使用更少空間。
+在之前的章節裡，我們討論了列表，Lisp 最多功能的資料結構。本章展示如何使用 Lisp 其它的資料結構：陣列（包含向量與字串），結構以及雜湊表。他們或許不像列表這麼彈性，但他們可以更快地存取並使用更少空間。
 
-Common Lisp 有另一個資料結構：實體(instance)。實體在 11 章討論，講述 CLOS。
+Common Lisp 有另一個資料結構：實體（instance）。實體在 11 章討論，講述 CLOS。
 
 4.1 陣列 (Array)
 ===================
@@ -20,9 +20,9 @@ Common Lisp 有另一個資料結構：實體(instance)。實體在 11 章討論
 
 陣列在 Common Lisp 裡至少可以有七個維度，每個維度至少可以有 1023 個元素。
 
-``:initial-element`` 參數是選擇性的。如果提供了這個參數，整個陣列會用指定的值作初始化。嘗試從一個未初始化的陣列內取出元素的行為，其後果為未定義(undefined)。
+``:initial-element`` 參數是選擇性的。如果提供了這個參數，整個陣列會用指定的值作初始化。嘗試從一個未初始化的陣列內取出元素的行為，其結果為未定義（undefined）。
 
-取出陣列內的元素我們呼叫 ``aref`` 。跟 Common Lisp 的存取函數相同， ``aref`` 是零索引的(zero-indexed)：
+取出陣列內的元素我們呼叫 ``aref`` 。跟 Common Lisp 的存取函數相同， ``aref`` 是零索引的（zero-indexed）：
 
 ::
 
@@ -38,7 +38,7 @@ Common Lisp 有另一個資料結構：實體(instance)。實體在 11 章討論
   > (aref arr 0 0) 
   B
 
-要表示一個字面陣列(literal array)，我們使用 ``#na`` 語法，其中 n 是陣列的維度。舉例來說，我們可以這樣表示一個跟 ``arr`` 一樣的陣列：
+要表示一個字面陣列（literal array），我們使用 ``#na`` 語法，其中 n 是陣列的維度。舉例來說，我們可以這樣表示一個跟 ``arr`` 一樣的陣列：
 
 ::
 
@@ -81,7 +81,7 @@ Common Lisp 有另一個資料結構：實體(instance)。實體在 11 章討論
 4.2 範例：二分搜索 (Example: Binary Search)
 =============================================
 
-作為一個範例，這小節展示如何寫一個在排序好的向量裡搜索一個物件的函數。如果我們知道一個向量是排序好的，我們可以比 ``find`` (65頁）做的更好， ``find`` 必須依序檢視每一個元素。取而代之的，我們跳到向量中間開始。如果中間的元素是我們要找的物件，搜索完畢。不然，我們持續往左半部或往右半部搜索，取決於物件是小於或大於中間的元素。
+作為一個範例，這小節展示如何寫一個在排序好的向量裡搜索一個物件的函數。如果我們知道一個向量是排序好的，我們可以比 ``find`` （65頁）做的更好， ``find`` 必須依序檢視每一個元素。取而代之的，我們跳到向量中間開始。如果中間的元素是我們要找的物件，搜索完畢。不然，我們持續往左半部或往右半部搜索，取決於物件是小於或大於中間的元素。
 
 圖 4.1 包含了一個這樣工作的函數。其實這兩個函數： ``bin-search`` 設置初始範圍及發送控制信號給 ``finder`` ，它尋找向量 ``vec`` 內 ``obj`` 是否介於 ``start`` 及 ``end`` 之間。
 
@@ -183,7 +183,7 @@ Common Lisp 提供大量的操控及比較字串的函數。他們收錄在附�
   > (format nil "~A or ~A" "truth" "dare")
   "truth or dare"
 
-但若你只想把數個字串連結起來，你可以使用 ``concatenate`` ，它接受一個指定型態的符號，加上一個或多個序列：
+但若你只想把數個字串連結起來，你可以使用 ``concatenate`` ，它接受一個指定型別的符號，加上一個或多個序列：
 
 ::
 
@@ -193,7 +193,7 @@ Common Lisp 提供大量的操控及比較字串的函數。他們收錄在附�
 4.4 序列 (Sequences)
 ===========================
 
-在 Common Lisp 裡，序列型態包含了列表與向量（因此也包含了字串）。有些我們在列表上使用的函數，其實是序列函數，包括 ``remove`` , ``length`` , ``subseq`` , ``reverse`` , ``sort`` , ``every`` 以及 ``some`` 。所以 46 頁 （譯註 3.11 的 ``mirror?`` 函數）我們所寫的函數，也可以用在別種序列上：
+在 Common Lisp 裡，序列型別包含了列表與向量（因此也包含了字串）。有些我們在列表上使用的函數，其實是序列函數，包括 ``remove`` , ``length`` , ``subseq`` , ``reverse`` , ``sort`` , ``every`` 以及 ``some`` 。所以 46 頁 （譯註 3.11 的 ``mirror?`` 函數）我們所寫的函數，也可以用在別種序列上：
 
 ::
 
@@ -207,7 +207,7 @@ Common Lisp 提供大量的操控及比較字串的函數。他們收錄在附�
   > (elt '(a b c) 1)
   B
 
-針對特定型態的序列，我們已經見過的存取函數應當比較快，所以使用 ``elt`` 是沒有意義的，除非在程式碼中，有要通用地支援序列的地方。
+針對特定型別的序列，我們已經見過的存取函數應當比較快，所以使用 ``elt`` 是沒有意義的，除非在程式碼中，有要通用地支援序列的地方。
 
 使用 ``elt`` ，我們可以寫一個對向量來說更有效率的 ``mirror?`` 版本：
 
@@ -457,13 +457,313 @@ Common Lisp 提供大量的操控及比較字串的函數。他們收錄在附�
 4.6 結構 (Structures)
 ===========================
 
+結構可以想成是豪華版的向量。假設你要寫一個程式來追蹤很多長方體。你可能會想用三個向量元素來表示長方體：高度、寬度及深度。你的程式會變得更容易讀，如果你與其使用原本的 ``svrefs`` ，而定義一個像是這樣
+
+::
+
+  (defun block-height (b) (svref b 0))
+
+等等的函數來取代。你可以把結構想成是，這些函數都替你定義好了的向量。
+
+要定義一個結構，我們使用 ``defstruct`` 。在最簡單的情況下，我們只要給出結構及欄位的名字就可以了：
+
+::
+
+  (defstruct point
+    x
+    y)
+
+這定義了一個``point`` 具有兩個欄位 x 與 y 。它也隱性地定義了 ``make-point`` , ``point-p`` , ``copy-point`` , ``point-x`` 及 ``point-y`` 函數。
+
+2.3 節提到 Lisp 程式可以寫 Lisp 程式。這是我們目前所看過的明顯例子之一。當你呼叫 ``defstruct`` 時，它自動寫好了其它幾個函數的定義。有了巨集，你將能夠自己來辦到同樣的事情（如果你需要的話，你甚至可以自己寫 ``defstruct`` ）。
+
+每一個 ``make-point`` 的呼叫，會回傳一個新的 ``point`` 。我們可以藉由給予對應的關鍵字參數，來指定單一欄位的值：
+
+::
+
+  (setf p (make-point :x 0 :y 0))
+  #S(POINT X 0 Y 0)
+
+存取 ``point`` 欄位的函數不僅被定義成可取出數值，也可以與 ``setf`` 合作使用。
+
+::
+
+  > (point-x p)
+  0
+  > (setf (point-y p) 2)
+  2
+  > p
+  #S(POINT X 0 Y 2)
+
+定義一個結構也定義了一個以此為名的型別。每個點會是型別 ``point`` ，然後是 ``structure`` ，接著是 ``atom`` ，最後是 ``t`` 。所以使用 ``point-p`` 來測試某個東西是不是一個點，也可以使用通用性的函數，像是 ``typep`` 來測試。
+
+我們可以藉由在本來的定義中，附上一個含有欄位名及一個預設表達式的列表，來指定結構欄位的預設值。
+
+::
+
+  (defstruct polemic
+    (type (progn
+            (format t "What kind of polemic was it? ")
+            (read)))
+    (effect nil))
+
+如果 ``make-polemic`` 呼叫沒有替這些欄位指定初始值，他們會被設成對應表達式的值：
+
+::
+
+  > (make-polemic)
+  What kind of polemic was it? scathing
+  #S(POLEMIC TYPE SCATHING EFFECT NIL)
+
+我們也可以控制結構顯示的方式，以及結構產生的存取函數的字首。這裡是一個更詳細的做了這兩件事的 ``point`` 定義：
+
+::
+
+  (defstruct (point (:conc-name p)
+                    (:print-function print-point))
+    (x 0)
+    (y 0))
+
+  (defun print-point (p stream depth)
+    (format stream "#<~A, ~A>" (px p) (py p)))
+
+``:conc-name`` 參數指定了要放在欄位名前面的名字，並用這些名字來生成存取函數。預設是 ``point-`` ；現在變成只有 ``p`` 。不使用預設的方式，使你的程式碼的可讀性降低了一點，所以你只有在會常常用到這些存取函數時，你才會想做這類的事情。
+
+``:print-function`` 是在它需要被顯示時，應該要用的函數\ *名* – 比如，頂層要顯示時。這個函數需要接受三個參數：要被印出的結構，在哪裡被印出，第三個參數通常可以被忽略。 [2]_ 我們會在 7.1 節討論這些流 (stream)。對現在來說，只要知道作為參數的流可以傳給 ``format`` 就好了。
+
+函數 ``print-point`` 會用縮寫的形式來顯示點：
+
+::
+
+  > (make-point)
+  #<0,0>
+
 4.7 範例：二元搜索樹 (Example: Binary Search Tree)
 ======================================================
+
+因為 ``sort`` 本身就內建了，你會很少，如果有的話，需要在 Common Lisp 裡寫排序程序。本節演示如何解決一個相關的問題，這個問題尚未有現成的解決方案：維護一個已排序的物件集合。本節的程式碼會把物件存在二元搜索樹裡（ *binary search tree* ）或稱作 BST。當二元搜索樹平衡時，它允許我們可以在與時間成 ``log n`` 比例的時間內，來尋找、新增或是刪除元素，其中 n 是集合的大小。
+
+.. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-4.4.png
+
+圖 4.4: 二元搜索樹
+
+一個二元搜索樹是一種二元樹，其中給定某個排序函數 ``<`` ，每個元素的左子樹都 ``<`` 該元素，而該元素 ``<`` 其右子樹。圖 4.4 展示一個根據 ``<`` 排序的範例。
+
+圖 4.5 包含了二元搜索樹中，插入與尋找的函數。基本的資料結構會是 ``node`` （節點），它有三個欄位：一個是存在該節點的物件，以及各一個欄位，給節點的左子樹及右子樹。你可以把節點想成是有一個 ``car`` 和兩個 ``cdr`` 的一個 cons 核（cons cell）。
+
+::
+
+  (defstruct (node (:print-function
+                    (lambda (n s d)
+                      (format s "#<~A>" (node-elt n)))))
+    elt (l nil) (r nil))
+
+  (defun bst-insert (obj bst <)
+    (if (null bst)
+        (make-node :elt obj)
+        (let ((elt (node-elt bst)))
+          (if (eql obj elt)
+              bst
+              (if (funcall < obj elt)
+                  (make-node
+                     :elt elt
+                     :l (bst-insert obj (node-l bst) <)
+                     :r (node-r bst))
+                  (make-node
+                     :elt elt
+                     :r (bst-insert obj (node-r bst) <)
+                     :l (node-l bst)))))))
+
+  (defun bst-find (obj bst <)
+    (if (null bst)
+        nil
+        (let ((elt (node-elt bst)))
+          (if (eql obj elt)
+              bst
+              (if (funcall < obj elt)
+                  (bst-find obj (node-l bst) <)
+                  (bst-find obj (node-r bst) <))))))
+
+  (defun bst-min (bst)
+    (and bst
+         (or (bst-min (node-l bst)) bst)))
+
+  (defun bst-max (bst)
+    (and bst
+         (or (bst-max (node-r bst)) bst)))
+
+圖 4.5 二元搜索樹：查詢與插入
+
+一個二元搜索樹可以是 ``nil`` 或是一個左子、右子樹都是二元搜索樹的節點。如同列表可由連續呼叫 ``cons`` 來創建，二元搜索樹將可以由連續呼叫 ``bst-insert`` 來創建。這個函數接受一個物件，一個二元搜索樹及一個排序函數，並回傳一個包含此物件的二元搜索樹。和 ``cons`` 函數一樣， ``bst-insert`` 不改動作為第二個參數傳入的二元搜索樹。以下是我們如何使用它，來創建一個二元搜索樹：
+
+::
+
+  > (setf nums nil)
+  NIL
+  > (dolist (x '(5 8 4 2 1 9 6 7 3))
+      (setf nums (bst-insert x nums #'<)))
+  NIL
+
+圖 4.4 顯示了此時 ``nums`` 的結構所對應的樹。
+
+我們可以使用 ``bst-find`` ，它與 ``bst-insert`` 接受同樣的參數，來找到二元搜索樹中的物件。 先前敘述所提到的 ``node`` 結構，它像是一個具有兩個 ``cdr`` 的 cons 核。如果我們把 16 頁的 ``our-member`` 拿來與 ``bst-find`` 比較的話，這樣的類比變得更清楚。
+
+和 ``member`` 一樣， ``bst-find`` 不僅回傳要尋找的元素，也回傳了被找元素作為根節點的子樹：
+
+::
+
+  > (bst-find 12 nums #'<)
+  NIL
+  > (bst-find 4 nums #'<)
+  #<4>
+
+這讓我們可以區分出無法找到某物以及成功找到 ``nil`` 的情況。
+
+要找到二元搜索樹的最小及最大的元素是很簡單的。要找到最小的，我們隨著左子的路徑走，如同 ``bst-min`` 所做的。要找到最大的，我們隨著右子的路徑走，如同 ``bst-max`` 所做的：
+
+::
+
+  > (bst-min nums)
+  #<1>
+  > (bst-max nums)
+  #<12>
+
+要從二元搜索樹移除一個元素一樣很快，但需要更多程式碼。圖 4.6 演示了如何做到這件事。
+
+
+:: 
+
+  (defun bst-remove (obj bst <)
+    (if (null bst)
+        nil
+        (let ((elt (node-elt bst)))
+          (if (eql obj elt)
+              (percolate bst)
+              (if (funcall < obj elt)
+                  (make-node
+                     :elt elt
+                     :l (bst-remove obj (node-l bst) <)
+                     :r (node-r bst))
+                  (make-node
+                     :elt elt
+                     :r (bst-remove obj (node-r bst) <)
+                     :l (node-l bst)))))))
+
+  (defun percolate (bst)
+    (cond ((null (node-l bst))
+           (if (null (node-r bst))
+               nil
+               (rperc bst)))
+          ((null (node-r bst)) (lperc bst))
+          (t (if (zerop (random 2))
+                 (lperc bst)
+                 (rperc bst)))))
+
+  (defun rperc (bst)
+    (make-node :elt (node-elt (node-r bst))
+               :l (node-l bst)
+               :r (percolate (node-r bst))))
+
+圖 4.6 二分搜索樹：刪除
+
+函數 ``bst-remove`` 接受一個物件，一個二元搜索樹以及一個排序函數，並回傳一個像是本來的二元搜索樹，但不含那個要移除的物件。跟 ``remove`` 一樣，它不改動作為第二個參數傳入的二分搜索樹：
+
+::
+
+  > (setf nums (bst-remove 2 nums #'<))
+  #<5>
+  > (bst-find 2 nums #'<)
+  NIL
+
+此時 ``nums`` 應有像是圖 4.7 所顯示的結構。（另一個可能性是 1 取代了 2 的位置。）
+
+.. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-4.7.png
+
+圖 4.7: 二元搜索樹
+
+刪除需要更多工作因為從內部節點移除一個物件，會留下一個空缺，需要由其中一個孩子來填補。這是 ``percolate`` 函數的用途。它替換一個二元搜索樹的最上面的元素時，用其中一個孩子來替換，並用此孩子的孩子來填補，等等。
+
+為了要保持樹的平衡， 如果有兩個孩子時， ``perlocate`` 隨機擇一替換。表達式 ``(random 2)`` 會回傳 0 或 1，所以 ``(zerop (random 2))`` 會回傳真或假。
+
+::
+
+  (defun bst-traverse (fn bst)
+    (when bst
+      (bst-traverse fn (node-l bst))
+      (funcall fn (node-elt bst))
+      (bst-traverse fn (node-r bst))))
+
+圖 4.8 二元搜索樹：走訪
+
+一旦我們把一個物件集合插入至二元搜索樹時，中序走訪會將它們由小至大排序。這是圖 4.8 中， ``bst-traverse`` 函數的用途：
+
+::
+
+  > (bst-traverse #'princ nums)
+  13456789
+  NIL
+
+（函數 ``princ`` 僅顯示一個單一物件）
+
+本節所給出的程式碼，提供了一個二元搜索樹實作的骨架。你可能想根據應用需求，來充實其骨架。舉例來說，這裡所給出的程式碼每個節點只有一個 ``elt`` 欄位；在許多應用裡，有兩個欄位會更有意義， ``key`` 與 ``value`` 。本章的這個版本把二元搜索樹視為集合看待，從這個角度看，重複的插入是被忽略的。但是程式碼可以很簡單地改動，來處理重複的元素。
+
+二元搜索樹不僅是維護一個已排序物件的集合的方法。他們是否是最好的方法，取決於你的應用。一般來說，二元搜索樹最適合用在插入與刪除是均勻分布的情況。有一件他們不適合的事，是用來維護優先佇列（priority queues）。在一個優先佇列裡，插入也許是均勻分布的，但刪除總是在一個末端。這會導致一個二元搜索樹變得不平衡，而我們所期望的複雜度是 ``O(log(n))`` 插入與刪除操作，會變成 ``O(n)`` 。如果你用二元搜索樹來表示一個優先佇列，你也可以使用一般的列表，因為二元搜索樹最終會作用的像個列表。
 
 4.8 雜湊表 (Hash Table)
 =====================================
 
 
+
+Chapter 4 總結 (Summary)
+============================
+
+1. Common Lisp 支援至少 7 個維度的陣列。一維陣列稱為向量。
+2. 字串是字元的向量。字元本身就是物件。
+3. 序列包括了向量與列表。許多序列函數都接受標準的關鍵字參數。
+4. 因為有許多函數都支援字串，所以在 Lisp 裡做解析是容易的。
+5. 呼叫 ``defstruct`` 定義了一個帶有命名欄位的結構。它是一個程式能寫出程式的好例子。
+6. 二元搜索樹見長於維護一個已排序的物件集合。
+7. 雜湊表提供了一個更有效率的方式來表示集合與映射 (mappings)。
+
+Chapter 4 練習 (Exercises)
+==================================
+
+1. 定義一個函數，接受一個平方陣列（square array, 一個相同維度的陣列 ``(n n)`` )，並將它順時針轉 90 度。
+
+::
+
+  > (quarter-turn #2A((a b) (c d)))
+  #2A((C A) (D B))
+
+你會需要用到 361 頁的 ``array-dimensions`` 。
+
+2. 閱讀 368 頁的 ``reduce`` 說明，然後用它來定義：
+
+::
+
+  (a) copy-list
+  (b) reverse（針對列表）
+
+3. 定義一個結構來表示一個樹，其中每個節點包含某些資料及三個小孩。定義：
+
+::
+
+  (a) 一個函數來複製這樣的樹（複製完的節點與本來的節點是不相等(eql)的）
+  (b) 一個函數，接受一個物件與這樣的樹，如果物件與樹中各節點的其中一個欄位相等時，回傳真。
+
+4. 定義一個函數，接受一個二元搜索樹，並回傳由此樹元素所組成的，一個由大至小排序的列表。
+
+5. 定義 ``bst-adjoin`` 。這個函數應與 ``bst-insert`` 接受相同的參數，但應該只在物件不等於任何樹中物件時將其插入。
+
+6. 任何雜湊表的內容可以由關聯列表(assoc-list)來描述，其中列表的元素是 ``(k . v)`` 的形式，對應到雜湊表中的每一個鍵值對。定義一個函數：
+
+::
+
+  (a) 接受一個關聯列表，並回傳一個對應的雜湊表。
+  (b) 接受一個雜湊表，並回傳一個對應的關聯列表。
+
 .. rubric:: 腳註
 
-.. [1] 一個簡單的陣列是不可調整的(neither adjustable)、不可替換的 (nor displaced)，且沒有填充指標 (fill-pointer)。陣列預設是簡單的。一個簡單向量是一個一維簡單陣列，可以含有任何型態的元素。
+.. [1] 一個簡單的陣列是不可調整的(neither adjustable)、不可替換的 (nor displaced)，且沒有填充指標 (fill-pointer)。陣列預設是簡單的。一個簡單向量是一個一維簡單陣列，可以含有任何型別的元素。
+
+.. [2] 在 Ansi Common Lisp 裡，你可以給一個 ``:print-object`` 的關鍵字參數來取代，它只需要兩個參數。也有一個巨集叫做 ``print-unreadable-object`` ，在可用時，應該要使用這個，用 ``#<...>`` 的語法來顯示物件。
