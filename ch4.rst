@@ -879,4 +879,4 @@ Chapter 4 練習 (Exercises)
 
 .. [1] 一個簡單的陣列是不可調整的(neither adjustable)、不可替換的 (nor displaced)，且沒有填充指標 (fill-pointer)。陣列預設是簡單的。一個簡單向量是一個一維簡單陣列，可以含有任何型別的元素。
 
-.. [2] 在 Ansi Common Lisp 裡，你可以給一個 ``:print-object`` 的關鍵字參數來取代，它只需要兩個參數。也有一個巨集叫做 ``print-unreadable-object`` ，在可用時，應該要使用這個，用 ``#<...>`` 的語法來顯示物件。
+.. [2] 在 Ansi Common Lisp 裡，你可以給一個 ``:print-object`` 的關鍵字參數來取代，它只需要兩個參數。也有一個巨集叫做 ``print-unreadable-object`` ，在可用時，應該要使用這個，可以用 ``#<...>`` 的語法來顯示物件。
