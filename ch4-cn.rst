@@ -361,7 +361,7 @@ Common Lisp 提供大量的操控及比较字串的函数。他们收录在附�
 
 ::
   
-  > (reduce #'intersection '((brad 's) (bad) (cat)))
+  > (reduce #'intersection '((b r a d 's) (bad) (cat)))
   (A)
 
 4.5 示例：解析日期 (Example: Parsing Dates)
