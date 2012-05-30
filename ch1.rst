@@ -1,15 +1,13 @@
 .. highlight:: cl
    :linenothreshold: 0
 
-`PDF Beta Download <https://github.com/JuanitoFatas/acl-chinese/raw/master/pdf/acl-zhTW-ch01.pdf>`_
-
 Chapter 1 簡介 (Introduction)
 *******************************
 
 `約翰麥卡錫 <http://zh.wikipedia.org/wiki/%E7%BA%A6%E7%BF%B0%C2%B7%E9%BA%A6%E5%8D%A1%E9%94%A1>`_  （John McCarthy 1927-2011 R.I.P.) 和他的學生於 1958 年開始 Lisp 的初次實現工作。Lisp 是繼 FORTRAN 之後，仍在使用的最古老的程式語言。更值得注意的是，它仍走在程式語言技術的最前面。懂 Lisp 的程式設計師會告訴你，有某種東西使 Lisp 與眾不同。
 
 Lisp 與眾不同的部分原因是它被設計成能夠自己進化。你能用 Lisp 定義新的 Lisp 運算元。當新的抽象概念風行時（如物件導向程式設計「Object-oriented programming」），我們總是發現這些新概念在 Lisp 是最容易來實現的。就像生物的 DNA 一樣，這樣的語言永遠不會過時。
- 
+
 1.1 新的工具 (New Tools)
 ============================
 
@@ -27,9 +25,9 @@ Lisp 與眾不同的部分原因是它被設計成能夠自己進化。你能用
 
 如果你只想做這種簡單的事情，那用什麼語言都不重要。假設你想寫一個函數，輸入一個數 ``n`` ，回傳把 ``n`` 與傳入引數（argument）相加的函數。
 
-:: 
+::
 
-	; Lisp 
+	; Lisp
 	(defun addn (n)
 	  #'(lambda (x)
 	      (+ x n)))

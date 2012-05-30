@@ -31,7 +31,7 @@ Cons 物件提供了一個方便的表示法來表示任何型態的物件。一
 產生的列表由一個 Cons 所組成，見圖3.1。這種表達 Cons 的方式叫做箱子表示法 (box notation)，因為每一個 Cons 是用一個箱子表示，內含一個 ``car`` 和 ``cdr`` 的指標。當我們呼叫 ``car`` 與 ``cdr`` 時，我們得到指標指向的地方：
 
 ::
-   
+
    > (car x)
    A
    > (cdr x)
@@ -47,7 +47,7 @@ Cons 物件提供了一個方便的表示法來表示任何型態的物件。一
 產生的結構見圖3.2。現在當我們想得到這個列表的 ``cdr`` 時，它是一個兩個元素的列表。
 
 .. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-3.2.png
-   
+
 圖 3.2 三個元素的列表
 
 ::
@@ -72,7 +72,7 @@ Cons 物件提供了一個方便的表示法來表示任何型態的物件。一
   (B C)
 
 .. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-3.3.png
-    
+
 圖 3.3 巢狀列表
 
 
@@ -111,7 +111,7 @@ Cons 物件提供了一個方便的表示法來表示任何型態的物件。一
    (A)
    > (eql x x)
    T
-  
+
 本質上 ``equal`` 若它的引數列印出的值相同時，回傳真：
 
 ::
@@ -147,7 +147,7 @@ Cons 物件提供了一個方便的表示法來表示任何型態的物件。一
    (A B C)
 
 .. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-3.4.png
-    
+
 圖3.4 兩個變數設為相同的列表
 
 當我們把 x 的值賦給 y 時，究竟發生什麼事呢？記憶體中與 x 有關的位置並沒有包含這個列表，而是一個指標指向它。當我們給 y 賦一個相同的值時， Lisp 複製的是指標，而不是列表。（圖 3.4 顯式賦值 x 給 y 後的結果）所以無論何時你把一個變數賦給另一個變數時，兩個變數會有 ``eql`` 的值。
@@ -316,7 +316,7 @@ Common Lisp 有額外的存取函數，它們是用 ``car`` 跟 ``cdr`` 所定�
 
 ``nth`` 與 ``nthcdr`` 都是零索引的 (zero-indexed); 即元素從 0 開始編號，而不是從 1 開始。在 Common Lisp 裡，無論何時你使用一個數字來參照一個資料結構中的元素時，都是從 0 開始編號的。
 
-兩個函數幾乎做一樣的事; ``nth`` 等同於取 ``nthcdr`` 的 ``car`` 。沒有檢查錯誤的情況下， ``nthcdr`` 可以這麼定義： 
+兩個函數幾乎做一樣的事; ``nth`` 等同於取 ``nthcdr`` 的 ``car`` 。沒有檢查錯誤的情況下， ``nthcdr`` 可以這麼定義：
 
 ::
 
@@ -330,7 +330,7 @@ Common Lisp 有額外的存取函數，它們是用 ``car`` 跟 ``cdr`` 所定�
 函數 ``last`` 回傳列表的最後一個 Cons 物件：
 
 ::
-   
+
    > (last '(a b c))
    (C)
 
@@ -356,7 +356,7 @@ Common Lisp 提供了數個函數來對一個列表的元素做函數呼叫。�
    > (mapcar #'list
              '(a b c)
              '(1 2 3 4))
-   ((A 1) (B 2) (C 3)) 
+   ((A 1) (B 2) (C 3))
 
 相關的 ``maplist`` 接受同樣的引數，將列表的漸進的下一個 cdr 傳入函數。
 
@@ -399,7 +399,7 @@ Common Lisp 有幾個內建的給樹使用的函數。舉例來說， ``copy-tre
 
 而我們想要把各處的 x 都換成 y 。呼叫 ``substitute`` 是不行的，它只能替換序列 (sequence)中的元素：
 
-:: 
+::
 
    > (substitute 'x 'y '(and (integerp x) (zerop (mod x 2))))
    (AND (INTEGERP X) (ZEROP (MOD X 2)))
@@ -522,7 +522,7 @@ Common Lisp 有幾個內建的給樹使用的函數。舉例來說， ``copy-tre
 我們可以想像一個限制性的版本 ``member-if`` 是這樣寫成的：
 
 ::
-   
+
    (defun our-member-if (fn lst)
     (and (consp lst)
          (if (funcall fn (car lst))
@@ -563,7 +563,7 @@ Common Lisp 有幾個內建的給樹使用的函數。舉例來說， ``copy-tre
 函數 ``length`` 回傳序列中元素的數目。
 
 ::
-   
+
    > (length '(a b c))
    3
 
@@ -604,13 +604,13 @@ Common Lisp 有幾個內建的給樹使用的函數。舉例來說， ``copy-tre
 
    > (mirror? '(a b b a))
    T
-   
+
 Common Lisp 有一個內建的排序函數叫做 ``sort`` 。它接受一個序列及一個比較兩個引數的函數，回傳一個有同樣元素的序列，根據比較函數來排序：
 
 ::
 
    > (sort '(0 2 1 3 8) #'>)
-   (8 3 2 1 0) 
+   (8 3 2 1 0)
 
 你要小心使用 ``sort`` ，因為它是 *破壞性的* ( *destructive* )。考慮到效率的因素， ``sort`` 被允許修改傳入的序列。所以如果你不想你本來的序列被改動，傳入一個副本。
 
@@ -627,7 +627,7 @@ Common Lisp 有一個內建的排序函數叫做 ``sort`` 。它接受一個序�
 ::
 
   (nthmost 2 '(0 2 1 3 8))
-          
+
 多努力一點，我們能寫出這個函數的一個更有效率的版本。
 
 函數 ``every`` 和 ``some`` 接受一個判斷式及一個或多個序列。當我們僅輸入一個序列時，它們測試序列元素是否滿足判斷式：
@@ -662,7 +662,7 @@ Common Lisp 有一個內建的排序函數叫做 ``sort`` 。它接受一個序�
 ``(setf lst (cons obj lst))``
 
 .. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-3.9.png
-    
+
 圖 3.9 push 及 pop 的效果
 
 以及表達式
@@ -707,7 +707,7 @@ Common Lisp 有一個內建的排序函數叫做 ``sort`` 。它接受一個序�
        (dolist (elt lst)
          (push elt acc))
        acc))
-      
+
 在這個版本，我們從一個空列表開始，然後把 lst 的每一個元素放入空表裡。等我們完成時，lst 最後一個元素會在最前端。
 
 ``pushnew`` 巨集是 ``push`` 的變種，使用了 ``adjoin`` 而不是 ``cons`` ：
@@ -746,7 +746,7 @@ Common Lisp 有一個內建的排序函數叫做 ``sort`` 。它接受一個序�
 因為這個 Cons 物件不是一個常規列表，它用點狀表示法來顯示。在點狀表示法， 每個 Cons 物件 的 ``car`` 與 ``cdr`` 由一個句點隔開來表示。這個 Cons 物件的結構展示在圖 3.10 。
 
 .. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-3.10.png
-    
+
 圖 3.10 一個成對的 Cons 物件 (A cons used as a pair)
 
 一個非常規列表的 Cons 物件稱之為點狀列表 (dotted list)。這不是個好名字，因為非常規列表的 Cons 物件通常不是用來表示列表： ``(a . b)`` 只是一個有兩部分的資料結構。
@@ -768,7 +768,7 @@ Common Lisp 有一個內建的排序函數叫做 ``sort`` 。它接受一個序�
    (A B C . D)
 
 .. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-3.11.png
-    
+
 圖 3.11 一個點狀列表 (A dotted list)
 
 這樣的 Cons 物件看起來像常規列表，除了最後一個 cdr 前面有一個句點。這個列表的結構展示在圖 3.11 ; 注意它跟圖 3.2 是多麼的相似。
@@ -793,7 +793,7 @@ Common Lisp 有一個內建的排序函數叫做 ``sort`` 。它接受一個序�
 
    > (setf trans '((+ . "add") (- . "subtract")))
    ((+ . "add") (- . "subtract"))
-    
+
 關聯列表很慢，但是在初期的程式中很方便。 Common Lisp 有一個內建的函數， ``assoc`` 用來取出在關聯列表中，與給定的鍵值有關聯的 Cons 對：
 
 ::
@@ -862,7 +862,7 @@ Common Lisp 有一個內建的排序函數叫做 ``sort`` 。它接受一個序�
 要找到從節點 a 可以到達的節點，我們可以：
 
 ::
-   
+
    > (cdr (assoc 'a min))
    (B C)
 
@@ -879,17 +879,17 @@ Common Lisp 有一個內建的排序函數叫做 ``sort`` 。它接受一個序�
 ::
 
    > (shortest-path 'a 'd min)
-   (A C D) 
+   (A C D)
 
 這是佇列在我們連續呼叫 ``bfs`` 看起來的樣子：
 
 ::
 
-   ((A))   
-   ((B A) (C A))    
-   ((C A) (C B A))   
-   ((C B A) (D C A))   
-   ((D C A) (D C B A))   
+   ((A))
+   ((B A) (C A))
+   ((C A) (C B A))
+   ((C B A) (D C A))
+   ((D C A) (D C B A))
 
 在佇列中的第二個元素變成下一個佇列的第一個元素。佇列的第一個元素變成下一個佇列尾端元素的 ``cdr`` 部分。
 
@@ -913,7 +913,7 @@ Common Lisp 有一個內建的排序函數叫做 ``sort`` 。它接受一個序�
    > (setf lst nil)
    NIL
 
-一開始我們呼叫 ``list`` ， ``list`` 呼叫 ``cons`` ，在堆積上配置了一個新的 Cons 物件。在這個情況我們創出三個 Cons 物件。之後當我們把 ``lst`` 設為 ``nil`` ，我們沒有任何方法可以再存取 ``lst`` ，列表 ``(a b c)`` 。 [5]_ 
+一開始我們呼叫 ``list`` ， ``list`` 呼叫 ``cons`` ，在堆積上配置了一個新的 Cons 物件。在這個情況我們創出三個 Cons 物件。之後當我們把 ``lst`` 設為 ``nil`` ，我們沒有任何方法可以再存取 ``lst`` ，列表 ``(a b c)`` 。 [5]_
 
 因為我們沒有任何方法再存取列表，它也有可能是不存在的。我們不再有任何方式可以存取的物件叫做垃圾。系統可以安全地重新使用這三個 cons 核。
 
