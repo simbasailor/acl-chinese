@@ -12,7 +12,7 @@ Ansi Common Lisp 中文翻譯版
 
 .. toctree::
    :maxdepth: 1
-   
+
    preface
    ch1
    ch2
@@ -26,7 +26,7 @@ Ansi Common Lisp 中文翻譯版
 
 .. toctree::
    :maxdepth: 1
-   
+
    preface-cn
    ch1-cn
    ch2-cn
@@ -36,3 +36,6 @@ Ansi Common Lisp 中文翻譯版
    terminology-cn
    about-cn
 
+
+評論
+----------
