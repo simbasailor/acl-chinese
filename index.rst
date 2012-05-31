@@ -19,6 +19,11 @@ Ansi Common Lisp 中文翻譯版
    ch3
    ch4
    ch5
+   ch6
+   ch7
+   ch8
+   ch9
+   ch10
    about
 
 
@@ -33,7 +38,11 @@ Ansi Common Lisp 中文翻譯版
    ch3-cn
    ch4-cn
    ch5-cn
-   terminology-cn
+   ch6-cn
+   ch7-cn
+   ch8-cn
+   ch9-cn
+   ch10-cn
    about-cn
 
 
