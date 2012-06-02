@@ -23,38 +23,40 @@ ANSI Common Lisp 这本书适合学生或者是专业的程序员去读。本书
 15-17 章用 3 个 Common Lisp 的实际应用，总结了之前章节中讲解的知识：一个是进行逻辑推理的程序，另外一个是一个 HTML 生成器，最后一个是针对面向对象编程的嵌入式语言。
 
 本书的最后一部分包含 4 个附录，这些附录应该对所有的读者都有用：
-附录A-D包括了一个如何调试程序的指南， 58 个 Common Lisp 操作符的源程序，一个对 ANSI Common Lisp 和之前的 Lisp 语言的区别的总结，以及一个包括所有 ANSI Common Lisp 的参考手册。
+附录 A-D 包括了一个如何调试程序的指南， 58 个 Common Lisp 操作符的源程序，一个对 ANSI Common Lisp 和之前的 Lisp 语言的区别的总结，以及一个包括所有 ANSI Common Lisp 的参考手册。
 
 本书还包括一部分注释。这些注释包括一些说明，一些参考条目，一些额外的代码，以及一些会偶然出现的对不正确表述的纠正。注释在文中用一个小圆圈来表示，像这样：○
 
 代码
 ==========
 
-虽然本书介绍的是 ANSI Common Lisp ，但是本书中的代码可以在任意版本的 Common Lisp 中运行。那些依赖 Lisp 语言新特性的例子的旁边，会有注释告诉你如何把它们运行于旧版本的 Lisp 中。
+虽然本书介绍的是 ANSI Common Lisp ，但是本书中的代码可以在任何版本的 Common Lisp 中运行。那些依赖 Lisp 语言新特性的例子的旁边，会有注释告诉你如何把它们运行于旧版本的 Lisp 中。
 
-本书中所有的代码都可以在互联网上下载到。你可以在网络上找到这些代码，它们还附带着一个免费软件的链接，一些过去的论文，以及 Lisp 的 FAQ 。还有很多有关Lisp的资源可以在此找到：
+本书中所有的代码都可以在互联网上下载到。你可以在网络上找到这些代码，它们还附带着一个免费软件的链接，一些过去的论文，以及 Lisp 的 FAQ 。还有很多有关 Lisp 的资源可以在此找到：
 http://www.eecs.harvard.edu/onlisp/
 源代码可以在此 FTP 服务器上下载：
-ftp://ftp.eecs.harvard.edu:/pub/onlisp/ 
+ftp://ftp.eecs.harvard.edu:/pub/onlisp/
 读者的问题和意见可以发送到 pg@eecs.harvard.edu 。
+
+译注：下载的链接都坏掉了，参考这里：http://lib.store.yahoo.net/lib/paulgraham/acl2.lisp
 
 On Lisp
 ==========
 
-在整本 On Lisp 书中，我一直试着指出一些 Lisp 独一无二的特性，这些特性使得 Lisp 更像 "Lisp" 。并且我还将展示一些 Lisp 能让你完成的新事情。比如说宏： Lisp 程序员能够并且经常编写一些能够写程序的程序。对于程序生成程序这种特性，因为 Lisp 是主流语言中唯一一个提供一些方便的抽象让你完成这个任务的程序语言，所以 Lisp 是主流语言中唯一一个广泛运用这个特性的语言。我非常乐意邀请那些想要更进一步了解宏和其他高级 Lisp 技术的读者读一下本书的姐妹篇： On Lisp 。
+在整本 On Lisp 书中，我一直试着指出一些 Lisp 独一无二的特性，这些特性使得 Lisp 更像 “Lisp” 。并且我将展示一些 Lisp 能让你完成的新事情。比如说宏： Lisp 程序员能够并且经常编写一些能够写程序的程序。对于程序生成程序这种特性，因为 Lisp 是主流语言中唯一一个提供一些方便的抽象让你完成这个任务的程序语言，所以 Lisp 是主流语言中唯一一个广泛运用这个特性的语言。我非常乐意邀请那些想要更进一步了解宏和其他高级 Lisp 技术的读者读一下本书的姐妹篇： On Lisp 。
 
 鸣谢
 ==========
 
 在所有帮助我完成这本的朋友当中，我想特别的感谢一下 Robert Morris 。他的重要影响反应在整本书中。他的这样影响让这本书更加优秀。本书中好一些实例程序都源自他手。这些程序包括 138 页的 Henley 和 249 页的模式匹配器。
 
-我非常的高兴我有一个高水平的技术审稿小组：Skona Brittain, John Foderaro, Nick Levine, Peter Norvig 和 Dave Toiretzky 。本书中几乎所有部分都得益于它们的意见。 John Foderaro 甚至重写了本书 5.7 节中一些代码。
+我非常的高兴我有一个高水平的技术审稿小组：Skona Brittain, John Foderaro, Nick Levine, Peter Norvig 和 Dave Touretzky 。本书中几乎所有部分都得益于它们的意见。 John Foderaro 甚至重写了本书 5.7 节中一些代码。
 
 另外一些人通篇阅读了本书的手稿，它们是：Ken Anderson, Tom Cheatham, Richard Fateman, Steve Hain, Barry Margolin, Waldo Pacheco, Wheeler Ruml 和 Stuart Russell。特别提到的是，Ken Anderson 和 Wheeler Ruml 给予了很多很多有帮助的意见。
 
 我非常感谢 Cheatham 教授，更广泛的说，哈佛，给我提供了编写这本书的一些必要的设施。另外也要感谢 Aiken 实验室的人员：Tony Hartman, Dave Mazieres, Janusz Juda, Harry Bochner 和 Joanne Klys。
 
-我非常高兴能再一次有机会和 Alan Apt 一起工作。这些在 Prentice Hall 工作的人士: Alan, Mona, Pompili Shirley McGuire 和 Shirley Michaels，与你们一起工作我很高兴。
+我非常高兴能再一次有机会和 Alan Apt 一起工作。这些在 Prentice Hall 工作的人士: Alan, Mona, Pompili Shirley McGuire 和 Shirley Michaels, 与你们一起工作我很高兴。
 
 本书用 Leslie Lamport 写的 LaTeX 进行排版。LaTeX 是在 Donald Knuth 编写的 TeX 的基础上，又加了 L.A.Carr, Van Jacobson 和 Guy Steele 所编写的宏完成。书中的图表是由 John Vlissides 和 Scott Stanton 编写的 Idraw完成的。整本书的预览是由 Tim Theisen 写的 Ghostview 完成的。 Ghostview 是根据 L. Peter Deutsch 的 Ghostscript 创建的。
 
