@@ -3,10 +3,10 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Ansi Common Lisp 中文翻譯版
+ANSI Common Lisp 中文翻譯版
 ===============================================
 
-目前已完成章節: 繁體 ch 5.6 简体 ch 5.6
+目前已完成章節: 繁體 ch 5 简体 ch 5
 
 繁體中文:
 

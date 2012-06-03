@@ -1,13 +1,13 @@
-关于 Ansi Common Lisp 简体中文
+关于 ANSI Common Lisp 简体中文
 **************************************************
 
-`「Ansi Common Lisp」 <http://paulgraham.com/acl>`_
+`「ANSI Common Lisp」 <http://paulgraham.com/acl>`_
 
 一书的简体中文翻译版，无正式获得授权，仅供同好学习交流之用，请勿用于商业用途。
 
-初学 Lisp 的朋友可以看看由 huangZ 所写的 `Practical Common Lisp 个人翻译版 <http://t.cn/zOvuMZN>`_ 。
+初学 Lisp 的朋友可以看看由 HuangZ 所写的 `Practical Common Lisp 个人翻译版 <http://t.cn/zOvuMZN>`_ 。
 
-感谢所有人给我的翻译及帮助。
+前言是我的好朋友泰安小码农「冯迪」所翻译的，另感谢所有人给我的翻译及帮助，特别是 HuangZ、高宏任。
 
 我尽我有限的知识与精力替大家服务。
 
@@ -18,9 +18,9 @@
 
 请至本翻译的 `github页面 <https://github.com/JuanitoFatas/acl-chinese>`_ 开任务给我。
 
-若不知道怎么开任务的朋友，可至 `這裡 <http://juanitofatas.github.com/blog/2012/01/23/acl-trans-errors/>`_ 留言。
+若不知道怎么开任务的朋友，可至 `這裡 <http://juanitofatas.github.com/blog/2012/01/23/acl-trans-errors/>`_ 留言，或是直接在 Disqus 评论留言。
 
-或是透过下面的邮箱直接联系我。
+亦可透过下面的邮箱直接联系我。
 
 联系我
 =======

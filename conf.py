@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Ansi Common Lisp 中文 documentation build configuration file, created by
+# ANSI Common Lisp 中文 documentation build configuration file, created by
 # sphinx-quickstart on Fri Jan 13 16:34:58 2012.
 #
 # This file is execfile()d with the current directory set to its containing dir.
@@ -40,7 +40,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Ansi Common Lisp 中文'
+project = u'ANSI Common Lisp 中文'
 copyright = u'2012, Juanito Fatas Huang'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -103,7 +103,7 @@ html_theme_path = ['.']
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
-html_title = u'Ansi Common Lisp 繁簡中文版'
+html_title = u'ANSI Common Lisp 繁簡中文版'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #html_short_title = None
