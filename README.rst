@@ -1,7 +1,7 @@
-關於Ansi Common Lisp 繁簡中文版
+關於 ANSI Common Lisp 繁簡中文版
 =====================================
 
-`Ansi Common Lisp 原書地址 <http://paulgraham.com/acl.html/>`_ 
+`ANSI Common Lisp 原書地址 <http://paulgraham.com/acl.html/>`_
 
 繁簡中文翻譯版，無正式獲得授權，僅供同好交流學習之用，轉載請註明出處，請勿用於商業用途。
 
@@ -14,7 +14,7 @@
 在線閱讀本文：
 ==================
 
-可以在 http://ansi-common-lisp.readthedocs.org/ 在線閱讀。
+可以在 http://ansi-common-lisp.rtfd.org/ 在線閱讀。
 
 提交錯誤或建議事項
 =====================
@@ -30,7 +30,7 @@
 
 （用一種編程語言表示的gmail信箱，嘿嘿）：
 
-gmail: 
+gmail:
 
 ::
 
