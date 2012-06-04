@@ -13,23 +13,23 @@ Chapter 6 函數 (Functions)
 
 ::
 
-	> (fboundp '+)
-	T
-	> (symbol-function '+)
-	#<Compiled-function + 17BA4E>
+  > (fboundp '+)
+  T
+  > (symbol-function '+)
+  #<Compiled-function + 17BA4E>
 
 透過 ``symbol-function`` 函數設定某個名字給一個函數：
 
 ::
 
-	(setf (symbol-function 'add2)
-				#'(lambda (x) (+ x 2)))
+  (setf (symbol-function 'add2)
+    #'(lambda (x) (+ x 2)))
 
 我們可以定義一個新的全域函數，我們可以像是使用 ``defun`` 所定義的函數那樣使用它：
 
 ::
 
-	> (add2 1)
+  > (add2 1)
 	3
 
 實際上 ``defun`` 做了稍微多的工作，將某些像是
@@ -44,10 +44,10 @@ Chapter 6 函數 (Functions)
 
 ::
 
-	(defun primo (lst) (car lst))
+  (defun primo (lst) (car lst))
 
-	(defun (setf primo) (val lst)
-		(setf (car lst) val))
+  (defun (setf primo) (val lst)
+    (setf (car lst) val))
 
 在一個名字是這種形式 ``(setf f)`` 的函數定義中，第一個參數代表新的數值，而剩下的參數代表了傳給 ``f`` 的參數。
 
@@ -55,10 +55,10 @@ Chapter 6 函數 (Functions)
 
 ::
 
-	> (let ((x (list 'a 'b 'c)))
-			(setf (primo x ) 480)
-			x)
-	(480 b c)
+  > (let ((x (list 'a 'b 'c)))
+      (setf (primo x ) 480)
+      x)
+  (480 b c)
 
 不需要為了定義 ``(setf primo)`` 而定義 ``primo`` ，但這樣的定義通常是成對的。
 
@@ -66,16 +66,16 @@ Chapter 6 函數 (Functions)
 
 ::
 
-	(defun foo (x)
-		"Implements an enhanced paradigm of diversity"
-		x)
+  (defun foo (x)
+    "Implements an enhanced paradigm of diversity"
+    x)
 
 那麼這個字串會變成函數的文件字串。一個全域定義的函數的文件可以藉由呼叫 ``documentation`` 來取得：
 
 ::
 
-	> (documentation 'foo 'function)
-	"Implements an enhanced paradigm of diversity"
+  > (documentation 'foo 'function)
+  "Implements an enhanced paradigm of diversity"
 
 6.2 區域函數 (Local Functions)
 ===============================

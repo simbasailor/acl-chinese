@@ -21,7 +21,7 @@ Common Lisp 有著威力強大的 I/O 工具。關於輸入以及一些普遍的
 
 ::
 
-	> (setf path (make-pathname :name "myfile"))
+  > (setf path (make-pathname :name "myfile"))
 	#P"myfile"
 
 開啟一個檔案預設的基本函數是 ``open`` 。它接受一個路徑名 [1]_ 以及大量的選擇性關鍵字參數，而要是開啟成功時，回傳一個指向檔案的流。
@@ -30,9 +30,9 @@ Common Lisp 有著威力強大的 I/O 工具。關於輸入以及一些普遍的
 
 ::
 
-	> (setf str (open path :direction :output
-												 :if-exists :supercede))
-	#<Stream C017E6>
+  > (setf str (open path :direction :output
+                         :if-exists :supercede))
+  #<Stream C017E6>
 
 流的印出表示法 (printed-representation) 因實現而異。
 
@@ -76,9 +76,9 @@ Common Lisp 有著威力強大的 I/O 工具。關於輸入以及一些普遍的
 
 ::
 
-	(with-open-file (str path :direction :output
-														:if-exists :supercede)
-		(format str "Something~%"))
+  (with-open-file (str path :direction :output
+                            :if-exists :supercede)
+    (format str "Something~%"))
 
 ``with-open-file`` 巨集將 ``close`` 放在 ``unwind-protect`` 裡 (參見 92 頁)，即使一個錯誤打斷了主體的求值，檔案是保證會被關閉的。
 
