@@ -8,7 +8,7 @@ ANSI Common Lisp 中文翻譯版
 
 目前已完成章節:
 
-繁體 ch5 ch6.1 ch7.1 ch8.2
+繁體 ch5 ch6.1 ch7.1 ch8.2 ch9.1
 简体 ch5
 
 繁體中文:
@@ -48,6 +48,12 @@ ANSI Common Lisp 中文翻譯版
    ch10-cn
    about-cn
 
+ANSI Common Lisp 勘誤表：
+
+.. toctree::
+   :maxdepth: 1
+
+   errata
 
 評論
 ----------
