@@ -44,7 +44,7 @@ Cons 物件提供了一個方便的表示法來表示任何型態的物件。一
    > (setf y (list 'a 'b 'c))
    (A B C)
 
-產生的結構見圖3.2。現在當我們想得到這個列表的 ``cdr`` 時，它是一個兩個元素的列表。
+產生的結構見圖 3.2。現在當我們想得到這個列表的 ``cdr`` 時，它是一個兩個元素的列表。
 
 .. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-3.2.png
 
@@ -131,6 +131,8 @@ Cons 物件提供了一個方便的表示法來表示任何型態的物件。一
                 (our-equal (cdr x) (cdr y)))))
 
 這個定義意味著，如果某個 x 和 y 相等 ( ``eql`` )，那麼他們也相等 ( ``equal`` )。
+
+**勘誤:** 這個版本的 ``our-equal`` 可以用在符號的列表 (list of symbols)，而不是列表 (list)。
 
 3.3 為什麼Lisp沒有指標 (Why Lisp Has No Pointers)
 =======================================================
@@ -992,6 +994,8 @@ Chapter 3 練習 (Exercises)
   (c) length (for lists)
   (d) member (for lists; no keywords)
 
+**勘誤:** 要解決 3.6 (b)，你需要使用到 6.3 節的參數 ``&rest`` 。
+
 7. 修改圖 3.6 的程式，使它使用更少 cons 核。（提示：使用點狀列表）
 
 8. 定義一個函數，接受一個列表並用點狀表示法印出：
@@ -1002,7 +1006,7 @@ Chapter 3 練習 (Exercises)
    (A . (B . (C . NIL)))
    NIL
 
-9. 寫一個程式來找到3.15節裡表示的網路中，最長有限的路徑。網路可能包含循環。
+9. 寫一個程式來找到 3.15 節裡表示的網路中，最長有限的路徑 (不重複）。網路可能包含循環。
 
 .. rubric:: 腳註
 
