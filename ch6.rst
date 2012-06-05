@@ -70,7 +70,7 @@ Chapter 6 函數 (Functions)
     "Implements an enhanced paradigm of diversity"
     x)
 
-那麼這個字串會變成函數的文件字串。一個全域定義的函數的文件可以藉由呼叫 ``documentation`` 來取得：
+那麼這個字串會變成函數的文件字串 (documentation string)。一個全域定義的函數的文件可以藉由呼叫 ``documentation`` 來取得：
 
 ::
 
