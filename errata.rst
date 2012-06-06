@@ -1,4 +1,4 @@
-ANSI Common Lisp Errata
+ANSI Common Lisp 勘誤表
 ----------------------------
 
 Here's a list of problems people have reported in ANSI Common Lisp. I haven't checked them all yet. The ones that say caught I have checked, the ones that say reported I haven't.

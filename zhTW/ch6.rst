@@ -132,8 +132,77 @@ Chapter 6 函數 (Functions)
 6.3 參數列表 (Parameter Lists)
 ================================
 
+2.1 節我們展示過，有了前序表達式， ``+`` 可以接受任何數量的參數。從 2.1 節開始，我們看過許多可以接受不定數量參數的函數。我們若要寫出這樣的函數，我們需要使用一個叫做 rest 參數的東西。
+
+如果我們在函數參數列表的最後一個變數前插入 ``&rest`` 符號 (token)，那麼當這個函數被呼叫時，這個變數會被設成一個帶有剩餘參數的列表。現在我們可以明白 ``funcall`` 是如何根據 ``apply`` 寫成的。它或許可以定義成：
+
+::
+
+  (defun our-funcall (fn &rest args)
+    (apply fn args))
+
+我們也看過運算元中有可以被忽略的參數，並可以預設成特定值。這樣的參數稱為選擇性參數 (optional parameters)。（相比之下普通的參數有時稱為需要的參數「required parameters」) 如果符號 ``&optional`` 出現在一個參數列表時，
+
+::
+
+  (defun pilosoph (thing &optional property)
+    (list thing 'is property))
+
+那麼在 ``&optional`` 之後的參數都是選擇性的，預設為 ``nil`` :
+
+::
+
+  > (philosoph 'death)
+  (DEATH IS NIL)
+
+我們可以用一個帶有參數的列表，來明確地給出預設值。這版本的 ``philosoph`` 有一個更鼓舞人心的預設值：
+
+::
+
+  > (philosoph 'death)
+  (DEATH IS FUN)
+
+選擇性參數的預設值不用是常數。它可以是任何 Lisp 表達式。若這個表達式不是常數，它會在每次需要用到時被重新求值。
+
+一個關鍵字參數 (keyword parameter)是一種更靈活的選擇性參數。如果你把符號 ``&key`` 放在一個參數列表，那在它之後的參數都是選擇性的。此外，當函數被呼叫時，這些參數會被識別出來，與位置無關，是用符號標籤（譯註: ``:`` )來識別：
+
+::
+
+  > (defun keylist (a &key x y z)
+      (list a x y z))
+  KEYLIST
+
+  > (keylist 1 :y 2)
+  (1 NIL 2 NIL)
+
+  > (keylist 1 :y 3 :x 2)
+  (1 2 3 NIL)
+
+與普通的選擇性參數一樣，關鍵字參數預設是 ``nil`` ，但可以在參數列表中明確地指定預設值。
+
+關鍵字與相關的參數可以被 rest 參數收集，並可以傳遞給預期收到的函數。舉例來說，我們可以這樣定義 ``adjoin`` :
+
+::
+
+  (defun our-adjoin (obj lst &rest args)
+    (if (apply #'member obj lst args)
+        lst
+        (cons obj lst)))
+
+由於 ``adjoin`` 與 ``member`` 接受一樣的關鍵字，我們可以用 rest 參數收集它們，再傳給 ``member`` 函數。
+
+5.2 節介紹了 ``defstructuring-bind`` 巨集。通常情況下，每個模式中的子樹，作為第一個參數，可以與函數的參數列表一樣複雜：
+
+::
+
+  (destructuring-bind ((&key w x) &rest y) '((:w 3) a)
+    (list w x y))
+  (3 NIL A)
+
 6.4 範例：實用函數 (Example: Utilities)
 =========================================
+
+
 
 6.5 閉包 (Closures)
 =======================================

@@ -8,52 +8,120 @@ ANSI Common Lisp 中文翻譯版
 
 目前已完成章節:
 
-繁體 ch5 ch6.1 ch7.1 ch8.2 ch9.1
-简体 ch5
+繁體 ch5 ch6.3 ch7.1 ch8.2 ch9.1
 
-繁體中文:
+简体 ch5 ch6.2 ch7.1 ch8.2 ch9.1
 
-.. toctree::
-   :maxdepth: 1
+繁體中文
+-------------
 
-   preface
-   ch1
-   ch2
-   ch3
-   ch4
-   ch5
-   ch6
-   ch7
-   ch8
-   ch9
-   ch10
-   about
+.. _zhTW:
 
+:doc:`zhTW/preface`
 
-简体中文:
+:doc:`zhTW/ch1`
 
-.. toctree::
-   :maxdepth: 1
+:doc:`zhTW/ch2`
 
-   preface-cn
-   ch1-cn
-   ch2-cn
-   ch3-cn
-   ch4-cn
-   ch5-cn
-   ch6-cn
-   ch7-cn
-   ch8-cn
-   ch9-cn
-   ch10-cn
-   about-cn
+:doc:`zhTW/ch3`
 
-ANSI Common Lisp 勘誤表：
+:doc:`zhTW/ch4`
 
-.. toctree::
-   :maxdepth: 1
+:doc:`zhTW/ch5`
 
-   errata
+:doc:`zhTW/ch6`
+
+:doc:`zhTW/ch7`
+
+:doc:`zhTW/ch8`
+
+:doc:`zhTW/ch9`
+
+:doc:`zhTW/ch10`
+
+:doc:`zhTW/ch11`
+
+:doc:`zhTW/ch12`
+
+:doc:`zhTW/ch13`
+
+:doc:`zhTW/ch14`
+
+:doc:`zhTW/ch15`
+
+:doc:`zhTW/ch16`
+
+:doc:`zhTW/ch17`
+
+:doc:`zhTW/appendix-A`
+
+:doc:`zhTW/appendix-B`
+
+:doc:`zhTW/appendix-C`
+
+:doc:`zhTW/appendix-D`
+
+:doc:`zhTW/notes`
+
+:doc:`zhTW/about`
+
+简体中文
+-------------
+
+.. _zhCN:
+
+:doc:`preface`
+
+:doc:`zhCN/ch1-cn`
+
+:doc:`zhCN/ch2-cn`
+
+:doc:`zhCN/ch3-cn`
+
+:doc:`zhCN/ch4-cn`
+
+:doc:`zhCN/ch5-cn`
+
+:doc:`zhCN/ch6-cn`
+
+:doc:`zhCN/ch7-cn`
+
+:doc:`zhCN/ch8-cn`
+
+:doc:`zhCN/ch9-cn`
+
+:doc:`zhCN/ch10-cn`
+
+:doc:`zhCN/ch11-cn`
+
+:doc:`zhCN/ch12-cn`
+
+:doc:`zhCN/ch13-cn`
+
+:doc:`zhCN/ch14-cn`
+
+:doc:`zhCN/ch15-cn`
+
+:doc:`zhCN/ch16-cn`
+
+:doc:`zhCN/ch17-cn`
+
+:doc:`zhCN/appendix-A-cn`
+
+:doc:`zhCN/appendix-B-cn`
+
+:doc:`zhCN/appendix-C-cn`
+
+:doc:`zhCN/appendix-D-cn`
+
+:doc:`zhCN/notes-cn`
+
+:doc:`zhCN/about-cn`
+
+ANSI Common Lisp 勘误
+------------------------------------
+
+:doc:`errata`
 
 評論
 ----------
