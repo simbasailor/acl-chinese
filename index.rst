@@ -70,7 +70,7 @@ ANSI Common Lisp 中文翻譯版
 
 .. _zhCN:
 
-:doc:`preface`
+:doc:`zhCN/preface-cn`
 
 :doc:`zhCN/ch1-cn`
 
