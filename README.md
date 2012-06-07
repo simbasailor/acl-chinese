@@ -1,3 +1,7 @@
+# ANSI Common Lisp
+
+《ANSI Common Lisp》—— 由 Paul Graham 编写的、一本非常棒的 Common Lisp 入门书籍，对于学习 Lisp/FP 、或者在《实用 Common Lisp 编程》或《On Lisp》之前阅读也非常有价值。
+
 # 如何贡献
 
 ## 译文格式
@@ -66,7 +70,7 @@ github account 以及填坑的日期。（见下方 [填坑是好青年](#填坑
 
 ### Preface
 
-贡献者：fengdidi @github
+贡献者：fengdidi
 
 联系方式：fengdidi@gmail.com
 
@@ -74,13 +78,13 @@ github account 以及填坑的日期。（见下方 [填坑是好青年](#填坑
 
 ### CH1
 
-贡献者：JuanitoFatas @github
+贡献者：JuanitoFatas
 
 联系方式：katehuang0320@gmail.com
 
 ### CH6
 
-贡献者：JuanitoFatas @github
+贡献者：JuanitoFatas
 
 联系方式：katehuang0320@gmail.com
 
@@ -88,7 +92,7 @@ github account 以及填坑的日期。（见下方 [填坑是好青年](#填坑
 
 ### CH7
 
-贡献者：JuanitoFatas @github
+贡献者：JuanitoFatas
 
 联系方式：katehuang0320@gmail.com
 
@@ -96,7 +100,7 @@ github account 以及填坑的日期。（见下方 [填坑是好青年](#填坑
 
 ### CH8
 
-贡献者：JuanitoFatas @github
+贡献者：JuanitoFatas
 
 联系方式：katehuang0320@gmail.com
 
@@ -104,7 +108,7 @@ github account 以及填坑的日期。（见下方 [填坑是好青年](#填坑
 
 ### CH9
 
-贡献者：JuanitoFatas @github
+贡献者：JuanitoFatas
 
 联系方式：katehuang0320@gmail.com
 
@@ -208,7 +212,7 @@ github account 以及填坑的日期。（见下方 [填坑是好青年](#填坑
 
 ## 感谢
 
-感谢所有的给予建议支持的人。
+感谢所有给予建议支持的人。
 
 ## 其他问题
 

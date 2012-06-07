@@ -63,8 +63,6 @@ ANSI Common Lisp 中文翻譯版
 
 :doc:`zhTW/notes`
 
-:doc:`zhTW/about`
-
 简体中文
 -------------
 
@@ -115,8 +113,6 @@ ANSI Common Lisp 中文翻譯版
 :doc:`zhCN/appendix-D-cn`
 
 :doc:`zhCN/notes-cn`
-
-:doc:`zhCN/about-cn`
 
 ANSI Common Lisp 勘误
 ------------------------------------
