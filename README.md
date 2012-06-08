@@ -214,9 +214,13 @@ github account 以及填坑的日期。（见下方 [填坑是好青年](#填坑
 
 感谢所有给予建议支持的人。
 
+## 版权
+
+译文请勿用于商业用途、仅供同好学习交流之用。
+
 ## 其他问题
 
-请直接联系我: katehuang0320@gmail.com
+发送邮件至 katehuang0320 / huangz1990 的 gmail。
 
 [quick-rst]: http://docutils.sourceforge.net/docs/user/rst/quickref.html
 [rst-primer]: http://docutils.sourceforge.net/docs/user/rst/quickstart.html
