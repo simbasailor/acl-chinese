@@ -514,16 +514,14 @@ Dylan 是 Common Lisp 与 Scheme 的混合物 (hybrid)，有着 Pascal 一般的
 
 **图 6.3 某些等价函数**
 
-函数 ``curry`` 与 ``rcurry`` (“right curry”) 精神上与前一小节的 ``make-adder`` 相同。两者皆接受一个函数及某些参数，并返回一个新的函数，expects the rest of the arguments.
-
-下列任一个函数等同於 ``(make-adder 3)`` :
+函数 ``curry`` 与 ``rcurry`` (“right curry”) 精神上与前一小节的 ``make-adder`` 相同。两者皆接受一个函数及某些参数，并返回一个预期其馀参数的新函数。下列任一个函数等同於 ``(make-adder 3)`` :
 
 ::
 
   (curry #'+ 3)
   (rcurry #'+ 3)
 
-当函数的参数次序重要时，很明显可以看出 ``curry`` 与 ``rcurry`` 的差别。如果我们 ``curry -`` ，我们得到一个用其参数减去某特定数的函数，
+当函数的参数顺序重要时，很明显可以看出 ``curry`` 与 ``rcurry`` 的差别。如果我们 ``curry -`` ，我们得到一个用其参数减去某特定数的函数，
 
 ::
 

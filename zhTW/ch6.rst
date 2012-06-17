@@ -514,16 +514,14 @@ Dylan 是 Common Lisp 與 Scheme 的混合物 (hybrid)，有著 Pascal 一般的
 
 **圖 6.3 某些等價函數**
 
-函數 ``curry`` 與 ``rcurry`` (“right curry”) 精神上與前一小節的 ``make-adder`` 相同。兩者皆接受一個函數及某些參數，並回傳一個新的函數，expects the rest of the arguments.
-
-下列任一個函數等同於 ``(make-adder 3)`` :
+函數 ``curry`` 與 ``rcurry`` (“right curry”) 精神上與前一小節的 ``make-adder`` 相同。兩者皆接受一個函數及某些參數，並回傳一個預期其餘參數的新函數。下列任一個函數等效於 ``(make-adder 3)`` :
 
 ::
 
   (curry #'+ 3)
   (rcurry #'+ 3)
 
-當函數的參數次序重要時，很明顯可以看出 ``curry`` 與 ``rcurry`` 的差別。如果我們 ``curry -`` ，我們得到一個用其參數減去某特定數的函數，
+當函數的參數順序重要時，很明顯可以看出 ``curry`` 與 ``rcurry`` 的差別。如果我們 ``curry -`` ，我們得到一個用其參數減去某特定數的函數，
 
 ::
 
