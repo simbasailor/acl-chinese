@@ -384,13 +384,17 @@ Common Lisp 有兩種流 (streams)，字元流與二進制流。本章描述了�
 
 ::
 
-	The struggle between Liberty and Authority is the most conspicuous feature in the portions of history with which we are earliest familiar, particularly in that of Greece, Rome, and England.
+	The struggle between Liberty and Authority is the most conspicuous feature
+	in the portions of history with which we are earliest familiar, particularly
+	in that of Greece, Rome, and England.
 
 在我們對 ``(file-subst " th" " z" "test1" "test2")`` 求值之後，讀取檔案 ``"test2"`` 為:
 
 ::
 
-	The struggle between Liberty and Authority is ze most conspicuous feature in ze portions of history with which we are earliest familiar, particularly in zat of Greece, Rome, and England.
+	The struggle between Liberty and Authority is ze most conspicuous feature
+	in ze portions of history with which we are earliest familiar, particularly
+	in zat of Greece, Rome, and England.
 
 為了使這個例子盡可能的簡單，圖 7.2 的程式碼只將一個字串換成另一個字串。很容易擴展為搜索一個模式而不是一個字面字串。你只需要做的是，將 ``char=`` 呼叫換成一個你想要的更通用的匹配函數呼叫。
 
@@ -462,4 +466,4 @@ Chapter 7 練習 (Exercises)
 
 .. [2] 要讓向量與陣列這樣被顯示，將 ``*print-array*`` 設為真。
 
-.. [3] Lisp 不能只用 ``#'`` 來表示函式，因為 ``#'`` 本身無法提供表示閉包的方式。
+.. [3] Lisp 不能只用 ``#'`` 來表示函數，因為 ``#'`` 本身無法提供表示閉包的方式。
