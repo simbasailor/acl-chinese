@@ -263,6 +263,77 @@ Common Lisp 中有相当多的类型--恐怕有无数种类型那么多，如果
 
 13.4 避免垃圾 (Garbage Avoidance)
 ===================================================
+就像Lisp允许你推后对变量类型的考虑一样，它也允许你推后对内存分配 (memory allocation) 的考虑。在程序的早期阶段
+不用去考虑内存分配 (或者棘手的bug ) 将解放你的想象力。当程序成熟时，它可以依赖更少的动态分配从而变得更快。
+
+然而，较少的构建 (consing) 并不总是让程序更快。对于那些依赖着低端 (bad) 垃圾回收器 (garbage collector) 的Lisp实现来说，过多的
+构建 (cons) 容易让程序运行缓慢。多数Lisp实现一直都还使用着低端垃圾回收器，因此高效的程序应尽可能少的构建就变成了一种
+传统。最近的发展完全改变了这种传统观点。一些实现上现在已经拥有了相当先进 (sophisticated) 的垃圾回收器，它构建新对象然后
+抛弃它们而不是回收这些对象，这样就会更高效。
+
+本节介绍几种让程序构建更少的方法。 但是否构建少了就能让你的程序运行的更快还依赖于实现。最佳忠告依然是自己去试一下吧。
+为了减少构建你需要做很多事。有些是不会改变你程序的形状的。例如，其中最简单的就是使用解构函数 (destructive function)。
+下表中罗列一些常用的函数以及与它们对应的解构版本。
+
+|-------------------+-------------------|
+|      SAFE         |   DESTRUCTIVE     |
+| append            | nconc             |
+| reverse           | nreverse          |
+| remove            | delete            |
+| remove-if         | delete-if         |
+| remove-duplicates | delete-duplicates |
+| subst             | nsubst            |
+| subst-if          | nsubst-if         |
+| union             | nunion            |
+| intersection      | nintersection     |
+| set-difference    | nset-difference   |
+|-------------------+-------------------|
+当你知道修改一个列表是安全的时候，你可以使用 *delete* 替换 *remove* ， *nreverse* 替换 *reverse 等等。
+
+即便你想完全摆脱构建，你也不必放弃在运行中 (on the fly) 创建对象的可能性。
+你需要避免的是在运行中 (on the fly) 为它们分配空间和通过垃圾回收来收回空间。通用方案是你自己预先分配内存块
+(block of memory)，以及明确回收用过的块。 *预先* 可能意味着在编译期或者某些初始化例程 （routine) 中。具体情况
+还应具体分析 (When speed begins to matter depends on the application) 。
+
+例如，当情况允许我们利用一个有限大小的堆栈时，我们可以让堆栈在一个已经分配了的向量中增长或缩减，而不是构建
+它。Common Lisp内建支持把向量作为堆栈使用。如果我们传给 *make-array* 可选的 *fill-pointer* 参数，
+我们将得到一个看起来可以扩展 (expendable) 的向量。 *make-array* 的第一个参数指定了分配给向量的存储量，而
+*fill-pointer*指定了初始有效长度：
+::
+   > (setf *print-array* t)
+   T
+   > (setf vec (make-array 10 :fill-pointer 2
+                              :initial-element nil))
+   #(NIL NIL)
+我们刚刚制造的向量对于序列函数 (sequence function) 来说仍好像只含有两个元素，
+::
+   > (length vec)
+   2
+但它能够增长直到十个元素。因为 *vec* 有一个填充指针 (fill pointer)，我们可以使用 *vector-push* 和 *vector-pop*
+函数推入和弹出元素，就像它是一个列表一样：
+::
+   > (vector-push 'a vec)
+   2
+   > vec
+   #(NIL NIL A)
+   > (vector-pop vec)
+   A
+   > vec
+   #(NIL NIL)
+当我们调用 *vector-push* 时，它增加填充指针并返回它过去的值。只要填充指针小于 *make-array* 的第一个参数，我们
+就可以向这个向量中压入 (push) 新元素；当空间用尽时， *vector-push* 返回 *nil* 。目前我们还可以向 *vec* 中
+压入八个元素。
+使用带有填充指针的向量有一个缺点，就是它们不再是简单向量 (simple vector)。我们不得不使用 *aref* 来代替 *svref*
+引用元素。代价需要和潜在的收益保持平衡。
+
+
+
+
+
+
+
+
+
 
 13.5 示例: 池 (Example: Pools)
 =======================================
