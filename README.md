@@ -2,6 +2,8 @@
 
 《ANSI Common Lisp》—— 由 Paul Graham 编写的、一本非常棒的 Common Lisp 入门书籍，对于学习 Lisp/FP 、或者在《实用 Common Lisp 编程》或《On Lisp》之前阅读也非常有价值。
 
+> 《On Lisp》国内知名 Lisper 冰河已翻译完成。可以在网络上找到。
+
 # 如何贡献
 
 ## 译文格式
@@ -12,7 +14,7 @@
 
 [Quick reStructuredText][quick-rst]
 
-基本上只要掌握如何使用行内代码、标题、代码区块、超连结、脚注即可。
+基本上只要掌握如何使用行内代码、标题、代码区块、超连结、脚注、表格、简单数学式即可。
 
 ## 流程
 
@@ -34,7 +36,7 @@ github account 以及填坑的日期。（见下方 [填坑是好青年](#填坑
 
 ## 翻译时间?
 
-基本上只要有在活动的迹象，都是OK的，但最好在 20 天内完成。
+基本上只要有在活动的迹象，都是 OK 的，但最好在 20 天内完成。
 
 特别长的 Notes Appendix D. 例外，但若太久没有收到你的消息，可能会将你移除这个坑。
 
@@ -52,7 +54,7 @@ github account 以及填坑的日期。（见下方 [填坑是好青年](#填坑
 
 由于 Paul Graham 的英语非常猛，碰到太难翻译的句子，
 
-或是不太确定的句子、用词、用语，请开 issue 与其他翻译的协作者讨论。
+或是不太确定的句子、用词、用语，可以开 issue 与其他翻译的协作者讨论。
 
 用词、用语可 Google 看看大家都是怎么称呼这个词的。
 
@@ -76,19 +78,11 @@ github account 以及填坑的日期。（见下方 [填坑是好青年](#填坑
 
 完成日：2012.02.10
 
-### CH1-9
+### CH1-10
 
 贡献者：JuanitoFatas
 
 联系方式：katehuang0320@gmail.com
-
-### CH10
-
-贡献者：JuanitoFatas
-
-联系方式：katehuang0320@gmail.com
-
-填坑日：2012.06.18
 
 ### CH11
 
@@ -184,6 +178,10 @@ github account 以及填坑的日期。（见下方 [填坑是好青年](#填坑
 
 填坑日：<yyyy.mm.dd>
 
+### 技术指导编辑校对
+
+贡献者: huangz1990
+
 ## 感谢
 
 感谢所有给予建议支持的人。
@@ -194,7 +192,7 @@ github account 以及填坑的日期。（见下方 [填坑是好青年](#填坑
 
 ## 其他问题
 
-发送邮件至 katehuang0320 / huangz1990 的 gmail。
+发送邮件至 huangz1990 或 fengdidi 的 gmail。
 
 [quick-rst]: http://docutils.sourceforge.net/docs/user/rst/quickref.html
 [rst-primer]: http://docutils.sourceforge.net/docs/user/rst/quickstart.html
