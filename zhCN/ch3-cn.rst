@@ -202,7 +202,7 @@ Lisp 没有指针的原因是因为每一个值，其实概念上来说都是一
 3.5 示例：压缩 (Example: Compression)
 ============================================
 
-作为一个例子，这节将演示如何实现简单形式的列表压缩。这个算法有一个令人映像深刻的名字， *游程编码* (*run-length encoding)。
+作为一个例子，这节将演示如何实现简单形式的列表压缩。这个算法有一个令人映像深刻的名字， *游程编码* (run-length encoding)。
 
 ::
 
@@ -217,7 +217,7 @@ Lisp 没有指针的原因是因为每一个值，其实概念上来说都是一
         (let ((next (car lst)))
           (if (eql next elt)
               (compr elt (+ n 1) (cdr lst))
-              (cons (n​​-elts elt n)
+              (cons (n-elts elt n)
                     (compr next 1 (cdr lst)))))))
 
   (defun n-elts (elt n)
@@ -844,7 +844,7 @@ Common Lisp 有一个内置的排序函数叫做 ``sort`` 。它接受一个序�
     (if (null queue)
         nil
         (let ((path (car queue)))
-          (let ((node​​ (car path)))
+          (let ((node (car path)))
             (if (eql node end)
                 (reverse path)
                 (bfs end
@@ -854,7 +854,7 @@ Common Lisp 有一个内置的排序函数叫做 ``sort`` 。它接受一个序�
 
   (defun new-paths (path node net)
     (mapcar #'(lambda (n)
-                (cons n ​​path))
+                (cons n path))
             (cdr (assoc node net))))
 
 图 3.12 广度优先搜索(breadth-first search)
