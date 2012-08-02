@@ -14,10 +14,10 @@ Chapter 12 结构 (Structure)
 
 ::
 
-> (setf part (list 'b 'c))
-(B C)
-> (setf whole (cons 'a part))
-(A B C) 
+	> (setf part (list 'b 'c))
+	(B C)
+	> (setf whole (cons 'a part))
+	(A B C) 
 
 其中，第一个cons是第二个cons的一部分（事实上，是的第二个cons的cdr）。在这样的情况下，我们说，这两个列表共享结构。这两个列表的基本结构见图12.1所示。
 
@@ -25,17 +25,17 @@ Chapter 12 结构 (Structure)
 
 ::
 
-> (tailp part whole)
-T
+	> (tailp part whole)
+	T
 
 我们可以想像它写成：
 
 ::
 
-(defun our-tailp (x y )
-(or (eql x  y )
-(and (consp y)
-(our-tailp x (cdr y)))))
+	(defun our-tailp (x y )
+	(or (eql x  y )
+	(and (consp y)
+	(our-tailp x (cdr y)))))
 
 定义表明，每个列表本身是一个尾巴，nil是每一个适当的列表的尾部。
 
@@ -43,9 +43,9 @@ T
 
 ::
 
-(setf part (list 'b 'c)
-whole1 (cons 1 part )
-whole2 (cons 2 part)) 
+	(setf part (list 'b 'c)
+	whole1 (cons 1 part )
+	whole2 (cons 2 part)) 
 
 现在whole1和whole2共享结构，但是它们彼此都不是对方的一部分。 
 
