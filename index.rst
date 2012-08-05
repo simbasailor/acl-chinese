@@ -6,107 +6,56 @@
 ANSI Common Lisp 中文翻譯版
 ===============================================
 
-繁體中文
--------------
-
-.. _zhTW:
-
-:doc:`zhTW/preface`
-
-:doc:`zhTW/ch1`
-
-:doc:`zhTW/ch2`
-
-:doc:`zhTW/ch3`
-
-:doc:`zhTW/ch4`
-
-:doc:`zhTW/ch5`
-
-:doc:`zhTW/ch6`
-
-:doc:`zhTW/ch7`
-
-:doc:`zhTW/ch8`
-
-:doc:`zhTW/ch9`
-
-:doc:`zhTW/ch10`
-
-:doc:`zhTW/ch11`
-
-:doc:`zhTW/ch12`
-
-:doc:`zhTW/ch13`
-
-:doc:`zhTW/ch14`
-
-:doc:`zhTW/ch15`
-
-:doc:`zhTW/ch16`
-
-:doc:`zhTW/ch17`
-
-:doc:`zhTW/appendix-A`
-
-:doc:`zhTW/appendix-B`
-
-:doc:`zhTW/appendix-C`
-
-:doc:`zhTW/appendix-D`
-
-:doc:`zhTW/notes`
-
-简体中文
--------------
-
-.. _zhCN:
-
-:doc:`zhCN/preface-cn`
-
-:doc:`zhCN/ch1-cn`
-
-:doc:`zhCN/ch2-cn`
-
-:doc:`zhCN/ch3-cn`
-
-:doc:`zhCN/ch4-cn`
-
-:doc:`zhCN/ch5-cn`
-
-:doc:`zhCN/ch6-cn`
-
-:doc:`zhCN/ch7-cn`
-
-:doc:`zhCN/ch8-cn`
-
-:doc:`zhCN/ch9-cn`
-
-:doc:`zhCN/ch10-cn`
-
-:doc:`zhCN/ch11-cn`
-
-:doc:`zhCN/ch12-cn`
-
-:doc:`zhCN/ch13-cn`
-
-:doc:`zhCN/ch14-cn`
-
-:doc:`zhCN/ch15-cn`
-
-:doc:`zhCN/ch16-cn`
-
-:doc:`zhCN/ch17-cn`
-
-:doc:`zhCN/appendix-A-cn`
-
-:doc:`zhCN/appendix-B-cn`
-
-:doc:`zhCN/appendix-C-cn`
-
-:doc:`zhCN/appendix-D-cn`
-
-:doc:`zhCN/notes-cn`
++-----------------------------------+-----------------------------------+
+| 繁體中文                          | 简体中文                          |
+|                                   |                                   |
+| :doc:`zhTW/preface`               | :doc:`zhCN/preface-cn`            |
+|                                   |                                   |
+| :doc:`zhTW/ch1`                   | :doc:`zhCN/ch1-cn`                |
+|                                   |                                   |
+| :doc:`zhTW/ch2`                   | :doc:`zhCN/ch2-cn`                |
+|                                   |                                   |
+| :doc:`zhTW/ch3`                   | :doc:`zhCN/ch3-cn`                |
+|                                   |                                   |
+| :doc:`zhTW/ch4`                   | :doc:`zhCN/ch4-cn`                |
+|                                   |                                   |
+| :doc:`zhTW/ch5`                   | :doc:`zhCN/ch5-cn`                |
+|                                   |                                   |
+| :doc:`zhTW/ch6`                   | :doc:`zhCN/ch6-cn`                |
+|                                   |                                   |
+| :doc:`zhTW/ch7`                   | :doc:`zhCN/ch7-cn`                |
+|                                   |                                   |
+| :doc:`zhTW/ch8`                   | :doc:`zhCN/ch8-cn`                |
+|                                   |                                   |
+| :doc:`zhTW/ch9`                   | :doc:`zhCN/ch9-cn`                |
+|                                   |                                   |
+| :doc:`zhTW/ch10`                  | :doc:`zhCN/ch10-cn`               |
+|                                   |                                   |
+| :doc:`zhTW/ch11`                  | :doc:`zhCN/ch11-cn`               |
+|                                   |                                   |
+| :doc:`zhTW/ch12`                  | :doc:`zhCN/ch12-cn`               |
+|                                   |                                   |
+| :doc:`zhTW/ch13`                  | :doc:`zhCN/ch13-cn`               |
+|                                   |                                   |
+| :doc:`zhTW/ch14`                  | :doc:`zhCN/ch14-cn`               |
+|                                   |                                   |
+| :doc:`zhTW/ch15`                  | :doc:`zhCN/ch15-cn`               |
+|                                   |                                   |
+| :doc:`zhTW/ch16`                  | :doc:`zhCN/ch16-cn`               |
+|                                   |                                   |
+| :doc:`zhTW/ch17`                  | :doc:`zhCN/ch17-cn`               |
+|                                   |                                   |
+| :doc:`zhTW/appendix-A`            | :doc:`zhCN/appendix-A-cn`         |
+|                                   |                                   |
+| :doc:`zhTW/appendix-B`            | :doc:`zhCN/appendix-B-cn`         |
+|                                   |                                   |
+| :doc:`zhTW/appendix-C`            | :doc:`zhCN/appendix-C-cn`         |
+|                                   |                                   |
+| :doc:`zhTW/appendix-D`            | :doc:`zhCN/appendix-D-cn`         |
+|                                   |                                   |
+| :doc:`zhTW/notes`                 | :doc:`zhCN/notes-cn`              |
+|                                   |                                   |
++-----------------------------------+-----------------------------------+
 
 ANSI Common Lisp 勘误
 ------------------------------------
