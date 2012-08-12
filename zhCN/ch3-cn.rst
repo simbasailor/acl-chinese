@@ -175,7 +175,7 @@ Lisp 没有指针的原因是因为每一个值，其实概念上来说都是一
 
 ::
 
-   > (setf x '(a b c))
+   > (setf x '(a b c)
            y (copy-list x))
    (A B C)
 
