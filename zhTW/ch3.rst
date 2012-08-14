@@ -174,7 +174,7 @@ Lisp 沒有指標的原因是因為每一個值，其實概念上來說都是一
 
 ::
 
-   > (setf x '(a b c))
+   > (setf x '(a b c)
            y (copy-list x))
    (A B C)
 
