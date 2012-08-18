@@ -3,6 +3,7 @@
 
 Chapter 13 速度 (Speed)
 **************************************************
+
 Lisp 实际上是两种语言：一种能写出快速执行的程序，一种则能让你快速的写出程序。
 在程序开发的早期阶段，你可以为了开发上的便捷舍弃程序的执行速度。
 一旦程序的结构开始固化 (crystallize)，你就可以精炼其中的关键部分以使得它们执行的更快。
@@ -15,6 +16,7 @@ Lisp 实际上是两种语言：一种能写出快速执行的程序，一种则
 
 13.1 瓶颈规则 (The Bottleneck Rule)
 ==================================
+
 不管实现如何，关于优化可以整理出三点规则：它应该关注瓶颈，它不应该开始的太早，它应该始于算法。
 
 也许关于优化最重要的事情就是要认识到程序执行中相当大的一部分时间都是由少数的瓶颈引起的。
@@ -47,6 +49,7 @@ Lisp 的一个优点就是能让你用不同的速度工作：很快的写出运
 
 13.2 编译 (Compilation)
 ==================================================
+
 有五个参数 (parameter) 可以控制代码的编译： *speed* (速度) 代表编译器产生代码的速度；
 *compilation-speed* (编译速度) 代表程序被编译的速度； *safety* (安全) 代表目标代码中进行错误检查的数量；
 *space* (空间) 代表目标代码的大小和内存需求量；最后， *debug* (调试) 代表为了调试而保留的信息量。
@@ -105,8 +108,7 @@ Lisp 的一个优点就是能让你用不同的速度工作：很快的写出运
 的事情发生了。和 *length/r* 不同的是，它不是在递归回溯的时候构建返回值，而是在递归调用的过程中积累返回值。
 所以额外的 *acc* 参数，在最后一层递归调用结束后就可以简单的返回。
 
-出色的编译器能够将一个尾调用编译成一个跳转 (goto)，因此也能将一个尾递归函数编译成一个循环 (loop)。在典型的机器语言代码中 
-(machine language code)，当第一次执行到表示 *len* 的指令片段 (the segment of instructions) 时，栈上会有信息指示在返回时要做些什么。
+出色的编译器能够将一个尾调用编译成一个跳转 (goto)，因此也能将一个尾递归函数编译成一个循环 (loop)。在典型的机器语言代码中 (machine language code)，当第一次执行到表示 *len* 的指令片段 (the segment of instructions) 时，栈上会有信息指示在返回时要做些什么。
 由于在递归调用后没有残余的计算，该信息对第二层调用仍然有效：第二层调用返回后我们要做的仅仅就是从第一层调用返回。
 因此，当要进行第二层调用时，我们只需给参数设置新的值，然后跳转到函数的起始处继续执行，没有必要进行真正的函数调用。
 
@@ -141,6 +143,7 @@ Lisp 的一个优点就是能让你用不同的速度工作：很快的写出运
 
 13.3 类型声明 (Type Declarations)
 ================================
+
 如果Lisp是你所学的第二门编程语言，你也许会感到困惑我们为何还未谈及类型声明这件事儿，
 毕竟它在其他一些编程语言中是那样盛行且必要。
 
@@ -241,9 +244,25 @@ Common Lisp 中有相当多的类型--恐怕有无数种类型那么多，如果
 一个完整的向量声明如下：
 ::
    (declare (type (vector fixnum 20) v))
-声明一个仅含有定长数且长度固定为20的向量。
+声明一个仅含有定长数且长度固定为 20 的向量。
 
-.. image:: ../images/Figure-13.2.png
+::
+
+  (setf a (make-array '(1000 1000)
+                      :element-type 'single-float
+                      :initial-element 1.0s0))
+
+  (defun sum-elts (a)
+    (declare (type (simple-array single-float (1000 1000))
+                   a))
+    (let ((sum 0.0s0))
+      (declare (type single-float sum))
+      (dotimes (r 1000)
+        (dotimes (c 1000)
+          (incf sum (aref a r c))))
+      sum))
+
+**图 13.2 对数组元素求和**
 
 最为通用的数组声明形式由数组类型以及紧接其后的元素类型和一个维度列表构成：
 ::
@@ -343,7 +362,31 @@ Common Lisp 中有相当多的类型--恐怕有无数种类型那么多，如果
 使用带有填充指针的向量有一个缺点，就是它们不再是简单向量 (simple vector)。我们不得不使用 *aref* 来代替 *svref*
 引用元素。代价需要和潜在的收益保持平衡。
 
-.. image:: ../images/Figure-13.3.png
+::
+
+  (defconstant dict (make-array 25000 :fill-pointer 0))
+
+  (defun read-words (from)
+    (setf (fill-pointer dict) 0)
+    (with-open-file (in from :direction :input)
+      (do ((w (read-line in nil :eof)
+              (read-line in nil :eof)))
+          ((eql w :eof))
+        (vector-push w dict))))
+
+  (defun xform (fn seq) (map-into seq fn seq))
+
+  (defun write-words (to)
+    (with-open-file (out to :direction :output
+                            :if-exists :supersede)
+      (map nil #'(lambda (x)
+                   (fresh-line out)
+                   (princ x out))
+               (xform #'nreverse
+                      (sort (xform #'nreverse dict)
+                            #'string<)))))
+
+**图 13.3 生成同韵字辞典**
 
 当应用 (applications) 涉及很长的序列时，你可以用 *map-into* 代替 *map* 。 *map-into* 的第一个参数不是一个序列类型
 而是实际的序列，用来存储结果。这个序列可以是该函数接受的其他序列参数中的任何一个。所以，打个比方，如果你想为一个向量
@@ -398,17 +441,61 @@ Common Lisp 中有相当多的类型--恐怕有无数种类型那么多，如果
 当你需要一个结构时，你从池中取得一份，当你用完后，再把它送回池中。为了演示存储池的使用，我们将快速的编写一段记录港
 口中船舶数量的程序原型 (prototype of a program)，然后用存储池的方式重写它。
 
-.. image:: ../images/Figure-13.4.png
+::
 
-图 13.4 中展示的是第一个版本。 全局变量 *\*harbor** 是一个船只的列表， 每一艘船只由一个 *ship* 结构表示。 函数 *enter*
+  (defparameter *harbor* nil)
+
+  (defstruct ship
+    name flag tons)
+
+  (defun enter (n f d)
+    (push (make-ship :name n :flag f :tons d)
+          *harbor*))
+
+  (defun find-ship (n)
+    (find n *harbor* :key #'ship-name))
+
+  (defun leave (n)
+    (setf *harbor*
+          (delete (find-ship n) *harbor*)))
+
+**图 13.4 港口**
+
+图 13.4 中展示的是第一个版本。 全局变量 **harbor** 是一个船只的列表， 每一艘船只由一个 *ship* 结构表示。 函数 *enter*
 在船只进入港口时被调用； *find-ship* 根据给定名字 (如果有的话) 来寻找对应的船只；最后， *leave* 在船只离开港口时被调用。
 
 一个程序的初始版本这么写棒呆了 (a perfectly good way)，但它会产生许多的垃圾。当这个程序运行时，它会在两个方面构造：当
-船只进入港口时，新的结构将会被分配；而 *\*harbor** 的每一次增大都需要使用构造。
+船只进入港口时，新的结构将会被分配；而 **harbor** 的每一次增大都需要使用构造。
 
 我们可以通过在编译期分配空间来消除这两种构造的源 (sources of consing)。图 13.5 展示了程序的第二个版本，它根本不会构造。
 
-.. image:: ../images/Figure-13.5.png
+::
+
+  (defconstant pool (make-array 1000 :fill-pointer t))
+
+  (dotimes (i 1000)
+    (setf (aref pool i) (make-ship)))
+
+  (defconstant harbor (make-hash-table :size 1100
+                                       :test #'eq))
+
+  (defun enter (n f d)
+    (let ((s (if (plusp (length pool))
+                 (vector-pop pool)
+                 (make-ship))))
+      (setf (ship-name s)        n
+            (ship-flag s)        f
+            (ship-tons s)        d
+            (gethash n harbor) s)))
+
+  (defun find-ship (n) (gethash n harbor))
+
+  (defun leave (n)
+    (let ((s (gethash n harbor)))
+      (remhash n harbor)
+      (vector-push s pool)))
+
+**图 13.5 港口（第二版）**
 
 严格说来，新的版本仍然会构造，只是不在运行期。在第二个版本中， *harbor* 从列表变成了哈希表，所以它所有的空间都在编译期分配了。
 一千个 *ship* 结构体也会在编译期被创建出来，并被保存在向量池 (vector pool) 中。(如果 *:fill-pointer* 参数为 *t* ，
@@ -420,8 +507,8 @@ Common Lisp 中有相当多的类型--恐怕有无数种类型那么多，如果
 
 13.6 快速操作符 (Fast Operators)
 =======================================
-本章一开始就宣称 Lisp 是两种不同的语言。就某种意义来讲这确实是正确的。如果你仔细看过 Common Lisp 的设计，你会发现某些
-特性主要是为了速度，而另外一些主要为了便捷性。
+
+本章一开始就宣称 Lisp 是两种不同的语言。就某种意义来讲这确实是正确的。如果你仔细看过 Common Lisp 的设计，你会发现某些特性主要是为了速度，而另外一些主要为了便捷性。
 
 例如，你可以通过三个不同的函数取得向量给定位置上的元素： *elt* 、 *aref* 、 *svref* 。如此的多样性允许你把一个程序
 的性能提升到极致 (allow you to squeeze as much performance out of a program as possible)。 所以如果你可以
