@@ -86,11 +86,11 @@ github account 以及填坑的日期。（见下方 [填坑是好青年](#填坑
 
 ### CH11
 
-贡献者：nchen
+贡献者：JuanitoFatas
 
-联系方式：chenrong2003@gmail.com
+联系方式：katehuang0320@gmail.com
 
-填坑日：2012.06.07
+填坑日：2012.09.01
 
 ### CH12
 
@@ -134,11 +134,11 @@ github account 以及填坑的日期。（见下方 [填坑是好青年](#填坑
 
 ### CH17
 
-贡献者：nchen
+贡献者：JuanitoFatas
 
-联系方式：chenrong2003@gmail.com
+联系方式：katehuang0320@gmail.com
 
-填坑日：2012.06.07
+填坑日：2012.09.01
 
 ### Appendix A.
 
