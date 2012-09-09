@@ -18,11 +18,11 @@ Chapter 12 结构 (Structure)
      > (setf part (list 'b 'c))
      (B C)
      > (setf whole (cons 'a part))
-     (A B C) 
+     (A B C)
 
-.. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-12.1.png
+.. figure:: https://raw.github.com/acl-translation/acl-chinese/master/images/Figure-12.1.png
 
-图 12.1 共享结构
+**图 12.1 共享结构**
 
 
 其中，第一个 ``cons`` 是第二个 ``cons`` 的一部分 (事实上，是的第二个 ``cons`` 的 ``cdr`` )。在这样的情况下，我们说，这两个列表共享结构 (Share Structure)。这两个列表的基本结构如图 12.1 所示。
@@ -53,17 +53,17 @@ Chapter 12 结构 (Structure)
             whole1 (cons 1 part)
             whole2 (cons 2 part))
 
-.. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-12.2.png
+.. figure:: https://raw.github.com/acl-translation/acl-chinese/master/images/Figure-12.2.png
 
-图 12.2 被共享的尾巴
+**图 12.2 被共享的尾巴**
 
-现在 ``whole1`` 和 ``whole2`` 共享结构，但是它们彼此都不是对方的一部分。 
+现在 ``whole1`` 和 ``whole2`` 共享结构，但是它们彼此都不是对方的一部分。
 
-当存在嵌套列表时，重要的是要区分是列表共享结构 (lists sharing structure)，还是列表的元素共享结构 (their elements sharing structure)。顶层列表结构 (Top-level list structure) 是指直接构成列表的那些 ``conses`` ，而不包含那些用于构造列表元素的 ``conses`` 。图 12.3 是一个嵌套列表的顶层列表结构 (译者注：图 12.3 中上面那三个有黑色阴影的 ``cons`` 即构成顶层列表结构的 ``cons``)。
+当存在嵌套列表时，重要的是要区分是列表共享结构 (lists sharing structure)，还是列表的元素共享结构 (their elements sharing structure)。顶层列表结构 (Top-level list structure) 是指直接构成列表的那些 ``conses`` ，而不包含那些用于构造列表元素的 ``conses`` 。图 12.3 是一个嵌套列表的顶层列表结构 (\ **译者注：**\ 图 12.3 中上面那三个有黑色阴影的 ``cons`` 即构成顶层列表结构的 ``cons``)。
 
-.. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-12.3.png
+.. figure:: https://raw.github.com/acl-translation/acl-chinese/master/images/Figure-12.3.png
 
-图 12.3 顶层列表结构
+**图 12.3 顶层列表结构**
 
 两个 ``cons`` 是否共享结构取决于我们把它们看作是列表还是 `树 (tree) <http://zh.wikipedia.org/wiki/%E6%A0%91_(%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84)>`_ 。可能存在两个嵌套列表，当把它们看作树时，它们共享结构，而看作列表时，它们不共享结构。图 12.4 构建了这种情况，两个列表以一个元素的形式包含了同一个列表，代码如下：
 
@@ -73,9 +73,9 @@ Chapter 12 结构 (Structure)
 	      holds1 (list 1 element 2)
 	      holds2 (list element 3))
 
-.. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-12.4.png
+.. figure:: https://raw.github.com/acl-translation/acl-chinese/master/images/Figure-12.4.png
 
-图 12.4 共享子树
+**图 12.4 共享子树**
 
 虽然 ``holds1`` 的第二个元素和 ``holds2`` 的第一个元素共享结构 (其实是相同的)，但如果把 ``holds1`` 和 ``holds2`` 看成是列表时，它们不共享结构。仅当两个列表共享顶层列表结构时，才能说这两个列表共享结构，而 ``holds1`` 和 ``holds2`` 没有共享顶层列表结构。
 
@@ -100,11 +100,11 @@ Chapter 12 结构 (Structure)
 
 它返回一个连原始列表的树型结构也不共享的新列表。图 12.5 显示了对一个嵌套列表使用 ``copy-list`` 和 ``copy-tree`` 的区别。
 
-.. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-12.5.png
+.. figure:: https://raw.github.com/acl-translation/acl-chinese/master/images/Figure-12.5.png
 
-图 12.5 两种复制
+**图 12.5 两种复制**
 
-12.2 修改 (Modification) 
+12.2 修改 (Modification)
 ==================================================
 
 为什么要避免共享结构呢？之前讨论的共享结构问题仅仅是个智力练习，到目前为止，并没使我们在实际写程序的时候有什么不同。当修改一个被共享的结构是，问题出现了。如果两个列表共享结构，当我们修改了其中一个，另外一个也会无意中被修改。
@@ -146,19 +146,31 @@ Chapter 12 结构 (Structure)
 12.3 示例：队列 (Example: Queues)
 ================================
 
-共享结构并不是一个总让人担心的特性。我们也可以对其加以利用的。这一节展示了怎样用共享结构来表示 `队列 (Queue) <http://zh.wikipedia.org/wiki/%E9%98%9F%E5%88%97>`_ 。队列对象是我们可以按照数据的插入顺序逐个检出数据的仓库，这个规则叫做 `先进先出 (FIFO, first in, first out) <http://zh.wikipedia.org/zh-cn/%E5%85%88%E9%80%B2%E5%85%88%E5%87%BA>`_ 。
+共享结构并不是一个总让人担心的特性。我们也可以对其加以利用的。这一节展示了怎样用共享结构来表示\ `队列 (Queue) <http://zh.wikipedia.org/wiki/%E9%98%9F%E5%88%97>`_\ 。队列对象是我们可以按照数据的插入顺序逐个检出数据的仓库，这个规则叫做\ `先进先出 (FIFO, first in, first out) <http://zh.wikipedia.org/zh-cn/%E5%85%88%E9%80%B2%E5%85%88%E5%87%BA>`_\ 。
 
-用列表表示 `栈 (stack) <http://zh.wikipedia.org/wiki/%E6%A0%88>`_ 比较容易，因为栈是从同一端插入和检出。而表示队列要困难些，因为队列的插入和检出是在不同端。为了有效的实现队列，我们需要找到一种办法来指向列表的两个端。
+用列表表示\ `栈 (stack) <http://zh.wikipedia.org/wiki/%E6%A0%88>`_\ 比较容易，因为栈是从同一端插入和检出。而表示队列要困难些，因为队列的插入和检出是在不同端。为了有效的实现队列，我们需要找到一种办法来指向列表的两个端。
 
 图 12.6 给出了一种可行的策略。它展示怎样表示一个含有 a，b，c 三个元素的队列。一个队列就是一个列表对，最后那个 ``cons`` 在相同的列表中 (原文：A queue is a pair of a list, and the last cons in that same list)。这个列表对由被称作头端 (front) 和尾端 (back) 的两部分组成。如果要从队列中检出一个元素只需在其头端 ``pop``，要插入一个元素，则创建一个新的 ``cons`` ，把尾端的 ``cdr`` 设置成指向这个 ``cons`` ，然后将尾端指向这个新的 ``cons`` 。
 
-.. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-12.6.png
+.. figure:: https://raw.github.com/acl-translation/acl-chinese/master/images/Figure-12.6.png
 
-图 12.6 一个队列的结构
+**图 12.6 一个队列的结构**
 
-.. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-12.7.png
+::
 
-图 12.7 队列实现
+	(defun make-queue () (cons nil nil))
+
+	(defun enqueue (obj q)
+	  (if (null (car q))
+	      (setf (cdr q) (setf (car q) (list obj)))
+	      (setf (cdr (cdr q)) (list obj)
+	            (cdr q) (cdr (cdr q))))
+	  (car q))
+
+	(defun dequeue (q)
+	  (pop (car q)))
+
+**图 12.7 队列实现**
 
 图 12.7 中的代码实现了这一策略。其用法如下：
 
@@ -187,12 +199,12 @@ Chapter 12 结构 (Structure)
 	> (dequeue q1)
 	B
 	> (enqueue 'd q1)
-	(C D) 
+	(C D)
 
 12.4 破坏性函数 (Destructive Functions)
 ===================================================
 
-Common Lisp 包含一些允许修改列表结构的函数。为了提高效率，这些函数是具有破坏性的。虽然它们可以回收利用作为参数传给它们的 ``conses``，但并不是因为想要它们的副作用而调用它们 (译者注：因为这些函数的副作用并没有任何保证，下面的例子将说明问题)。
+Common Lisp 包含一些允许修改列表结构的函数。为了提高效率，这些函数是具有破坏性的。虽然它们可以回收利用作为参数传给它们的 ``conses``，但并不是因为想要它们的副作用而调用它们 (\ **译者注：**\ 因为这些函数的副作用并没有任何保证，下面的例子将说明问题)。
 
 比如，``delete`` 是 ``remove`` 的一个具有破坏性的版本。虽然它可以破坏作为参数传给它的列表，但它并不保证什么。在大多数的 Common Lisp 的实现中，会出现下面的情况：
 
@@ -209,7 +221,7 @@ Common Lisp 包含一些允许修改列表结构的函数。为了提高效率�
 
 ::
 
-     (setf lst (delete 'a lst)) 
+     (setf lst (delete 'a lst))
 
 破坏性函数是怎样回收利用传给它们的列表的呢？比如，可以考虑 ``nconc`` —— ``append`` 的破坏性版本。[2]下面是两个参数版本的实现，其清楚地展示了两个已知列表是怎样被缝在一起的：
 
@@ -258,7 +270,7 @@ Common Lisp 包含一些允许修改列表结构的函数。为了提高效率�
 ::
 
 	(defun mappend (fn &rest lsts )
-	    (apply #'append (apply #'mapcar fn lsts))) 
+	    (apply #'append (apply #'mapcar fn lsts)))
 
 如果使用 ``mappend`` 函数，那么 ``grandchildren`` 的定义就可以省去 ``copy-list``：
 
@@ -270,9 +282,9 @@ Common Lisp 包含一些允许修改列表结构的函数。为了提高效率�
 12.5 示例：二叉搜索树 (Example: Binary Search Trees)
 =======================================
 
-在某些情况下，使用破坏性操作比使用非破坏性的显得更自然。第4.7节中展示了如何维护一个具有二分搜索格式的有序对象集 (或者说维护一个 `二叉搜索树 (BST) <http://zh.wikipedia.org/zh-cn/%E4%BA%8C%E5%85%83%E6%90%9C%E5%B0%8B%E6%A8%B9>`_ )。第4.7节中给出的函数都是非破坏性的，但在我们真正使用BST的时候，这是一个不必要的保护措施。本节将展示如何定义更符合实际应用的具有破坏性的插入函数和删除函数。
+在某些情况下，使用破坏性操作比使用非破坏性的显得更自然。第4.7节中展示了如何维护一个具有二分搜索格式的有序对象集 (或者说维护一个\ `二叉搜索树 (BST) <http://zh.wikipedia.org/zh-cn/%E4%BA%8C%E5%85%83%E6%90%9C%E5%B0%8B%E6%A8%B9>`_\ )。第4.7节中给出的函数都是非破坏性的，但在我们真正使用BST的时候，这是一个不必要的保护措施。本节将展示如何定义更符合实际应用的具有破坏性的插入函数和删除函数。
 
-图 12.8 展示了如何定义一个具有破坏性的 ``bst-insert`` (第 72 页「 译者注：第 4.7 节」)。相同的输入参数，能够得到相同返回值。唯一的区别是，它将修改作为第二个参数输入的 BST。 在第 2.12 节中说过，具有破坏性并不意味着一个函数调用具有副作用。的确如此，如果你想使用 ``bst-insert!`` 构造一个 BST，你必须像调用 ``bst-insert`` 那样调用它：
+图 12.8 展示了如何定义一个具有破坏性的 ``bst-insert`` (第 72 页「\ **译者注：**\ 第 4.7 节」)。相同的输入参数，能够得到相同返回值。唯一的区别是，它将修改作为第二个参数输入的 BST。 在第 2.12 节中说过，具有破坏性并不意味着一个函数调用具有副作用。的确如此，如果你想使用 ``bst-insert!`` 构造一个 BST，你必须像调用 ``bst-insert`` 那样调用它：
 
 ::
 
@@ -282,35 +294,134 @@ Common Lisp 包含一些允许修改列表结构的函数。为了提高效率�
 	(setf *bst* (bst-insert! x *bst* #'<)))
 	NIL
 
-.. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-12.8.png
+::
 
-你也可以为 BST 定义一个类似 push 的功能，但这超出了本书的范围。(好奇的话，可以参考第 409 页 「 译者注：即备注 204 」 的宏定义。)
+	(defun bst-insert! (obj bst <)
+	  (if (null bst)
+	      (make-node :elt obj)
+	      (progn (bsti obj bst <)
+	             bst)))
 
-与 ``bst-remove`` (第 74 页「 译者注：第 4.7 节」) 对应，图 12.9 展示了一个破坏性版本的 ``bst-delete``。同 ``delete`` 一样，我们调用它并不是因为它的副作用。你应该像调用 ``bst-remove`` 那样调用 ``bst-delete``：
+	(defun bsti (obj bst <)
+	  (let ((elt (node-elt bst)))
+	    (if (eql obj elt)
+	        bst
+	        (if (funcall < obj elt)
+	            (let ((l (node-l bst)))
+	              (if l
+	                  (bsti obj l <)
+	                  (setf (node-l bst)
+	                        (make-node :elt obj))))
+	            (let ((r (node-r bst)))
+	              (if r
+	                  (bsti obj r <)
+	                  (setf (node-r bst)
+	                        (make-node :elt obj))))))))
+
+**图 12.8: 二叉搜索树：破坏性插入**
+
+你也可以为 BST 定义一个类似 push 的功能，但这超出了本书的范围。(好奇的话，可以参考第 409 页 「\ **译者注：**\ 即备注 204 」 的宏定义。)
+
+与 ``bst-remove`` (第 74 页「\ **译者注：**\ 第 4.7 节」) 对应，图 12.9 展示了一个破坏性版本的 ``bst-delete``。同 ``delete`` 一样，我们调用它并不是因为它的副作用。你应该像调用 ``bst-remove`` 那样调用 ``bst-delete``：
 
 ::
- 
+
 	> (setf *bst* (bst-delete 2 *bst* #'<) )
 	#<7>
 	> (bst-find 2 *bst* #'<)
-	NIL 
+	NIL
 
-.. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-12.9.png
+::
+
+	(defun bst-delete (obj bst <)
+	  (if bst (bstd obj bat nil nil <))
+	  bst)
+
+	(defun bstd (obj bst prev dir <)
+	  (let ((elt (node-elt bst)))
+	    (if (eql elt obj)
+	        (let ((rest (percolate! bst)))
+	          (case dir
+	            (:l (setf (node-l prev) rest))
+	            (:r (setf (node-r prev) rest))))
+	      (if (funcall < obj elt)
+	          (if (node-l bst)
+	              (bstd obj (node-l bst) bst :l <))
+	          (if (node-r bst)
+	              (bstd obj (node-r bst) bst :r <))))))
+
+	(defun percolate! (bst)
+	  (cond ((null (node-l bst))
+	         (if (null (node-r bst))
+	             nil
+	             (rperc! bst)))
+	        ((null (node-r bst)) (lperc! bst))
+	        (t (if (zerop (random 2))
+	               (lperc! bst)
+	               (rperc! bst)))))
+
+	(defun lperc! (bst)
+	  (setf (node-elt bst) (node-elt (node-l bst)))
+	  (percolate! (node-l bst)))
+
+	(defun rperc! (bst)
+	  (setf (node-elt bst) (node-elt (node-r bst)))
+	  (percolate! (node-r bst)))
+
+**图 12.9: 二叉搜索树：破坏性删除**
+
+**译注:** 此范例已被回报为错误的，一个修复的版本请造访\ `这里 <https://gist.github.com/2868339>`_\ 。
 
 12.6 示例：双向链表 (Example: Doubly-Linked Lists)
 =======================================
 
-普通的 lisp 列表是单向链表，这意味着其指针指向一个方向：我们可以获取下一个元素，但不能获取前一个。在 `双向链表 <http://zh.wikipedia.org/wiki/%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8>`_ 中，指针指向两个方向，我们获取前一个元素和下一个元素都很容易。这一节将介绍如何创建和操作双向链表。
+普通的 lisp 列表是单向链表，这意味着其指针指向一个方向：我们可以获取下一个元素，但不能获取前一个。在\ `双向链表 <http://zh.wikipedia.org/wiki/%E5%8F%8C%E5%90%91%E9%93%BE%E8%A1%A8>`_\ 中，指针指向两个方向，我们获取前一个元素和下一个元素都很容易。这一节将介绍如何创建和操作双向链表。
 
 图 12.10 展示了如何用结构来实现双向链表。将 ``cons`` 看成一种结构，它有两个字段：指向数据的 ``car`` 和指向下一个元素的 `cdr`。要实现一个双向链表，我们需要第三个字段，用来指向前一个元素。图 12.10 中的 ``defstruct`` 定义了一个含有三个字段的对象 `dl` (用于"双向链接")，我们将用它来构造双向链表。``dl`` 的 ``data`` 字段对应一个 ``cons`` 的 ``car``，``next`` 字段对应 ``cdr``。``prev`` 字段就类似一个 ``cdr``，指向另外一个方向。(图 12.11 是一个含有三个元素的双向链表。) 空的双向链表为 ``nil``，就像空的列表一样。
 
-.. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-12.10.png
+::
 
-.. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-12.11.png
+	(defstruct (dl (:print-function print-dl))
+	  prev data next)
+
+	(defun print-dl (dl stream depth)
+	  (declare (ignore depth))
+	  (format stream "#<DL ~A>" (dl->list dl)))
+
+	(defun dl->list (lst)
+	  (if (dl-p lst)
+	      (cons (dl-data lst) (dl->list (dl-next lst)))
+	      lst))
+
+	(defun dl-insert (x lst)
+	  (let ((elt (make-dl :data x :next lst)))
+	    (when (dl-p lst)
+	      (if (dl-prev lst)
+	          (setf (dl-next (dl-prev lst)) elt
+	                (dl-prev elt) (dl-prev lst)))
+	      (setf (dl-prev lst) elt))
+	    elt))
+
+	(defun dl-list (&rest args)
+	  (reduce #'dl-insert args
+	          :from-end t :initial-value nil))
+
+	(defun dl-remove (lst)
+	  (if (dl-prev lst)
+	      (setf (dl-next (dl-prev lst)) (dl-next lst)))
+	  (if (dl-next lst)
+	      (setf (dl-prev (dl-next lst)) (dl-prev lst)))
+	  (dl-next lst))
+
+**图 12.10: 构造双向链表**
+
+.. figure:: https://raw.github.com/acl-translation/acl-chinese/master/images/Figure-12.11.png
+
+**图 12.11: 一个双向链表。**
 
 为了便于操作，我们为双向链表定义了一些实现类似 ``car``，``cdr``，``consp`` 功能的函数：``dl-data``，``dl-next`` 和 ``dl-p``。``dl->list`` 是 ``dl`` 的打印函数(``print-function``)，其返回一个包含 ``dl`` 所有元素的普通列表。
 
-函数 ``dl-insert`` 就像针对双向链表的 ``cons`` 操作。至少，它就像 ``cons`` 一样，是一个基本构建函数。与 ``cons`` 不同的是，它实际上要修改作为第二个参数传递给它的双向链表。在这种情况下，这是自然而然的。我们 ``cons`` 内容到普通列表前面，不需要对普通列表的 ``rest`` (译者注： ``rest`` 即 ``cdr`` 的另一种表示方法，这里的 ``rest`` 是对通过 ``cons`` 构建后列表来说的，即修改之前的列表) 做任何修改。但是要在双向链表的前面插入元素，我们不得不修改列表的 ``rest`` (这里的 ``rest`` 即指没修改之前的双向链表) 的 ``prev`` 字段来指向这个新元素。
+函数 ``dl-insert`` 就像针对双向链表的 ``cons`` 操作。至少，它就像 ``cons`` 一样，是一个基本构建函数。与 ``cons`` 不同的是，它实际上要修改作为第二个参数传递给它的双向链表。在这种情况下，这是自然而然的。我们 ``cons`` 内容到普通列表前面，不需要对普通列表的 ``rest`` (\ **译者注：**\  ``rest`` 即 ``cdr`` 的另一种表示方法，这里的 ``rest`` 是对通过 ``cons`` 构建后列表来说的，即修改之前的列表) 做任何修改。但是要在双向链表的前面插入元素，我们不得不修改列表的 ``rest`` (这里的 ``rest`` 即指没修改之前的双向链表) 的 ``prev`` 字段来指向这个新元素。
 
 几个普通列表可以共享同一个尾巴。因为双向链表的尾巴不得不指向它的前一个元素，所以不可能存在两个双向链表共享同一个尾巴。如果 ``dl-insert`` 不具有破坏性，那么它不得不复制其第二个参数。
 
@@ -321,7 +432,7 @@ Common Lisp 包含一些允许修改列表结构的函数。为了提高效率�
 ::
 
 	> (dl-list 'a 'b 'c)
-	#<DL (A B C)> 
+	#<DL (A B C)>
 
 它使用了 ``reduce`` 函数 (并设置其 ``from-end`` 参数为 ``true``，``initial-value`` 为 ``nil``)，其功能等价于
 
@@ -356,11 +467,11 @@ Common Lisp 包含一些允许修改列表结构的函数。为了提高效率�
 	> (setf x (list 'a))
 	(A)
 	> (progn (setf (cdr x) x) nil)
-	NIL 
+	NIL
 
 这样 ``x`` 就是一个环形列表，其结构如图 12.12 (左) 所示。
 
-.. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-12.12.png
+.. figure:: https://raw.github.com/acl-translation/acl-chinese/master/images/Figure-12.12.png
 
 如果 LISP 试着打印我们刚刚构造的结构，将会显示 (a a a a a …… —— 无限个 ``a``)。但如果设置全局变量 ``*print-circle*`` 为 ``t`` 的话，LISP 就会采用一种方式打印出一个能代表环形结构的对象：
 
@@ -369,7 +480,7 @@ Common Lisp 包含一些允许修改列表结构的函数。为了提高效率�
 	> (setf *print-circle* t )
 	T
 	> x
-	#1=(A . #1#) 
+	#1=(A . #1#)
 
 如果你需要，你也可以使用 ``#n=`` 和 ``#n#`` 这两个读取宏来自己表示共享结构。
 
@@ -387,7 +498,7 @@ Common Lisp 包含一些允许修改列表结构的函数。为了提高效率�
 	> (let ((y (list 'a )))
 	(setf (car y) y)
 	     y)
-	#i=(#i#) 
+	#i=(#i#)
 
 图 12.12 (右) 展示了其结构。这个 `car-circular` 是一个正规的列表。`cdr-circular` 列表都不是正规列表，除开一些特殊情况 `car-circular` 列表是正规列表。
 
@@ -399,7 +510,7 @@ Common Lisp 包含一些允许修改列表结构的函数。为了提高效率�
 	     (setf (car c) c
 		    (cdr c) c)
 	     c)
-	#1=(#1# . #1#) 
+	#1=(#1# . #1#)
 
 很难想像这样的一个列表有什么用。实际上，了解环形列表的主要目的就是为了避免因为偶然因素构造出了环形列表，因为，将一个环形列表传给一个函数，如果该函数遍历这个环形列表，它将进入死循环。
 
@@ -412,7 +523,7 @@ Common Lisp 包含一些允许修改列表结构的函数。为了提高效率�
 	> (let ((a (make-array 1)) )
 		  (setf (aref a 0) a)
 		  a)
-	#1=#(#1#) 
+	#1=#(#1#)
 
 实际上，任何可以包含元素的对象都可能包含其自身作为元素。
 
@@ -427,7 +538,7 @@ Common Lisp 包含一些允许修改列表结构的函数。为了提高效率�
 		  (setf (elt-parent c) p
 			    (elt-child p) c)
 		  c) )
-	#1=#S(ELT PARENT #S(ELT PARENT NIL CHILD #1#) CHILD NIL) 
+	#1=#S(ELT PARENT #S(ELT PARENT NIL CHILD #1#) CHILD NIL)
 
 要实现像这样一个结构的打印函数 (``print-function``)，我们需要将全局变量 ``*print-circle*`` 绑定为 ``t``，或者避免打印可能构成环的字段。
 
@@ -504,12 +615,12 @@ Chapter 12 练习 (Exercises)
 
 	> (setf q (make-queue))
 	(NIL)
-	> (enqueue 'a q) 
+	> (enqueue 'a q)
 	(A)
 	> (enqueue 'b q)
 	(A B)
 	> (dequeue q)
-	A 
+	A
 
 3. 定义一个函数 ``copy-queue``，可以返回一个 queue 的拷贝。
 
