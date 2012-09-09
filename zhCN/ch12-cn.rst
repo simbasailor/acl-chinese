@@ -473,6 +473,8 @@ Common Lisp 包含一些允许修改列表结构的函数。为了提高效率�
 
 .. figure:: https://raw.github.com/acl-translation/acl-chinese/master/images/Figure-12.12.png
 
+**图 12.12 环状列表。**
+
 如果 LISP 试着打印我们刚刚构造的结构，将会显示 (a a a a a …… —— 无限个 ``a``)。但如果设置全局变量 ``*print-circle*`` 为 ``t`` 的话，LISP 就会采用一种方式打印出一个能代表环形结构的对象：
 
 ::
