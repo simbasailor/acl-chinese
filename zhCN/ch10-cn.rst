@@ -187,8 +187,7 @@ Comma-at 在宏里很有用，举例来说，在用剩馀参数 (rest parameters
 10.4 示例：快速排序法(Example: Quicksort)
 ===================================================
 
-
-图 10.1 包含了重度依赖宏的一个示例函数 –– 一个使用快速排序演算法来排序向量的函数。这个函数的工作方式如下:
+图 10.1 包含了重度依赖宏的一个示例函数 –– 一个使用快速排序演算法 `λ <http://ansi-common-lisp.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-164>`_ 来排序向量的函数。这个函数的工作方式如下:
 
 ::
 
@@ -550,7 +549,7 @@ Common Lisp 提供了 ``define-modify-macro`` 作为写出对於 ``setf`` 限制
 
 现在宏已经介绍过了，我们看过更多的 Lisp 是由超乎我们想像的 Lisp 写成。许多不是函数的 Common Lisp 操作符是宏，而他们全部用 Lisp 写成的。只有二十五个 Common Lisp 内建的操作符是特殊操作符。
 
-`John Foderaro <http://www.franz.com/about/bios/jkf.lhtml>`_ 将 Lisp 称为“可程序的程序语言。” 通过撰写你自己的函数与宏，你将 Lisp 变成任何你想要的语言。 (我们会在 17 章看到这个可能性的图形化示范)无论你的程序适合何种形式，你确信你可以将 Lisp 塑造成适合它的语言。
+`John Foderaro <http://www.franz.com/about/bios/jkf.lhtml>`_ 将 Lisp 称为“可程序的程序语言。” `λ <http://ansi-common-lisp.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-173>`_ 通过撰写你自己的函数与宏，你将 Lisp 变成任何你想要的语言。 (我们会在 17 章看到这个可能性的图形化示范)无论你的程序适合何种形式，你确信你可以将 Lisp 塑造成适合它的语言。
 
 宏是这个灵活性的主要成分之一。它们允许你将 Lisp 变得完全认不出来，但仍然用一种有原则且高效的方法来实作。在 Lisp 社区里，宏是个越来越感兴趣的主题。可以使用宏办到惊人之事是很清楚的，但更确信的是宏背後还有更多需要被探索。如果你想的话，可以通过你来发现。Lisp 永远将进化放在程序员手里。这是它为什麽存活的原因。
 

@@ -1,6 +1,10 @@
 Notes 备注
 ******************************
 
+本节是备注亦作为参考文献。所有列于此的书籍与论文应当被视为推荐阅读。
+
+**译注: 备注后面跟随的数字即书的页码**
+
 备注 viii (Notes viii)
 ==================================
 
@@ -13,7 +17,7 @@ Notes 备注
 
 `McCarthy, John. <http://en.wikipedia.org/wiki/John_McCarthy_(computer_scientist)>`_ `History of Lisp. <http://www-formal.stanford.edu/jmc/history/lisp/lisp.html>`_ In `Wexelblat, Richard L. <http://en.wikipedia.org/wiki/Richard_Wexelblat>`_ (Ed.) `Histroy of Programming Languages. <http://cs305.com/book/programming_languages/Conf-01/HOPLII/frontmatter.pdf>`_ Academic Press, New York, 1981, pp. 173-197.
 
-备注 154 (Notes 154)
+备注 150 (Notes 150)
 ==================================
 
 下面这个函数会显示在一个给定实现中，16 个用来标示浮点表示法的限制的全局常量：

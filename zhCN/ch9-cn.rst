@@ -342,7 +342,7 @@ Common Lisp 对於整数的大小没有限制。可以塞进一个字 (word)内�
 
 (译注: ``s`` 为短浮点、 ``f`` 为单浮点、 ``d`` 为双浮点、 ``l`` 为长浮点。)
 
-在给定的实现里，用十六个全局常量标明了每个格式的限制。它们的名字是这种形式: ``m-s-f`` ，其中 ``m`` 是 ``most`` 或 ``least`` ， ``s`` 是 ``positive`` 或 ``negative`` ，而 ``f`` 是四种浮点数之一。
+在给定的实现里，用十六个全局常量标明了每个格式的限制。它们的名字是这种形式: ``m-s-f`` ，其中 ``m`` 是 ``most`` 或 ``least`` ， ``s`` 是 ``positive`` 或 ``negative`` ，而 ``f`` 是四种浮点数之一。 `λ <http://ansi-common-lisp.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-150>`_
 
 浮点数乾涸与溢出被 Common Lisp 视为错误 :
 

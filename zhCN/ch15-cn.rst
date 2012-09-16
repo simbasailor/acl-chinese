@@ -26,7 +26,7 @@ Chapter 15 示例：推论 (Example: Inference)
 其中， ``head`` 是 **那么...部分** (then-part)， ``body`` 是 **如果...部分** (if-part)。在 ``head`` 和 ``body`` 中我们使用以问号为前缀的符号来表示变量。所以下面这个规则：
 
 ::
-   
+
    (<- (child ?x ?y) (parent ?y ?x))
 
 表示：如果 y 是 x 的家长，那么 x 是 y 的孩子；更恰当地说，我们可以通过证明 ``(parent y x)`` 来证明 ``(child x y)`` 的所表示的事实。
@@ -45,7 +45,7 @@ Chapter 15 示例：推论 (Example: Inference)
 
 然后使用它来证明 ``(daughter x y)`` 可能导致程序使用第一个规则去证明 ``(child x y)`` 。
 
-表达式的证明可以回溯任意数量的规则，只要它最终结束于给出的已知事实。这个过程有时候被称为反向链接 (backward-chaining)。之所以说 *反向* (backward) 是因为这一类推论先考虑 *head* 部分，这是为了在继续证明 *body* 部分之前检查规则是否有效。*链接* (chaining) 来源于规则之间的依赖关系，从我们想要证明的内容到我们的已知条件组成一个链接 (尽管事实上它更像一棵树)。
+表达式的证明可以回溯任意数量的规则，只要它最终结束于给出的已知事实。这个过程有时候被称为反向链接 (backward-chaining)。之所以说 *反向* (backward) 是因为这一类推论先考虑 *head* 部分，这是为了在继续证明 *body* 部分之前检查规则是否有效。*链接* (chaining) 来源于规则之间的依赖关系，从我们想要证明的内容到我们的已知条件组成一个链接 (尽管事实上它更像一棵树)。`λ <http://ansi-common-lisp.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-248>`_
 
 15.2 匹配 (Matching)
 ==================================================
