@@ -36,15 +36,15 @@ github account 以及填坑的日期。（见下方 [填坑是好青年](#填坑
 
 ## 翻译时间?
 
-基本上只要有在活动的迹象，都是 OK 的，但最好在 20 天内完成。
+基本上只要有在活动的迹象，都是 OK 的。
 
-特别长的 Notes Appendix D. 例外，但若太久没有收到你的消息，可能会将你移除这个坑。
+若太久没有收到你的消息，可能会将你移除这个坑。
 
 ## 到哪翻译？
 
 假如你要翻译的是 11 章，到 `zhCN` 目录下找到 ch11-cn.rst 开始翻译...
 
-    `(((...Hardcore-Translating-Action...)))
+    `(((...Performing Hardcore-Translating-Action...)))
 
 ## 翻译约定
 
@@ -52,11 +52,13 @@ github account 以及填坑的日期。（见下方 [填坑是好青年](#填坑
 
 ## 碰到问题？
 
-由于 Paul Graham 的英语非常猛，碰到太难翻译的句子，
+由于 Paul Graham 的英语非常洗煉，碰到太难翻译的句子，
 
 或是不太确定的句子、用词、用语，可以开 issue 与其他翻译的协作者讨论。
 
-用词、用语可 Google 看看大家都是怎么称呼这个词的。
+用词、用语可 Google 看看大家都是怎么称呼这个词的，沒有這個詞就採用原文，
+
+或是開個 issue 討論如何發明它。
 
 ## 翻译完成:
 
@@ -78,19 +80,11 @@ github account 以及填坑的日期。（见下方 [填坑是好青年](#填坑
 
 完成日：2012.02.10
 
-### CH1-10
+### CH1-11
 
 贡献者：JuanitoFatas
 
 联系方式：katehuang0320@gmail.com
-
-### CH11
-
-贡献者：JuanitoFatas
-
-联系方式：katehuang0320@gmail.com
-
-填坑日：2012.09.01
 
 ### CH12
 
@@ -98,15 +92,11 @@ github account 以及填坑的日期。（见下方 [填坑是好青年](#填坑
 
 联系方式：xiaolangde@gmail.com
 
-填坑日：<2012.08.01>
-
 ### CH13
 
 贡献者：onixie
 
 联系方式：onixie@gmail.com
-
-填坑日：2012.06.07
 
 ### CH14
 
@@ -114,15 +104,11 @@ github account 以及填坑的日期。（见下方 [填坑是好青年](#填坑
 
 联系方式：katehuang0320@gmail.com
 
-填坑日：2012.08.04
-
 ### CH15
 
 贡献者：panxiuqing
 
 联系方式：panxiuqing@gmail.com
-
-填坑日：2012.08.05
 
 ### CH16
 
@@ -162,21 +148,11 @@ github account 以及填坑的日期。（见下方 [填坑是好青年](#填坑
 
 填坑日：<yyyy.mm.dd>
 
-### Appendix D.
-
-贡献者：<your-github-account>
-
-联系方式：
-
-填坑日：<yyyy.mm.dd>
-
 ### Notes
 
-贡献者：<your-github-account>
+贡献者：JuanitoFatas
 
-联系方式：
-
-填坑日：<yyyy.mm.dd>
+联系方式：katehuang0320@gmail.com
 
 ### 技术指导编辑校对
 
@@ -192,7 +168,7 @@ github account 以及填坑的日期。（见下方 [填坑是好青年](#填坑
 
 ## 其他问题
 
-发送邮件至 huangz1990 或 fengdidi 的 gmail。
+发送邮件至 huangz1990 或 katehuang0320 的 gmail。
 
 [quick-rst]: http://docutils.sourceforge.net/docs/user/rst/quickref.html
 [rst-primer]: http://docutils.sourceforge.net/docs/user/rst/quickstart.html
