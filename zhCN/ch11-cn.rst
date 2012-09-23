@@ -39,6 +39,9 @@ Common Lisp 对象系统，或称为 CLOS，是一个用来实作面向对象编
 
 ::
 
+	(defclass rectangle ()
+	  (height width))
+
 	(defclass circle ()
 	  (radius))
 
@@ -52,6 +55,7 @@ Common Lisp 对象系统，或称为 CLOS，是一个用来实作面向对象编
 	    (setf (slot-value r 'height) 2
 	          (slot-value r 'width) 3)
 	    (area r))
+	6
 
 **图 11.2: 使用类型与方法来计算面积**
 
