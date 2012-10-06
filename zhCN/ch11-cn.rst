@@ -1,7 +1,7 @@
 .. highlight:: cl
    :linenothreshold: 0
 
-Chapter 11 Common Lisp 对象系统 CLOS
+Chapter 11 Common Lisp 对象系统 (CLOS)
 **************************************************
 
 Common Lisp 对象系统，或称为 CLOS，是一个用来实作面向对象编程的操作集 (set of operations)。由于它们共同的历史，通常将这些操作视为一个群组。`λ <http://ansi-common-lisp.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-176>`_ 技术上来说，它们与其他部分的 Common Lisp 没有不同： ``defmethod`` 只不过和 ``defun`` 一样是语言中的一个整合部分。
@@ -9,7 +9,7 @@ Common Lisp 对象系统，或称为 CLOS，是一个用来实作面向对象编
 11.1 面向对象编程 Object-Oriented Programming
 ======================================
 
-面向对象编程意味著程序组织的方式的改变。这个改变跟已经发生过的处理器能力 (processor power)分配的变化雷同。在 1970 年代，一个多用户的计算机系统代表著，一个或两个大型机 (mainframe)连接到大量的\ `哑终端 <http://zh.wikipedia.org/wiki/%E5%93%91%E7%BB%88%E7%AB%AF>`_\ (dumb terminal)。现在更可能的是大量相互通过网络连接的工作站 (workstation)。系统的处理能力 (processing power)现在分布至个体用户上，而不是集中在一台大型的计算机上。
+面向对象编程意味著程序组织方式的改变。这个改变跟已经发生过的处理器能力 (processor power)分配的变化雷同。在 1970 年代，一个多用户的计算机系统代表著，一个或两个大型机 (mainframe)连接到大量的\ `哑终端 <http://zh.wikipedia.org/wiki/%E5%93%91%E7%BB%88%E7%AB%AF>`_\ (dumb terminal)。现在更可能的是大量相互通过网络连接的工作站 (workstation)。系统的处理能力 (processing power)现在分布至个体用户上，而不是集中在一台大型的计算机上。
 
 面向对象编程带来的变革与上例非常相似，前者打破了传统程序的组织方式。不再让单一的程序去操作那些数据，而是告诉数据自己该做什么，程序隐含在这些新的数据“对象”的交互过程之中。
 
@@ -82,19 +82,119 @@ Common Lisp 对象系统，或称为 CLOS，是一个用来实作面向对象编
 11.2 类与实例 (Class and Instances)
 ==================================================
 
+在 4.6 节时，我们看过了创建结构的两个步骤：我们调用 ``defstruct`` 来设计一个结构的形式，并用一个像是 ``make-point`` 这样特定的函数来创建结构。创建实例 (instances)同样需要两个类似的步骤。首先我们使用 ``defclass`` 来定义一个类别 (Class):
 
+::
+
+	(defclass circle ()
+	  (radius center))
+
+这个定义说明了 ``circle`` 类别的实例会有两个槽 (\ *slot*\ )，分别名为 ``radius`` 与 ``center`` （槽类比于结构里的栏位 「field」）。
+
+要创建这个类的实例，我们调用通用的 ``make-instance`` 函数，而不是调用一个特定的函数，传入的第一个参数为类别名称：
+
+::
+
+	> (setf c (make-instance 'circle))
+	#<CIRCLE #XC27496>
+
+要设置这个实例的槽，我们可以使用 ``setf`` 搭配 ``slot-value`` ：
+
+::
+
+	> (setf (slot-value c 'radius) 1)
+	1
+
+与结构的栏位类似，未初始化的槽的值是未定义的 (undefined)。
 
 11.3 槽的特性 (Slot Properties)
 ================================
 
+传给 ``defclass`` 的第三个参数必须是一个槽定义的列表。如上面的例子所示，最简单的槽定义是一个表示其名称的符号。在一般用途下，一个槽定义可以是一个列表，内有槽的名称，伴随著一个或多个属性 (property)。属性像关键字参数那样指定。
+
+通过替一个槽定义一个存取器 (accessor)，我们隐式地定义了一个可以引用到槽的函数，使我们不需要在调用 ``slot-value`` 函数。如果我们照著下面来更新我们的 ``circle`` 类定义，
+
+::
+
+	(defclass circle ()
+	  ((radius :accessor circle-radius)
+	   (center :accessor circle-center)))
+
+则我们能够分别通过 ``circle-radius`` 及 ``circle-center`` 来引用槽：
+
+::
+
+	> (setf c (make-instance 'circle))
+	#<CIRCLE #XC5C726>
+
+	> (setf (circle-radius c) 1)
+	1
+
+	> (circle-radius c)
+	1
+
+通过指定一个 ``:writer`` 或是一个 ``reader`` ，而不是 ``accessor`` ，我们可以获得存取器的写入或读取行为。
+
+要指定一个槽的缺省值，我们可以给入一个 ``:initform`` 参数。若我们想要能够在 ``make-instance`` 调用期间就将槽初始化，我们可定义一个参数名传给 ``:initarg`` 。 [1]_ 加入刚刚所说的两件事，现在我们的类定义变成：
+
+::
+
+	(defclass circle ()
+	  ((radius :accessor circle-radius
+	           :initarg :radius
+	           :initform 1)
+	   (center :accessor circle-center
+	           :initarg :center
+	           :initform (cons 0 0))))
+
+现在当我们创建一个 ``circle`` 类的实例时，我们可以使用关键字参数 ``:initarg`` 给槽传入一个值，或是將槽的值设为``:initform`` 所指定的缺省值。
+
+::
+
+	> (setf c (make-instance 'circle :radius 3))
+	#<CIRCLE #XC2DE0E>
+	> (circle-radius c)
+	3
+	> (circle-center c)
+	(0 . 0)
+
+注意 ``initarg`` 的优先级比 ``initform`` 高。
+
+我们可以指定某些槽是可以被分享的 –– 也就是每个产生出来的实例，共享槽的值都是一样的。我们通过宣称槽拥有 ``:acclocation :class`` 来办到此事。（另一个办法是让一个槽有 ``:allocation :instance`` ，但由于缺省便如此了，不需要特别再声明一次。）当我们在一个实例中，改变了共享槽的值，则其它的实例的槽也会获得相同的值。所以我们会想要使用共享槽来存放那些所有实例皆有的相同属性。
+
+举例来说，假设我们想要模拟一群小报 (a flock of tabloids)的行为。在我们的模拟里，我们想要能够表示一个事实，也就是当一家小报采用一个头版时，其它小报也会跟进的这个行为。我们可以通过让所有的实例共享一个槽。若 ``tabloid`` 类别如下这样定义，
+
+::
+
+	(defclass tabloid ()
+	  ((top-story :accessor tabloid-story
+	              :allocation :class)))
+
+则若我们创立两家小报 (two instances of tabloids)，无论一家的头版是什么，另一家的头版也会是一样的：
+
+::
+
+	> (setf daily-blab (make-instance 'tabloid)
+	        unsolicited-mail (make-instance 'tabloid))
+	#<TABLOID #x302000EFE5BD>
+	> (setf (tabloid-story daily-blab) 'adultery-of-senator)
+	ADULTERY-OF-SENATOR
+	> (tabloid-story unsolicited-mail)
+	ADULTERY-OF-SENATOR
+
+若有给入 ``:documentation`` 属性的话，应该是作为 ``slot`` 文档的一个字串。通过指定一个 ``:type`` ，你保证一个槽只会有这种类型的元素。类型声明在 13.3 节解释。
+
 11.4 超类 (Superclasses)
 ===================================================
+
 
 11.5 优先级 (Precedence)
 =======================================
 
-11.6 通用函数 (Generic Functions)
+
+11.6 广义函数 (Generic Functions)
 =======================================
+
 
 11.7 辅助方法 (Auxiliary Methods)
 ==================================================
@@ -102,14 +202,24 @@ Common Lisp 对象系统，或称为 CLOS，是一个用来实作面向对象编
 11.8 结合方法 (Method Combination)
 =======================================
 
+
 11.9 封装 (Encapsulation)
 ===================================
+
 
 11.10 两种模型 (Two Models)
 ========================================
 
+
 Chapter 11 总结 (Summary)
 ============================
 
+
 Chapter 11 练习 (Exercises)
 ==================================
+
+
+
+.. rubric:: 脚注
+
+.. [1] Initarg 的名称通常是关键字，但不需要是。
