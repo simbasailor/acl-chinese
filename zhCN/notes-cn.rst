@@ -55,7 +55,7 @@ Kiczales, Gregor, Jim des Rivieres, and Daniel G. Bobrow. `The Art of the Metaob
 备注 178 (Notes 178)
 ================
 
-让我们再回放刚刚的句子一次： *我们可以完成种种的改动，甚至不需要看程序中其他的代码一眼。* 这个想法或许对某些读者听起来担忧地熟悉。这是写出\ `面条式代码 <http://zh.wikipedia.org/wiki/%E9%9D%A2%E6%9D%A1%E5%BC%8F%E4%BB%A3%E7%A0%81>`_\ 的食谱。
+让我们再回放刚刚的句子一次：\ *我们甚至不需要看程序中其他的代码一眼，就可以完成种种的改动。*\ 这个想法或许对某些读者听起来担忧地熟悉。这是写出\ `面条式代码 <http://zh.wikipedia.org/wiki/%E9%9D%A2%E6%9D%A1%E5%BC%8F%E4%BB%A3%E7%A0%81>`_\ 的食谱。
 
 面向对象模型使得通过一点一点的来构造程序变得简单。但这通常意味著，在实践上它提供了一种有结构的方法来写出面条式代码。这不一定是坏事，但也不会是好事。
 
@@ -84,3 +84,8 @@ Gabriel, Richard P. `Lisp Good News, Bad News, How to Win Big <http://www.dreams
 早在 1973 年，`Richard Fateman <http://en.wikipedia.org/wiki/Richard_Fateman>`_ 已经能证明在 `PDP-10 <http://en.wikipedia.org/wiki/PDP-10>`_ 主机上，`MacLisp <http://en.wikipedia.org/wiki/Maclisp>`_ 编译器比制造商的 FORTRAN 编译器，产生出更快速的代码。
 
 **译注:** `该篇 MacLisp 编译器在 PDP-10 可产生比 Fortran 快的代码的论文在这可以找到 <http://dl.acm.org/citation.cfm?doid=1086803.1086804>`_
+
+备注 191 (Notes 191)
+==================================
+
+
