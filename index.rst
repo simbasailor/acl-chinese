@@ -3,12 +3,12 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-ANSI Common Lisp 中文翻譯版
-===============================================
+ANSI Common Lisp 中文翻譯版 (Chinese Translation)
+===================================================
 
 +-----------------------------------+-----------------------------------+
 |                                   |                                   |
-| **繁體中文**                      | **简体中文**                      |
+| **正體中文**                      | **简体中文**                      |
 |                                   |                                   |
 | :doc:`zhTW/preface`               | :doc:`zhCN/preface-cn`            |
 |                                   |                                   |
@@ -58,10 +58,15 @@ ANSI Common Lisp 中文翻譯版
 |                                   |                                   |
 +-----------------------------------+-----------------------------------+
 
-ANSI Common Lisp 勘误
+ANSI Common Lisp 勘误 (Errata)
 ------------------------------------
 
 :doc:`errata`
 
-評論
-----------
+参考解答 (Answers to Exercises)
+------------------------------
+
+`P.Graham "ANSI Common LISP" Answer for Practice <http://www.shido.info/lisp/pacl2_e.html>`_ –– by SHIDO, Takafumi (takafumi@shido.info)
+
+評論 (Comments)
+--------------------------
