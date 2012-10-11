@@ -66,7 +66,7 @@ ANSI Common Lisp 勘误表 (Errata)
 参考解答 (Answers to Exercises)
 ------------------------------
 
-`P.Graham "ANSI Common LISP" Answer for Practice <http://www.shido.info/lisp/pacl2_e.html>`_ ––be by SHIDO, Takafumi (takafumi@shido.info)
+`P.Graham "ANSI Common LISP" Answer for Practice <http://www.shido.info/lisp/pacl2_e.html>`_ –– by SHIDO, Takafumi (takafumi@shido.info)
 
 建议及評論 (Comments and Suggestions)
 ------------------------------------------------
