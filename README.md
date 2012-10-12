@@ -80,7 +80,7 @@ github account 以及填坑的日期。（见下方 [填坑是好青年](#填坑
 
 完成日：2012.02.10
 
-### CH1-11
+### CH1-11, 14, 17
 
 贡献者：JuanitoFatas
 
@@ -98,12 +98,6 @@ github account 以及填坑的日期。（见下方 [填坑是好青年](#填坑
 
 联系方式：onixie@gmail.com
 
-### CH14
-
-贡献者：JuanitoFatas
-
-联系方式：katehuang0320@gmail.com
-
 ### CH15
 
 贡献者：panxiuqing
@@ -112,19 +106,7 @@ github account 以及填坑的日期。（见下方 [填坑是好青年](#填坑
 
 ### CH16
 
-贡献者：<your-github-account>
-
-联系方式：
-
-填坑日：<yyyy.mm.dd>
-
-### CH17
-
-贡献者：JuanitoFatas
-
-联系方式：katehuang0320@gmail.com
-
-填坑日：2012.09.01
+贡献者：huangz1990
 
 ### Appendix A.
 
@@ -160,7 +142,9 @@ github account 以及填坑的日期。（见下方 [填坑是好青年](#填坑
 
 ## 感谢
 
-感谢所有给予建议支持的人。
+感谢所有给予建议支持的人，
+
+特别感谢 HuangZ 与 Feng Di 这两个朋友一路已来的鼓励及帮助。
 
 ## 版权
 
