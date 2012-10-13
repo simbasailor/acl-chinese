@@ -183,10 +183,10 @@ Lisp 没有指针的原因是因为每一个值，其实概念上来说都是一
 
 ::
 
-(defun our-copy-list (lst)
- (if (atom lst)
-     lst
-     (cons (car lst) (our-copy-list (cdr lst)))))
+  (defun our-copy-list (lst)
+   (if (atom lst)
+       lst
+       (cons (car lst) (our-copy-list (cdr lst)))))
 
 这个定义暗示着 ``x`` 与 ``(copy-list x)`` 会永远 ``equal`` ，并永远不 ``eql`` ，除非 ``x`` 是 ``NIL`` 。
 
