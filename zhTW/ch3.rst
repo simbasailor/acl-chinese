@@ -61,7 +61,7 @@ Cons 物件提供了一個方便的表示法來表示任何型態的物件。一
 
 ::
 
-   > (setf z (list 'a (list 'b 'c) 'd'))
+   > (setf z (list 'a (list 'b 'c) 'd))
    (A (B C) D)
 
 當這種情況發生時，它的結構如圖3.3所示; 第二個 Cons 的 ``car`` 指標也指向一個列表：
@@ -183,7 +183,7 @@ Lisp 沒有指標的原因是因為每一個值，其實概念上來說都是一
 ::
 
    (defun our-copy-list (lst)
-     (if (atom list)
+     (if (atom lst)
          lst
          (cons (car lst) (our-copy-list (cdr lst)))))
 
