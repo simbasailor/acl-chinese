@@ -61,7 +61,7 @@ Lisp 程序开发通常呼应着开发 Lisp 语言自身。在最初版本的 Li
 
 ::
 
-   > (setf z (list 'a (list 'b 'c) 'd'))
+   > (setf z (list 'a (list 'b 'c) 'd))
    (A (B C) D)
 
 当这种情况发生时，它的结构如图 3.3 所示；第二个 *Cons* 的 ``car`` 指针也指向一个列表：
@@ -183,10 +183,10 @@ Lisp 没有指针的原因是因为每一个值，其实概念上来说都是一
 
 ::
 
-   (defun our-copy-list (lst)
-     (if (atom list)
-         lst
-         (cons (car lst) (our-copy-list (cdr lst)))))
+(defun our-copy-list (lst)
+ (if (atom lst)
+     lst
+     (cons (car lst) (our-copy-list (cdr lst)))))
 
 这个定义暗示着 ``x`` 与 ``(copy-list x)`` 会永远 ``equal`` ，并永远不 ``eql`` ，除非 ``x`` 是 ``NIL`` 。
 
