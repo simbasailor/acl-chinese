@@ -90,7 +90,7 @@ Common Lisp 对象系统，或称为 CLOS，是一组用来实作面向对象编
 	(defclass circle ()
 	  (radius center))
 
-这个定义说明了 ``circle`` 类别的实例会有两个槽 (\ *slot*\ )，分别名为 ``radius`` 与 ``center`` （槽类比于结构里的栏位 「field」）。
+这个定义说明了 ``circle`` 类别的实例会有两个槽 (\ *slot*\ )，分别名为 ``radius`` 与 ``center`` （槽类比于结构里的字段 「field」）。
 
 要创建这个类的实例，我们调用通用的 ``make-instance`` 函数，而不是调用一个特定的函数，传入的第一个参数为类别名称：
 
@@ -106,7 +106,7 @@ Common Lisp 对象系统，或称为 CLOS，是一组用来实作面向对象编
 	> (setf (slot-value c 'radius) 1)
 	1
 
-与结构的栏位类似，未初始化的槽的值是未定义的 (undefined)。
+与结构的字段类似，未初始化的槽的值是未定义的 (undefined)。
 
 11.3 槽的属性 (Slot Properties)
 ================================
