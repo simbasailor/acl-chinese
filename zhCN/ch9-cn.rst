@@ -627,7 +627,7 @@ Chapter 9 练习 (Exercises)
 
 译注: `Honer's method on wiki <http://en.wikipedia.org/wiki/Horner's_method>`_
 
-7. 你的 Common Lisp 实现使用了几个位元来表示定数 (fixnum)？
+7. 你的 Common Lisp 实现使用了几个位元来表示定长数？
 
 8. 你的 Common Lisp 实现提供几种不同的浮点数？
 
