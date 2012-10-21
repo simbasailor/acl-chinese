@@ -4,36 +4,32 @@
 Chapter 16 示例：生成 HTML (Example: Generating HTML)
 *********************************************************
 
-本章的目标是完成一个简单的 HTML 生成器 —— 这个程序可以自动生成一系列包含超文本链接的网页。
-除了介绍特定 Lisp 技术之外，本章还是一个典型的自底向上编程（bottom-up programming）的例子。
-我们以一些通用 HTML 例程作为开始，继而将这些例程看作是一门编程语言，从而更好地编写这个生成器。
+本章的目标是完成一个简单的 HTML 生成器 —— 这个程序可以自动生成一系列包含超文本链接的网页。除了介绍特定 Lisp 技术之外，本章还是一个典型的自底向上编程（bottom-up programming）的例子。
+我们以一些通用 HTML 实用函数作为开始，继而将这些例程看作是一门编程语言，从而更好地编写这个生成器。
 
-
-16.1 HTML
+16.1 超文本标记语言 (HTML)
 ==================================
 
-HTML （HyperText Markup Language，超文本标记语言）用于构建网页，是一种简单、易学的语言。
-本节就对这种语言作概括性介绍。
+HTML （HyperText Markup Language，超文本标记语言）用于构建网页，是一种简单、易学的语言。本节就对这种语言作概括性介绍。
 
-当你使用\ *网页浏览器*\ 阅览网页时，浏览器从远程服务器获取 HTML 文件，并将它们显示在你的屏幕上。
-每个 HTML 文件都包含任意多个\ *标签*\ （tag），这些标签相当于发送给浏览器的指令。
+当你使用\ *网页浏览器*\ 阅览网页时，浏览器从远程服务器获取 HTML 文件，并将它们显示在你的屏幕上。每个 HTML 文件都包含任意多个\ *标签*\ （tag），这些标签相当于发送给浏览器的指令。
 
 .. figure:: ../images/Figure-16.1.png
-   
-   图 16.1 一个 HTML 文件
+
+**图 16.1 一个 HTML 文件**
 
 图 16.1 给出了一个简单的 HTML 文件，图 16.2 展示了这个 HTML 文件在浏览器里显示时大概是什么样子。
 
 .. figure:: ../images/Figure-16.2.png
 
-   图 16.2 一个网页
+**图 16.2 一个网页**
 
 注意在三角符号之间的文本并没有被显示出来，这些用三角符号包围的文本就是标签。
 HTML 的标签分为两种，一种是成双成对地出现的：
 
 .. code-block:: html
-    
-    <tag>...</tag>
+
+  <tag>...</tag>
 
 第一个标签标志着某种情景（environment）的开始，而第二个标签标志着这种情景的结束。
 这种标签的一个例子是 ``<h2>`` ：所有被 ``<h2>`` 和 ``</h2>`` 包围的文本，都会使用比平常字体尺寸稍大的字体来显示。
@@ -48,7 +44,7 @@ HTML 的标签分为两种，一种是成双成对地出现的：
 
 .. code-block:: html
 
-    <a href="foo.html">
+  <a href="foo.html">
 
 这样的标签，就标识了一个指向另一个 HTML 文件的链接，其中这个 HTML 文件和当前网页的文件夹相同。
 当点击这个链接时，浏览器就会获取并显示 ``foo.html`` 这个文件。
@@ -61,12 +57,12 @@ HTML 的标签分为两种，一种是成双成对地出现的：
 HTML 还有不少其他的标签，但是本章要用到的标签，基本都包含在图 16.1 里了。
 
 
-16.2 HTML Utilities
+16.2 HTML 实用函数 (HTML Utilities)
 ==================================================
 
 .. figure:: ../images/Figure-16.3.png
 
-   图 16.3 标签生成例程
+**图 16.3 标签生成例程**
 
 本节会定义一些生成 HTML 的例程。
 图 16.3 包含了三个基本的、生成标签的例程。
@@ -76,20 +72,20 @@ HTML 还有不少其他的标签，但是本章要用到的标签，基本都包
 
 ::
 
-    > (as center "The Missing Lambda")
-    <center>The Missing Lambda</center>
-    NIL
+  > (as center "The Missing Lambda")
+  <center>The Missing Lambda</center>
+  NIL
 
 ``with`` 则接受一个代码体（body of code），并将它放置在两个标签之间：
 
 ::
 
-    > (with center
-        (princ "The Unbalanced Parenthesis"))
-    <center>
-    The Unbalanced Parenthesis
-    </center>
-    NIL
+  > (with center
+      (princ "The Unbalanced Parenthesis"))
+  <center>
+  The Unbalanced Parenthesis
+  </center>
+  NIL
 
 两个宏都使用了 ``~(...~)`` 来进行格式化，从而创建包含小写字母的标签。
 HTML 并不介意标签是大写还是小写，但是在包含许许多多标签的 HTML 文件中，小写字母的标签可读性更好一些。
@@ -103,7 +99,7 @@ HTML 并不介意标签是大写还是小写，但是在包含许许多多标签
 
 .. figure:: ../images/Figure-16.4.png
 
-   图 16.4 HTML 文件生成例程
+**图 16.4 HTML 文件生成例程**
 
 图 16.4 包含用于生成 HTML 文件的例程。
 第一个函数根据给定的符号（symbol）返回一个文件名。
@@ -118,30 +114,30 @@ HTML 并不介意标签是大写还是小写，但是在包含许许多多标签
 
 ``page`` 宏的输出先在顶部打印 ``title`` ，接着打印 ``body`` 部分的输出。
 
-如果我们调用 
+如果我们调用
 
 ::
 
-    (page 'paren "The Unbalanced Parenthesis"
-      (princ "Something in his expression told her..."))
+  (page 'paren "The Unbalanced Parenthesis"
+    (princ "Something in his expression told her..."))
 
 这会产生一个名为 ``paren.html`` 的文件（文件名由 ``html-file`` 函数生成），文件中的内容为：
 
 .. code-block:: html
 
-    <title>The Unbalanced Parenthesis</title>
-    <center>
-    <h2>THE UNBALANCED PARENTHESIS</h2>
-    </center>
-    <br><br><br>
-    Something in his expression told her...
+  <title>The Unbalanced Parenthesis</title>
+  <center>
+  <h2>THE UNBALANCED PARENTHESIS</h2>
+  </center>
+  <br><br><br>
+  Something in his expression told her...
 
 除了 ``title`` 标签以外，以上输出的所有 HTML 标签在前面已经见到过了。
 被 ``<title>`` 标签包围的文本并不显示在网页之内，它们会显示在浏览器窗口，用作页面的标题。
 
 .. figure:: ../images/Figure-16.5.png
 
-   图 16.5 生成链接的例程
+**图 16.5 生成链接的例程**
 
 图片 16.5 给出了用于生成链接的例程。
 ``with-link`` 和 ``with`` 很相似：它根据给定的地址 ``dest`` ，创建一个指向 HTML 文件的链接。
@@ -149,30 +145,29 @@ HTML 并不介意标签是大写还是小写，但是在包含许许多多标签
 
 ::
 
-    > (with-link 'capture
-        (princ "The Captured Variable"))
-    <a href="capture.html">The Captured Variable</a>
-    "</a>"
+  > (with-link 'capture
+      (princ "The Captured Variable"))
+  <a href="capture.html">The Captured Variable</a>
+  "</a>"
 
 ``with-link`` 也被用在 ``link-item`` 当中，这个函数接受一个字符串，并创建一个带链接的列表项：
 
 ::
 
-    > (link-item 'bq "Backquote!")
-    <li><a href="bq.html">Backquote!</a>
-    "</a>"
+  > (link-item 'bq "Backquote!")
+  <li><a href="bq.html">Backquote!</a>
+  "</a>"
 
-最后，\ ``button`` 也使用了 ``with-link`` ，从而创建一个被方括号包围的链接：
+最后， ``button`` 也使用了 ``with-link`` ，从而创建一个被方括号包围的链接：
 
 ::
 
-    > (button 'help "Help")
-    [ <a href="help.html">Help</a> ]
-    NIL
+  > (button 'help "Help")
+  [ <a href="help.html">Help</a> ]
+  NIL
 
-
-16.3 迭代式例程
-================================
+16.3 迭代式实用函数 (An Iteration Utility)
+===============================================
 
 在这一节，我们先暂停一下编写 HTML 生成器的工作，转到编写迭代式例程的工作上来。
 
@@ -186,16 +181,16 @@ HTML 并不介意标签是大写还是小写，但是在包含许许多多标签
 
 .. figure:: ../images/Figure-16.6.png
 
-   图 16.6 对树进行迭代
+**图 16.6 对树进行迭代**
 
 图 16.6 里定义的新例程是 ``mapc`` 的一个变种。它接受一个函数和一个列表作为参数，对于传入列表中的每个元素，它都会用三个参数来调用传入函数，分别是元素本身，前一个元素，以及后一个元素。（当没有前一个元素或者后一个元素时，使用 ``nil`` 代替。）
 
 ::
 
-    > (map3 #'(lambda (&rest args) (princ args))
-            '(a b c d))
-    (A NIL B) (B A C) (C B D) (D C NIL)
-    NIL
+  > (map3 #'(lambda (&rest args) (princ args))
+          '(a b c d))
+  (A NIL B) (B A C) (C B D) (D C NIL)
+  NIL
 
 和 ``mapc`` 一样， ``map3`` 总是返回 ``nil`` 作为函数的返回值。需要这类例程的情况非常多。在下一个小节就会看到，这个例程是如何让每个页面都实现“前进一页”和“后退一页”功能的。
 
@@ -203,17 +198,17 @@ HTML 并不介意标签是大写还是小写，但是在包含许许多多标签
 
 ::
 
-    > (map3 #'(lambda (c p n)
-                (princ c)
-                (if n (princ " | ")))
-            '(a b c d))
-    A | B | C | D
-    NIL
+  > (map3 #'(lambda (c p n)
+              (princ c)
+              (if n (princ " | ")))
+          '(a b c d))
+  A | B | C | D
+  NIL
 
 程序员经常会遇到上面的这类问题，但只要花些功夫，定义一些例程来处理它们，就能为后续工作节省不少时间。
 
 
-16.4 生成页面 
+16.4 生成页面 (Generating Pages)
 ===================================================
 
 一本书可以有任意数量的大章，每个大章又有任意数量的小节，而每个小节又有任意数量的分节，整本书的结构呈现出一棵树的形状。
@@ -233,13 +228,13 @@ HTML 并不介意标签是大写还是小写，但是在包含许许多多标签
 
 .. figure:: ../images/Figure-16.7.png
 
-   图 16.7 网站的结构
+**图 16.7 网站的结构**
 
 图 16.7 展示了生成程序创建的页面所形成的链接结构。
 
 .. figure:: ../images/Figure-16.8.png
 
-   图 16.8 定义一个网站
+**图 16.8 定义一个网站**
 
 图 16.8 包含定义页面所需的数据结构。程序需要处理两类对象：项和节点。这两类对象的结构很相似，不过节点包含的是项的列表，而项包含的是文本块。
 
@@ -252,8 +247,8 @@ HTML 并不介意标签是大写还是小写，但是在包含许许多多标签
 与此类似，在目录里，节点的排列顺序由传给 ``defsite`` 的参数决定。
 
 .. figure:: ../images/Figure-16.9.png
-   
-   图 16.9 生成索引和目录
+
+**图 16.9 生成索引和目录**
 
 图 16.9 包含的函数用于生成索引和目录。
 常量 ``contents`` 和 ``index`` 都是字符串，它们分别用作 ``contents`` 页面的标题和 ``index`` 页面的标题；另一方面，如果有其他页面包含了目录和索引这两个页面，那么这两个常量也会作为这些页面文件的前缀名。
@@ -268,7 +263,7 @@ HTML 并不介意标签是大写还是小写，但是在包含许许多多标签
 
 .. figure:: ../images/Figure-16.10.png
 
-   图 16.10 生成网站、节点和项
+**图 16.10 生成网站、节点和项**
 
 图 16.10 包含其余的代码： ``gen-site`` 生成整个页面集合，并调用相应的函数，生成节点和项。
 
@@ -289,4 +284,4 @@ HTML 并不介意标签是大写还是小写，但是在包含许许多多标签
 
 .. figure:: ../images/Figure-16.11.png
 
-   图 16.11 一个微型网站
+**图 16.11 一个微型网站**
