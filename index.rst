@@ -4,7 +4,7 @@
    contain the root `toctree` directive.
 
 ANSI Common Lisp 中文翻譯版 (Chinese Translation)
-===================================================
+======================================================
 
 +-----------------------------------+-----------------------------------+
 |                                   |                                   |
@@ -64,9 +64,19 @@ ANSI Common Lisp 勘误表 (Errata)
 :doc:`errata`
 
 参考解答 (Answers to Exercises)
-------------------------------
+----------------------------------
 
 `P.Graham "ANSI Common LISP" Answer for Practice <http://www.shido.info/lisp/pacl2_e.html>`_ –– by SHIDO, Takafumi (takafumi@shido.info)
+
+中英文术语
+------------------------------
+
+本书词汇参考\ `计算机词汇表 <http://github.com/JuanitoFatas/Computer-Science-Glossary>`_\ 。
+
+相关阅读 (Related Readings)
+-----------------------------
+
+`保罗•格雷厄姆 ANSI Common Lisp 一书注解。<http://www.cs.northwestern.edu/academics/courses/325/readings/graham/graham-notes.html>`_
 
 建议及評論 (Comments and Suggestions)
 ------------------------------------------------
