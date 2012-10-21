@@ -4,87 +4,17 @@
 
 > 《On Lisp》国内知名 Lisper 冰河已翻译完成。可以在网络上找到。
 
-# 如何贡献
+## 译文词汇表
 
-## 译文格式
+依据 [Computer Science Glossary](https://github.com/JuanitoFatas/Computer-Science-Glossary)。
 
-翻译采用 RST 语法，可以到这里快速的熟悉语法：
-
-[A ReStructuredText Primer][rst-primer]
-
-[Quick reStructuredText][quick-rst]
-
-基本上只要掌握如何使用行内代码、标题、代码区块、超连结、脚注、表格、简单数学式即可。
-
-## 流程
-
-首先 fork 这个 repository。
-
-请开一个新的分支提交你的劳动成果，假如是翻译第 11 章，请开一个 branch:
-
-    git checkout -b chapter-11
-
-**注意** ：开一个不同于 master 的分支较好。
-
-## 认领制度
-
-请在 `README.md` 找一个尚未填补的坑，填入你的:
-
-github account 以及填坑的日期。（见下方 [填坑是好青年](#填坑是好青年) 小节）
-
-填好坑以后，送一个 pull request 就代表你成功的占了一个坑，可以开始慢慢翻译你的文章了。
-
-## 翻译时间?
-
-基本上只要有在活动的迹象，都是 OK 的。
-
-若太久没有收到你的消息，可能会将你移除这个坑。
-
-## 到哪翻译？
-
-假如你要翻译的是 11 章，到 `zhCN` 目录下找到 ch11-cn.rst 开始翻译...
-
-    `(((...Performing Hardcore-Translating-Action...)))
-
-## 翻译约定
-
-有一些基本的约定请你参考 WIKI 的翻译约定。
-
-## 碰到问题？
-
-由于 Paul Graham 的英语非常洗煉，碰到太难翻译的句子，
-
-或是不太确定的句子、用词、用语，可以开 issue 与其他翻译的协作者讨论。
-
-用词、用语可 Google 看看大家都是怎么称呼这个词的，沒有這個詞就採用原文，
-
-或是開個 issue 討論如何發明它。
-
-## 翻译完成:
-
-    git add <your-file>
-    git commit -m 'what you wanna say/notes about your work'
-    git push <origin> <your-chapter>
-
-到你 forked 的 repository，将 current_branch 切换到你新增的 branch，
-
-如 `chapter-11`，发送一个 Pull Request，并填写一些相关信息，DONE!!!
-
-## 填坑是好青年
+## 贡献者
 
 ### Preface
 
 贡献者：fengdidi
 
 联系方式：fengdidi@gmail.com
-
-完成日：2012.02.10
-
-### CH1-11, 14, 17
-
-贡献者：JuanitoFatas
-
-联系方式：katehuang0320@gmail.com
 
 ### CH12
 
@@ -108,33 +38,9 @@ github account 以及填坑的日期。（见下方 [填坑是好青年](#填坑
 
 贡献者：huangz1990
 
-### Appendix A.
-
-贡献者：<your-github-account>
-
-联系方式：
-
-填坑日：<yyyy.mm.dd>
-
-### Appendix B.
+### 其它章节
 
 贡献者：JuanitoFatas
-
-联系方式：katehuang0320@gmail.com
-
-### Appendix C.
-
-贡献者：<your-github-account>
-
-联系方式：
-
-填坑日：<yyyy.mm.dd>
-
-### Notes
-
-贡献者：JuanitoFatas
-
-联系方式：katehuang0320@gmail.com
 
 ### 技术指导编辑校对
 
@@ -144,11 +50,11 @@ github account 以及填坑的日期。（见下方 [填坑是好青年](#填坑
 
 感谢所有给予建议支持的人，
 
-特别感谢 HuangZ 与 Feng Di 这两个朋友一路已来的鼓励及帮助。
+特别感谢 HuangZ 与 Feng Di 这两个朋友一路以来的鼓励及帮助。
 
-## 版权
+## 译文声明
 
-译文请勿用于商业用途、仅供同好学习交流之用。
+译文请勿用于商业用途、仅供同好学习交流之用、**禁止全文转载**。
 
 ## 其他问题
 
