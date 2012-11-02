@@ -6,12 +6,12 @@ Chapter 15 示例：推论 (Example: Inference)
 
 接下来三章提供了大量的 Lisp 程序例子。选择这些例子来说明那些较长的程序所采取的形式，和 Lisp 所擅长解决的问题类型。
 
-在这一章中我们将要写一个基于一组 ``if-then`` 规则的推论程序。这是一个经典的例子--不仅在于其经常出现在教科书上，还因为它反映了 Lisp 作为一个“符号计算”语言的本意。这个例子散发着很多早期 Lisp 程序的气息。
+在这一章中我们将要写一个基于一组 ``if-then`` 规则的推论程序。这是一个经典的例子 —— 不仅在于其经常出现在教科书上，还因为它反映了 Lisp 作为一个“符号计算”语言的本意。这个例子散发着很多早期 Lisp 程序的气息。
 
 15.1 目标 (The Aim)
 ==================================
 
-在这个程序中，我们将用一种熟悉的形式来表示信息：包含单个判断式 (predicate) 以及跟在之后的零个或多个参数组成的列表。要表示 Donald 是 Nancy 的家长，我们可以这样写：
+在这个程序中，我们将用一种熟悉的形式来表示信息：包含单个判断式，以及跟在之后的零个或多个参数所组成的列表。要表示 Donald 是 Nancy 的家长，我们可以这样写：
 
 ::
 
@@ -45,53 +45,55 @@ Chapter 15 示例：推论 (Example: Inference)
 
 然后使用它来证明 ``(daughter x y)`` 可能导致程序使用第一个规则去证明 ``(child x y)`` 。
 
-表达式的证明可以回溯任意数量的规则，只要它最终结束于给出的已知事实。这个过程有时候被称为反向链接 (backward-chaining)。之所以说 *反向* (backward) 是因为这一类推论先考虑 *head* 部分，这是为了在继续证明 *body* 部分之前检查规则是否有效。*链接* (chaining) 来源于规则之间的依赖关系，从我们想要证明的内容到我们的已知条件组成一个链接 (尽管事实上它更像一棵树)。`λ <http://ansi-common-lisp.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-248>`_
+表达式的证明可以回溯任意数量的规则，只要它最终结束于给出的已知事实。这个过程有时候被称为反向链接 (backward-chaining)。之所以说 *反向* (backward) 是因为这一类推论先考虑 *head* 部分，这是为了在继续证明 *body* 部分之前检查规则是否有效。*链接* (chaining) 来源于规则之间的依赖关系，从我们想要证明的内容到我们的已知条件组成一个链接 (尽管事实上它更像一棵树)。 `λ <http://ansi-common-lisp.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-248>`_
 
 15.2 匹配 (Matching)
 ==================================================
 
-我们需要有一个函数来做模式匹配以完成我们的反向链接 (back-chaining) 程序，这个函数能够比较两个包含变量的列表，它会检查在给变量赋值后是否可以使两个列表相等。举例，如果 ?x 和 ?y 是变量，那么下面两个列表：
+我们需要有一个函数来做模式匹配以完成我们的反向链接 (back-chaining) 程序，这个函数能够比较两个包含变量的列表，它会检查在给变量赋值后是否可以使两个列表相等。举例，如果 ``?x`` 和 ``?y`` 是变量，那么下面两个列表：
 
 ::
 
    (p ?x ?y c ?x)
    (p  a  b c  a)
 
-当 ?x = a 并且 ?y = b 时匹配，而下面两个列表：
+当 ``?x = a`` 且 ``?y = b`` 时匹配，而下面两个列表：
 
 ::
 
    (p ?x b ?y a)
    (p ?y b  c a)
 
-当 ?x = ?y = c 时匹配。
+当 ``?x = ?y = c`` 时匹配。
 
-我们有一个 match 函数，它接受两棵树，如果这两棵数能匹配，则返回一个 关联列表 (assoc-list) 来显示他们是如何匹配的：
+我们有一个 ``match`` 函数，它接受两棵树，如果这两棵数能匹配，则返回一个关联列表 (assoc-list)来显示他们是如何匹配的：
 
 ::
 
-   (defun match (x y &optional binds)
-     (cond
-      ((eql x y) (values binds t))
-      ((assoc x binds) (match (binding x binds) y binds))
-      ((assoc y binds) (match x (binding y binds) binds))
-      ((var? x) (values (cons (cons x y) binds) t))
-      ((var? y) (values (cons (cons y x) binds) t))
-      (t
-       (when (and (consp x) (consp y))
-         (multiple-value-bind (b2 yes)
-                              (match (car x) (car y) binds)
-           (and yes (match (cdr x) (cdr y) b2)))))))
+  (defun match (x y &optional binds)
+    (cond
+     ((eql x y) (values binds t))
+     ((assoc x binds) (match (binding x binds) y binds))
+     ((assoc y binds) (match x (binding y binds) binds))
+     ((var? x) (values (cons (cons x y) binds) t))
+     ((var? y) (values (cons (cons y x) binds) t))
+     (t
+      (when (and (consp x) (consp y))
+        (multiple-value-bind (b2 yes)
+                             (match (car x) (car y) binds)
+          (and yes (match (cdr x) (cdr y) b2)))))))
 
-   (defun var? (x)
-     (and (symbolp x)
-          (eql (char (symbol-name x) 0) #\?)))
+  (defun var? (x)
+    (and (symbolp x)
+         (eql (char (symbol-name x) 0) #\?)))
 
-   (defun binding (x binds)
-     (let ((b (assoc x binds)))
-       (if b
-           (or (binding (cdr b) binds)
-               (cdr b)))))
+  (defun binding (x binds)
+    (let ((b (assoc x binds)))
+      (if b
+          (or (binding (cdr b) binds)
+              (cdr b)))))
+
+** 图 15.1: 匹配函数。**
 
 ::
 
@@ -175,6 +177,8 @@ Chapter 15 示例：推论 (Example: Inference)
      `(length (push (cons (cdr ',con) ',ant)
                     (gethash (car ',con) *rules*))))
 
+**图 15.2 定义规则**
+
 规则将被包含于一个叫做 ``*rules*`` 的哈希表，通过头部 (head) 的判断式构建这个哈系表。这样做加强了我们无法使用判断式中的变量的限制。虽然我们可以通过把所有这样的规则放在分离的列表中来消除限制，但是如果这样做，当我们需要证明某件事的时侯不得不和每一个列表进行匹配。
 
 我们将要使用同一个宏 ``<-`` 去定义事实 (facts)和规则 (rules)。一个事实将被表示成一个没有 *body* 部分的规则。这和我们对规则的定义保持一致。一个规则告诉我们你可以通过证明 *body* 部分来证明 *head* 部分，所以没有 *body* 部分的规则意味着你不需要通过证明任何东西来证明 *head* 部分。这里有两个对应的例子：
@@ -186,41 +190,43 @@ Chapter 15 示例：推论 (Example: Inference)
    > (<- (child ?x ?y) (parent ?y ?x))
    1
 
-调用 ``<-`` 返回的是给定判断式下存储的规则数量；用 ``length`` 函数来包装 ``push`` 能使我们免于看到顶层 (toplevel)中的一大堆返回值。
+调用 ``<-`` 返回的是给定判断式下存储的规则数量；用 ``length`` 函数来包装 ``push`` 能使我们免于看到顶层中的一大堆返回值。
 
 下面是我们的推论程序所需的大多数代码：
 
 ::
 
-   (defun prove (expr &optional binds)
-     (case (car expr)
-       (and (prove-and (reverse (cdr expr)) binds))
-       (or  (prove-or (cdr expr) binds))
-       (not (prove-not (cadr expr) binds))
-       (t   (prove-simple (car expr) (cdr expr) binds))))
+  (defun prove (expr &optional binds)
+    (case (car expr)
+      (and (prove-and (reverse (cdr expr)) binds))
+      (or  (prove-or (cdr expr) binds))
+      (not (prove-not (cadr expr) binds))
+      (t   (prove-simple (car expr) (cdr expr) binds))))
 
-   (defun prove-simple (pred args binds)
-     (mapcan #'(lambda (r)
-                 (multiple-value-bind (b2 yes)
-                                      (match args (car r)
-                                             binds)
-                   (when yes
-                     (if (cdr r)
-                         (prove (cdr r) b2)
-                         (list b2)))))
-             (mapcar #'change-vars
-                     (gethash pred *rules*))))
+  (defun prove-simple (pred args binds)
+    (mapcan #'(lambda (r)
+                (multiple-value-bind (b2 yes)
+                                     (match args (car r)
+                                            binds)
+                  (when yes
+                    (if (cdr r)
+                        (prove (cdr r) b2)
+                        (list b2)))))
+            (mapcar #'change-vars
+                    (gethash pred *rules*))))
 
-   (defun change-vars (r)
-     (sublis (mapcar #'(lambda (v) (cons v (gensym "?")))
-                     (vars-in r))
-             r))
+  (defun change-vars (r)
+    (sublis (mapcar #'(lambda (v) (cons v (gensym "?")))
+                    (vars-in r))
+            r))
 
-   (defun vars-in (expr)
-     (if (atom expr)
-         (if (var? expr) (list expr))
-	 (union (vars-in (car expr))
-                (vars-in (cdr expr)))))
+  (defun vars-in (expr)
+    (if (atom expr)
+        (if (var? expr) (list expr))
+      (union (vars-in (car expr))
+             (vars-in (cdr expr)))))
+
+**图 15.3: 推论。**
 
 上面代码中的 ``prove`` 函数是推论进行的枢纽。它接受一个表达式和一个可选的绑定列表作为参数。如果表达式不包含逻辑操作，它调用 ``prove-simple`` 函数，前面所说的链接 (chaining)正是在这个函数里产生的。这个函数查看所有拥有正确判断式的规则，并尝试对每一个规则的 *head* 部分和它想要证明的事实做匹配。对于每一个匹配的 *head* ，使用匹配所产生的新的绑定在 *body* 上调用 ``prove`` 。对 ``prove`` 的调用所产生的绑定列表被 ``mapcan`` 收集并返回：
 
@@ -243,9 +249,9 @@ Chapter 15 示例：推论 (Example: Inference)
 
    (<- (daughter ?y ?x) (and (child ?y ?x) (female ?y)))
 
-第一条规则要表达的意思是：对于任何的 x 和 y， 如果 y 是 x 的家长，则 x 是 y 的孩子。第二条则是：对于任何的 x 和 y， 如果 y 是 x 的孩子并且 y 是女性，则 y 是 x 的女儿。在每一条规则内部，变量之间的关系是显著的，但是两条规则使用了相同的变量并非我们刻意为之。
+第一条规则要表达的意思是：对于任何的 ``x`` 和 ``y`` ， 如果 ``y`` 是 ``x`` 的家长，则 ``x`` 是 ``y`` 的孩子。第二条则是：对于任何的 ``x`` 和 ``y`` ， 如果 ``y`` 是 ``x`` 的孩子并且 ``y`` 是女性，则 ``y`` 是 ``x`` 的女儿。在每一条规则内部，变量之间的关系是显著的，但是两条规则使用了相同的变量并非我们刻意为之。
 
-如果我们使用上面所写的规则，它们将不会按预期的方式工作。如果我们尝试证明“ a 是 b 的女儿”，匹配到第二条规则的 *head* 部分时会将 a 绑定到 ?y ，将 b 绑定到 ?x。我们无法用这样的绑定匹配第一条规则的 *head* 部分：
+如果我们使用上面所写的规则，它们将不会按预期的方式工作。如果我们尝试证明“ a 是 b 的女儿”，匹配到第二条规则的 *head* 部分时会将 ``a`` 绑定到 ``?y`` ，将 ``b`` 绑定到 ?x。我们无法用这样的绑定匹配第一条规则的 *head* 部分：
 
 ::
 
@@ -260,24 +266,26 @@ Chapter 15 示例：推论 (Example: Inference)
 
 ::
 
-   (defun prove-and (clauses binds)
-     (if (null clauses)
-         (list binds)
-	 (mapcan #'(lambda (b)
-                     (prove (car clauses) b))
-                 (prove-and (cdr clauses) binds))))
+  (defun prove-and (clauses binds)
+    (if (null clauses)
+        (list binds)
+        (mapcan #'(lambda (b)
+                    (prove (car clauses) b))
+                (prove-and (cdr clauses) binds))))
 
-   (defun prove-or (clauses binds)
-     (mapcan #'(lambda (c) (prove c binds))
-             clauses))
+  (defun prove-or (clauses binds)
+    (mapcan #'(lambda (c) (prove c binds))
+            clauses))
 
-   (defun prove-not (clause binds)
-     (unless (prove clause binds)
-       (list binds)))
+  (defun prove-not (clause binds)
+    (unless (prove clause binds)
+      (list binds)))
+
+**图 15.4 逻辑操作符 (Logical operators)**
 
 操作一个 ``or`` 或者 ``not`` 表达式是非常简单的。操作 ``or`` 时，我们提取在 ``or`` 之间的每一个表达式返回的绑定。操作 ``not`` 时，当且仅当在 ``not`` 里的表达式产生 ``none`` 时，返回当前的绑定。
 
-``prove-and`` 函数稍微复杂一点。它像一个过滤器(filter)，它用之后的表达式所建立的每一个绑定来证明第一个表达式。这将导致 ``and`` 里的表达式以相反的顺序被求值。除非调用 ``prove`` 中的 ``prove-and`` 函数则会先逆转它们。
+``prove-and`` 函数稍微复杂一点。它像一个过滤器，它用之后的表达式所建立的每一个绑定来证明第一个表达式。这将导致 ``and`` 里的表达式以相反的顺序被求值。除非调用 ``prove`` 中的 ``prove-and`` 函数则会先逆转它们。
 
 现在我们有了一个可以工作的程序，但它不是很友好。必须要解析 ``prove-and`` 返回的绑定列表是令人厌烦的，它们会变得更长随着规则变得更加复杂。下面有一个宏来帮助我们更愉快地使用这个程序：
 
@@ -290,6 +298,8 @@ Chapter 15 示例：推论 (Example: Inference)
                             `(,v (binding ',v ,binds)))
                         (vars-in query))
             ,@body))))
+
+**图 15.5 介面宏 (Interface macro)**
 
 它接受一个 ``query`` （不被求值）和若干表达式构成的 ``body`` 作为参数，把 ``query`` 所生成的每一组绑定的值赋给 ``query`` 中对应的模式变量，并计算 ``body`` 。
 
@@ -304,15 +314,17 @@ Chapter 15 示例：推论 (Example: Inference)
 
 ::
 
-   (with-answer (p ?x ?y)
-     (f ?x ?y))
+  (with-answer (p ?x ?y)
+    (f ?x ?y))
 
-   ;;将被展开成下面的代码
+  ;;将被展开成下面的代码
 
-   (dolist (#:g1 (prove '(p ?x ?y)))
-     (let ((?x (binding '?x #:g1))
-           (?y (binding '?y #:g1)))
-       (f ?x ?y)))
+  (dolist (#:g1 (prove '(p ?x ?y)))
+    (let ((?x (binding '?x #:g1))
+          (?y (binding '?y #:g1)))
+      (f ?x ?y)))
+
+**图 15.6: with-answer 调用的展开式**
 
 下面是使用它的一个例子：
 
@@ -340,11 +352,13 @@ Chapter 15 示例：推论 (Example: Inference)
    NANCY is the  sibling of DEBBIE.
    NIL
 
+**图 15.7: 使用中的程序**
+
 15.4 分析 (Analysis)
 ===================================================
 
-看上去，我们在这一章中写的代码是用简单自然的方式去实现这样一个程序。事实上，它非常低效。我们在这里是其实是做了一个解释器。我们能够把这个程序做得像一个编译器。
+看上去，我们在这一章中写的代码，是用简单自然的方式去实现这样一个程序。事实上，它的效率非常差。我们在这里是其实是做了一个解释器。我们能够把这个程序做得像一个编译器。
 
-这里做一个简单的描述。基本的思想是把整个程序打包到两个宏 ``<-`` 和 ``with-answer`` ，把已有程序中在 *运行时* 做的多数工作搬到 *宏展开时* （在 10.7 节的 ``avg`` 可以看到这种构思的雏形) 用函数取代列表来表示规则，我们不在运行时用 ``prove`` 和 ``prove-and`` 这样的函数来解释表达式，而是用相应的函数把表达式转化成代码。当一个规则被定义的时候就有表达式可用。为什么要等到使用的时候才去分析它呢？这同样适用于和 ``<-`` 调用了相同的函数来进行宏展开的 ``with-answer`` 。
+这里做一个简单的描述。基本的思想是把整个程序打包到两个宏 ``<-`` 和 ``with-answer`` ，把已有程序中在\ *运行期*\ 做的多数工作搬到\ *宏展开期*\ （在 10.7 节的 ``avg`` 可以看到这种构思的雏形) 用函数取代列表来表示规则，我们不在运行时用 ``prove`` 和 ``prove-and`` 这样的函数来解释表达式，而是用相应的函数把表达式转化成代码。当一个规则被定义的时候就有表达式可用。为什么要等到使用的时候才去分析它呢？这同样适用于和 ``<-`` 调用了相同的函数来进行宏展开的 ``with-answer`` 。
 
-听上去好像比我们已经写的这个程序复杂很多，但其实可能只是长了两三倍。想要学习这种技术的读者可以看 *On Lisp* 或者 *Paradigms of Artificial Intelligence Programming* ，其中包含了一些使用这种风格写的程序例子。
+听上去好像比我们已经写的这个程序复杂很多，但其实可能只是长了两三倍。想要学习这种技术的读者可以看 *On Lisp* 或者 *Paradigms of Artificial Intelligence Programming* ，这两本书有一些使用这种风格写的示例程序。
