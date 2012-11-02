@@ -588,7 +588,7 @@ Common Lisp 有几个内置的操作树的函数。举例来说， ``copy-tree``
    > (reverse '(a b c))
    (C B A)
 
-一个回文 (palindrome) 是一个正读反读都一样的序列 —— 举例来说， ``(abba)`` 。如果一个回文有偶数个元素，那么后半段会是前半段的镜射 (mirror)。使用 ``length`` 、 ``subseg`` 以及 ``reverse`` ，我们可以定义一个函数
+一个回文 (palindrome) 是一个正读反读都一样的序列 —— 举例来说， ``(abba)`` 。如果一个回文有偶数个元素，那么后半段会是前半段的镜射 (mirror)。使用 ``length`` 、 ``subseq`` 以及 ``reverse`` ，我们可以定义一个函数
 
 ::
 
