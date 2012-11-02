@@ -9,7 +9,7 @@ Chapter 2 欢迎来到 Lisp (Welcome to Lisp)
 2.1 形式 (Form)
 ===================
 
-你可以经由编写 Lisp 而学习它，这是千真万确的事实，因为 Lisp 是交互式语言 (interactive language)。任何 Lisp 系统都包含一个交互式的前端叫做\ *顶层* (toplevel)。你在顶层输入 Lisp 表达式 (expression)，然后系统会显示它们的值。
+你可以经由编写 Lisp 而学习它，这是千真万确的事实，因为 Lisp 是交互式语言 (interactive language)。任何 Lisp 系统都包含一个交互式的前端叫做\ *顶层*\ (toplevel)。你在顶层输入 Lisp 表达式 (expression)，然后系统会显示它们的值。
 
 Lisp 通常会打印一个提示符 (prompt)告诉你，它正在等待你的输入。许多 Common Lisp 的实现用 ``>`` 作为顶层提示符。我们也沿用这个符号。
 
