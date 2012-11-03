@@ -313,7 +313,7 @@ Common Lisp 有兩種流 (streams)，字元流與二進制流。本章描述了�
 	(defun file-subst (old new file1 file2)
 	  (with-open-file (in file1 :direction :input)
 	     (with-open-file (out file2 :direction :output
-	                                :if-exists :supersede)
+	                                :if-exists :supercede)
 	       (stream-subst old new in out))))
 
 	(defun stream-subst (old new in out)
