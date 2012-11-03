@@ -205,7 +205,7 @@ Lisp 提供我們所有其他語言有的資料型態 (data types)，和一些�
 
 ::
 
-   > (cons 'a '(cons 'b nil))
+   > (cons 'a (cons 'b nil))
    (A B)
    > (list a b)
    (A B)

@@ -24,7 +24,7 @@ Cons 物件提供了一個方便的表示法來表示任何型態的物件。一
    > (setf x (cons 'a nil))
    (A)
 
-.. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-3.1.png
+.. figure:: ../images/Figure-3.1.png
 
 圖 3.1 一個元素的列表
 
@@ -46,7 +46,7 @@ Cons 物件提供了一個方便的表示法來表示任何型態的物件。一
 
 產生的結構見圖 3.2。現在當我們想得到這個列表的 ``cdr`` 時，它是一個兩個元素的列表。
 
-.. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-3.2.png
+.. figure:: ../images/Figure-3.2.png
 
 圖 3.2 三個元素的列表
 
@@ -71,7 +71,7 @@ Cons 物件提供了一個方便的表示法來表示任何型態的物件。一
   > (car (cdr z))
   (B C)
 
-.. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-3.3.png
+.. figure:: ../images/Figure-3.3.png
 
 圖 3.3 巢狀列表
 
@@ -148,7 +148,7 @@ Cons 物件提供了一個方便的表示法來表示任何型態的物件。一
    > (setf y x)
    (A B C)
 
-.. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-3.4.png
+.. figure:: ../images/Figure-3.4.png
 
 圖3.4 兩個變數設為相同的列表
 
@@ -166,7 +166,7 @@ Lisp 沒有指標的原因是因為每一個值，其實概念上來說都是一
 3.4 建立列表 (Building Lists)
 =================================
 
-.. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-3.5.png
+.. figure:: ../images/Figure-3.5.png
 
 圖 3.5 複製的結果
 
@@ -377,7 +377,7 @@ Conses 物件可以想成是二元樹， ``car`` 代表右子樹，而 ``cdr`` �
 
 (a (b c) d) 也是一棵由圖 3.8 所代表的樹。（如果你逆時針旋轉45度，你會發現跟圖 3.3 一模一樣）
 
-.. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-3.8.png
+.. figure:: ../images/Figure-3.8.png
 
 圖 3.8 二元樹 (Binary Tree)
 
@@ -589,7 +589,7 @@ Common Lisp 有幾個內建的給樹使用的函數。舉例來說， ``copy-tre
    > (reverse '(a b c))
    (C B A)
 
-一個迴文 (palindrome) 是一個正讀反讀都一樣的序列 ─ 舉例來說， ``(a b b a)`` 。如果一個迴文有偶數個元素，那麼後半段會是前半段的鏡射 (mirror)。使用 ``length`` 、 ``subseg`` 以及 ``reverse`` ，我們可以定義一個函數
+一個迴文 (palindrome) 是一個正讀反讀都一樣的序列 ─ 舉例來說， ``(a b b a)`` 。如果一個迴文有偶數個元素，那麼後半段會是前半段的鏡射 (mirror)。使用 ``length`` 、 ``subseq`` 以及 ``reverse`` ，我們可以定義一個函數
 
 ::
 
@@ -663,7 +663,7 @@ Common Lisp 有一個內建的排序函數叫做 ``sort`` 。它接受一個序�
 
 ``(setf lst (cons obj lst))``
 
-.. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-3.9.png
+.. figure:: ../images/Figure-3.9.png
 
 圖 3.9 push 及 pop 的效果
 
@@ -747,7 +747,7 @@ Common Lisp 有一個內建的排序函數叫做 ``sort`` 。它接受一個序�
 
 因為這個 Cons 物件不是一個常規列表，它用點狀表示法來顯示。在點狀表示法， 每個 Cons 物件 的 ``car`` 與 ``cdr`` 由一個句點隔開來表示。這個 Cons 物件的結構展示在圖 3.10 。
 
-.. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-3.10.png
+.. figure:: ../images/Figure-3.10.png
 
 圖 3.10 一個成對的 Cons 物件 (A cons used as a pair)
 
@@ -769,7 +769,7 @@ Common Lisp 有一個內建的排序函數叫做 ``sort`` 。它接受一個序�
    > (cons 'a (cons 'b (cons 'c 'd)))
    (A B C . D)
 
-.. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-3.11.png
+.. figure:: ../images/Figure-3.11.png
 
 圖 3.11 一個點狀列表 (A dotted list)
 
@@ -857,7 +857,7 @@ Common Lisp 有一個內建的排序函數叫做 ``sort`` 。它接受一個序�
 
 圖 3.12 廣度優先搜索 (breadth-first search)
 
-.. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-3.13.png
+.. figure:: ../images/Figure-3.13.png
 
 圖 3.13 最小網路
 
