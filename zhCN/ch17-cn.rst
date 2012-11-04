@@ -46,7 +46,7 @@ Chapter 17 示例：对象 (Example: Objects)
 
 	(tell obj 'move 10)
 
-事实上，纯 Lisp 唯一缺少的原料是继承。我们可以通过定义一个递归版本的 ``gethash`` 来实现一个简单的版本，如图 17.1 。现在仅用总共 8 行代码，我们初步有了面向对象编程的三个元素。 we have all three of the minimal elments of object-oriented programming.
+事实上，纯 Lisp 唯一缺少的原料是继承。我们可以通过定义一个递归版本的 ``gethash`` 来实现一个简单的版本，如图 17.1 。现在仅用总共 8 行代码，我们初步有了面向对象编程的三个元素。
 
 ::
 
