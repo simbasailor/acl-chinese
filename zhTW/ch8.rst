@@ -70,7 +70,7 @@ Chapter 8 符號 (Symbols)
 
 現在符號 ``alizarin`` 的 ``color`` 屬性是 ``red`` 。
 
-.. figure:: https://github.com/acl-translation/acl-chinese/raw/master/images/Figure-8.1.png
+.. figure:: ../images/Figure-8.1.png
 
 **圖 8.1 符號的結構**
 

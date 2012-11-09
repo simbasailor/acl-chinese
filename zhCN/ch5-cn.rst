@@ -328,7 +328,7 @@ Common Lisp 有三个构造区块 (block) 的基本操作符： ``progn`` , ``bl
 
 使用 ``dolist`` ，初始列表内的第三个元素是选择性的，缺省是 ``nil`` 。注意它可以参照到迭代里的变量。
 
-::
+.. tip::
 
   do 的重点 (THE POINT OF do)
 
@@ -340,10 +340,12 @@ Common Lisp 有三个构造区块 (block) 的基本操作符： ``progn`` , ``bl
   那么累积结果就得藉由赋值语句来“手动”实现…或有其他的副作用。具有多变量的 do 循环，体现了产生与累积的
   本质对称性，允许可以没有副作用地表达迭代过程：
 
-  (defun factorial (n)
-    (do ((j n (- j 1))
-         (f 1 (* j f)))
-      ((= j 0) f)))
+  .. code-block:: cl
+
+      (defun factorial (n)
+        (do ((j n (- j 1))
+             (f 1 (* j f)))
+          ((= j 0) f)))
 
   当然在 step 形式里实现所有的实际工作，一个没有主体的 do 循环形式是较不寻常的。
 

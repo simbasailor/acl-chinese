@@ -15,7 +15,7 @@ Common Lisp 提供了四种不同类型的数字：整数 (integers)、浮点数
 
 判断式 ``integerp`` , ``floatp`` 以及 ``complexp`` 对於相对应的数字类型返回真。图 9.1 演示了数值类型的层级 (hierarchy of numeric types)。
 
-.. figure:: https://github.com/acl-translation/acl-chinese/raw/master/images/Figure-9.1.png
+.. figure:: ../images/Figure-9.1.png
 
 **图 9.1: 数值类型**
 
@@ -459,7 +459,7 @@ Common Lisp 对於整数的大小没有限制。可以塞进一个字 (word)内�
 
 图像平面会是由 x 轴与 y 轴所定义的平面。观测者 (eye) 会在 z 轴，距离原点 200 个单位。所以要在图像平面可以被看到，插入至 ``*worlds*`` 的表面 (一开始为 ``nil``)会有着负的 z 座标。图 9.4 说明了一个光线穿过图像平面上的一点，并击中一个球体。
 
-.. figure:: https://github.com/acl-translation/acl-chinese/raw/master/images/Figure-9.4.png
+.. figure:: ../images/Figure-9.4.png
 
 **图 9.4: 追踪光线。**
 
@@ -575,7 +575,7 @@ Common Lisp 对於整数的大小没有限制。可以塞进一个字 (word)内�
 
 图 9.7 是产生出来的图片，其中 ``res`` 参数为 10。
 
-.. figure:: https://github.com/acl-translation/acl-chinese/raw/master/images/Figure-9.7.png
+.. figure:: ../images/Figure-9.7.png
 
 **图 9.7: 追踪光线的图**
 

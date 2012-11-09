@@ -250,7 +250,7 @@ Common Lisp 对象系统，或称为 CLOS，是一组用来实作面向对象编
 
 图 11.3 包含了一个表示 ``cast-statue`` 类别及其基类的网络。
 
-.. figure:: https://raw.github.com/acl-translation/acl-chinese/master/images/Figure-11.3.png
+.. figure:: ../images/Figure-11.3.png
 
 **图 11.3: 类别层级**
 

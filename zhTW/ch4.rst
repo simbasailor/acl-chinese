@@ -545,7 +545,7 @@ Common Lisp 提供大量的操控及比較字串的函數。他們收錄在附�
 
 因為 ``sort`` 本身就內建了，你會很少，如果有的話，需要在 Common Lisp 裡寫排序程序。本節演示如何解決一個相關的問題，這個問題尚未有現成的解決方案：維護一個已排序的物件集合。本節的程式碼會把物件存在二元搜索樹裡（ *binary search tree* ）或稱作 BST。當二元搜索樹平衡時，它允許我們可以在與時間成 ``log n`` 比例的時間內，來尋找、新增或是刪除元素，其中 n 是集合的大小。
 
-.. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-4.4.png
+.. figure:: ../images/Figure-4.4.png
 
 圖 4.4: 二元搜索樹
 
@@ -680,7 +680,7 @@ Common Lisp 提供大量的操控及比較字串的函數。他們收錄在附�
 
 此時 ``nums`` 應有像是圖 4.7 所顯示的結構。（另一個可能性是 1 取代了 2 的位置。）
 
-.. figure:: https://github.com/JuanitoFatas/acl-chinese/raw/master/images/Figure-4.7.png
+.. figure:: ../images/Figure-4.7.png
 
 圖 4.7: 二元搜索樹
 
