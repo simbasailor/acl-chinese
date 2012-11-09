@@ -15,33 +15,33 @@ Chapter 12 结构 (Structure)
 
 ::
 
-     > (setf part (list 'b 'c))
-     (B C)
-     > (setf whole (cons 'a part))
-     (A B C)
+	> (setf part (list 'b 'c))
+	(B C)
+	> (setf whole (cons 'a part))
+	(A B C)
 
 .. figure:: https://raw.github.com/acl-translation/acl-chinese/master/images/Figure-12.1.png
 
 **图 12.1 共享结构**
 
 
-其中，第一个 ``cons`` 是第二个 ``cons`` 的一部分 (事实上，是的第二个 ``cons`` 的 ``cdr`` )。在这样的情况下，我们说，这两个列表共享结构 (Share Structure)。这两个列表的基本结构如图 12.1 所示。
+其中，第一个 ``cons`` 是第二个 ``cons`` 的一部分 (事实上，是第二个 ``cons`` 的 ``cdr`` )。在这样的情况下，我们称这两个列表为共享结构 (Share Structure)。这两个列表的基本结构如图 12.1 所示。
 
-使用 ``tailp`` 函数来检测一下。将两个列表作为它的输入参数，如果第一个列表是第二个列表的一部分时，则返回T ：
+使用 ``tailp`` 判断式来检测一下。将两个列表作为它的输入参数，如果第一个列表是第二个列表的一部分时，则返回 ``T`` ：
 
 ::
 
-     > (tailp part whole)
-     T
+	> (tailp part whole)
+	T
 
 我们可以把它想像成：
 
 ::
 
 	(defun our-tailp (x y)
-	   (or (eql x y)
-	       (and (consp y)
-		    (our-tailp x (cdr y)))))
+		(or (eql x y)
+				(and (consp y)
+		    		 (our-tailp x (cdr y)))))
 
 定义表明，每个列表都是它自己的一个尾巴 (tail)， ``nil`` 是每一个正规列表的尾巴。
 
@@ -49,9 +49,9 @@ Chapter 12 结构 (Structure)
 
 ::
 
-     (setf part (list 'b 'c)
-            whole1 (cons 1 part)
-            whole2 (cons 2 part))
+	(setf part (list 'b 'c)
+				whole1 (cons 1 part)
+				whole2 (cons 2 part))
 
 .. figure:: https://raw.github.com/acl-translation/acl-chinese/master/images/Figure-12.2.png
 
@@ -282,7 +282,7 @@ Common Lisp 包含一些允许修改列表结构的函数。为了提高效率�
 12.5 示例：二叉搜索树 (Example: Binary Search Trees)
 =======================================
 
-在某些情况下，使用破坏性操作比使用非破坏性的显得更自然。第4.7节中展示了如何维护一个具有二分搜索格式的有序对象集 (或者说维护一个\ `二叉搜索树 (BST) <http://zh.wikipedia.org/zh-cn/%E4%BA%8C%E5%85%83%E6%90%9C%E5%B0%8B%E6%A8%B9>`_\ )。第4.7节中给出的函数都是非破坏性的，但在我们真正使用BST的时候，这是一个不必要的保护措施。本节将展示如何定义更符合实际应用的具有破坏性的插入函数和删除函数。
+在某些情况下，使用破坏性操作比使用非破坏性的显得更自然。第 4.7 节中展示了如何维护一个具有二分搜索格式的有序对象集 (或者说维护一个\ `二叉搜索树 (BST) <http://zh.wikipedia.org/zh-cn/%E4%BA%8C%E5%85%83%E6%90%9C%E5%B0%8B%E6%A8%B9>`_\ )。第 4.7 节中给出的函数都是非破坏性的，但在我们真正使用BST的时候，这是一个不必要的保护措施。本节将展示如何定义更符合实际应用的具有破坏性的插入函数和删除函数。
 
 图 12.8 展示了如何定义一个具有破坏性的 ``bst-insert`` (第 72 页「\ **译者注：**\ 第 4.7 节」)。相同的输入参数，能够得到相同返回值。唯一的区别是，它将修改作为第二个参数输入的 BST。 在第 2.12 节中说过，具有破坏性并不意味着一个函数调用具有副作用。的确如此，如果你想使用 ``bst-insert!`` 构造一个 BST，你必须像调用 ``bst-insert`` 那样调用它：
 
@@ -493,7 +493,7 @@ Common Lisp 包含一些允许修改列表结构的函数。为了提高效率�
 	(defun circular (lst)
 	     (setf (cdr (last lst)) lst))
 
-另外一种环形列表叫做 ``car-circular`` 列表。``car-circular`` 列表是一个树，并将其自身当作自己的子树 (subtree) 的结构。因为环是通过一个 ``cons`` 的 ``car`` 形成的，所以叫做  ``car-circular``。这里构造了一个 ``car-circular`` ，它的第二个元素是它自身：
+另外一种环形列表叫做 ``car-circular`` 列表。``car-circular`` 列表是一个树，并将其自身当作自己的子树的结构。因为环是通过一个 ``cons`` 的 ``car`` 形成的，所以叫做  ``car-circular``。这里构造了一个 ``car-circular`` ，它的第二个元素是它自身：
 
 ::
 

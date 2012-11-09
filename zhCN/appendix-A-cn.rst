@@ -100,6 +100,35 @@ Appendix A 调试 (Debugging)
 当什么事都没发生时 (When Noting Happens)
 ==================================================
 
+不是所有的臭虫都会打断求值过程。另一个常见并更危险的情况是，当 Lisp 好像不甩你的时候。通常这是你的程序进入了无穷循环的徵兆。
+
+如果无穷循环是出自于迭代的代码，Lisp 会开心的一直循环。但要是出自于递归的代码 （没有做尾递归优化的），你最终会得到一个错误信息说，Lisp 把栈的内存都用光了：
+
+::
+
+	> (defun blow-stack () (1+ (blow-stack)))
+	BLOW-STACK
+	> (blow-stack)
+	Error: Stack overflow.
+
+如果你怀疑你进入了无穷循环，解决方法是中止执行，并跳出中断循环。
+
+In either case, if you suspect an infinite loop, the solution is to interrupt execution,
+then abort out of the resulting break loop.
+
+Sometimes a program working on a very big problem will run out of stack space
+without being in an infinite loop. This is rare though. Usually running out of stack is
+a sign of a programming error.
+
+In recursive functions it is a common error to forget the base case. In English
+descriptions of recursion, we often omit it. Informally, we might say "ob j is a member
+of 1st ifit is either the first element, oramemberof the rest of 1st." Strictly speaking,
+we should also add that "ob j is not a member of 1st if it is empty." Otherwise what
+we're describing is an infinite recursion.
+
+In Common Lisp, car and cdr both return n i l if they are given n i l as an
+argument:
+
 
 
 没有值或未绑定 (No Value/Unbound)
