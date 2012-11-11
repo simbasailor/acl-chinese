@@ -328,7 +328,7 @@ Common Lisp 有三个构造区块 (block) 的基本操作符： ``progn`` , ``bl
 
 使用 ``dolist`` ，初始列表内的第三个元素是选择性的，缺省是 ``nil`` 。注意它可以参照到迭代里的变量。
 
-.. tip::
+.. note::
 
   do 的重点 (THE POINT OF do)
 

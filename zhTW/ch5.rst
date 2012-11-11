@@ -328,7 +328,7 @@ Common Lisp 有三個創造區塊 (block) 的基本運算元： ``progn`` , ``bl
 
 使用 ``dolist`` ，初始列表內的第三個元素是選擇性的，預設是 ``nil`` 。注意它可以參照到迭代裡的變數。
 
-.. tip::
+.. note::
 
   do 的重點 (THE POINT OF do)
 

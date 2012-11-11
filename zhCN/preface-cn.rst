@@ -29,7 +29,7 @@ ANSI Common Lisp 这本书适合学生或者是专业的程序员去读。本书
 
 .. tip::
 
-	译注: 由于小圈圈 ○ 实在太不明显了，译文中使用 λ 符号来表示备注。**
+	译注: 由于小圈圈 ○ 实在太不明显了，译文中使用 λ 符号来表示备注。
 
 `λ <http://ansi-common-lisp.readthedocs.org/en/latest/zhCN/notes-cn.html#viii-notes-viii>`_
 
@@ -51,7 +51,7 @@ ftp://ftp.eecs.harvard.edu:/pub/onlisp/
 On Lisp
 =============
 
-在整本 On Lisp 书中，我一直试着指出一些 Lisp 独一无二的特性，这些特性使得 Lisp 更像 “Lisp” 。并展示一些 Lisp 能让你完成的新事情。比如说宏： Lisp 程序员能够并且经常编写一些能够写程序的程序。对于程序生成程序这种特性，因为 Lisp 是主流语言中唯一一个提供一些方便的抽象，让你完成这个任务的程序语言，所以 Lisp 是主流语言中唯一一个广泛运用这个特性的语言。我非常乐意邀请那些想要更进一步了解宏和其他高级 Lisp 技术的读者，读一下本书的姐妹篇： `On Lisp <http://www.paulgraham.com/onlisp.html>`_。
+在整本 On Lisp 书中，我一直试着指出一些 Lisp 独一无二的特性，这些特性使得 Lisp 更像 “Lisp” 。并展示一些 Lisp 能让你完成的新事情。比如说宏： Lisp 程序员能够并且经常编写一些能够写程序的程序。对于程序生成程序这种特性，因为 Lisp 是主流语言中唯一一个提供一些方便的抽象，让你完成这个任务的程序语言，所以 Lisp 是主流语言中唯一一个广泛运用这个特性的语言。我非常乐意邀请那些想要更进一步了解宏和其他高级 Lisp 技术的读者，读一下本书的姐妹篇： `On Lisp <http://www.paulgraham.com/onlisp.html>`_ 。
 
 .. tip::
 
