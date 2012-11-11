@@ -68,7 +68,7 @@ ANSI Common Lisp 勘误表 (Errata)
 
 `P.Graham “ANSI Common LISP” Answer for Practice <http://www.shido.info/lisp/pacl2_e.html>`_ –– by SHIDO, Takafumi (takafumi@shido.info)
 
-中英文术语
+中英文术语 (Glossary)
 ------------------------------
 
 本书词汇参考\ `计算机科学词汇表 <http://github.com/JuanitoFatas/Computer-Science-Glossary>`_\ 。
@@ -77,6 +77,13 @@ ANSI Common Lisp 勘误表 (Errata)
 -----------------------------
 
 `Chris Riesbeck 关于本书的剖析 <http://www.cs.northwestern.edu/academics/courses/325/readings/graham/graham-notes.html>`_
+
+下载离线版本 (Download)
+---------------------------------------
+
+注意，因为文档总是在不断地更新和修正当中，请定期下载最新的离线文档，确保获得最好的阅读体验。
+
+`HTML 格式下载 <https://media.readthedocs.org/htmlzip/ansi-common-lisp/latest/ansi-common-lisp.zip>`_
 
 建议及評論 (Comments and Suggestions)
 ------------------------------------------------
