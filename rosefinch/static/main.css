@@ -1,0 +1,56 @@
+body {
+  padding-top: 60px;
+  padding-bottom: 40px;
+  font-size: 16px;
+}
+
+pre, code {
+  font-size: 16px;
+  overflow-x: hidden;
+}
+
+div.admonition {
+    -webkit-border-radius: 10px;
+    -khtml-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    border-style: dotted;
+    border-width: thin;
+    border-color: #dcdcdc;
+    padding: 10px 15px 10px 15px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    margin-left: 40px;
+}
+div.note {
+    padding: 10px 20px 10px 20px;
+    background: #e4ffde url(alert_info_32.png) 15px 15px no-repeat;
+    min-height: 42px;
+}
+div.warning {
+    padding: 10px 20px 10px 20px;
+    background: #fffbc6 url(alert_warning_32.png) 15px 15px no-repeat;
+    min-height: 42px;
+}
+
+h2, h3 {
+    margin: 20px 0px 20px 0px;
+}
+
+div.highlight-cl {
+  margin: 5px 0px 5px 0px;
+}
+
+div.highlight-cl > pre {
+  margin-left: 40px;
+}
+
+blockquote li {
+  font-size: 16px;
+}
+
+.documentwrapper  table {
+  border-style: none;
+  border-color: #f3f3f3;
+  border-top-color: #f3f3f3;
+}
