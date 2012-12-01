@@ -15,7 +15,7 @@
 
 {%- set sidebar_enabled = (not embedded) and (theme_sidebar_enabled | tobool) and (sidebars != []) -%}
 {%- set sidebar_position = theme_sidebar_position -%}
-{%- set document_span = (pagename == "search" or not sidebar_enabled) and 'span12' or 'span10' -%}
+{%- set document_span = (pagename == "search" or not sidebar_enabled) and 'span12' or 'span9' -%}
 
 {%- set search_enabled = (theme_search_enabled | tobool) -%}
 
@@ -68,7 +68,7 @@
 {%- macro sidebar() -%}
   {%- if sidebar_enabled -%}
     <div class="sphinxsidebar">
-      <div class="sphinxsidebarwrapper">
+      <div id="sidenav" class="box sphinxsidebarwrapper">
         {%- block sidebarlogo -%}
           {%- if logo -%}
             <p class="logo">
@@ -286,7 +286,7 @@
     {%- endblock -%}
 
     {%- block footer -%}
-      <div class="footer container-fluid">
+      <footer class="container-fluid">
         <hr />
 
         {%- if show_copyright -%}
@@ -304,7 +304,7 @@
         {%- if show_sphinx -%}
           {%- trans sphinx_version=sphinx_version | e -%}Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> {{ sphinx_version }}.{%- endtrans -%}
         {%- endif -%}
-      </div>
+      </footer>
     {%- endblock -%}
   </body>
 </html>
