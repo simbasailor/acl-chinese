@@ -66,7 +66,7 @@ Chapter 15 示例：推论 (Example: Inference)
 
 当 ``?x = ?y = c`` 时匹配。
 
-我们有一个 ``match`` 函数，它接受两棵树，如果这两棵数能匹配，则返回一个关联列表 (assoc-list)来显示他们是如何匹配的：
+我们有一个 ``match`` 函数，它接受两棵树，如果这两棵树能匹配，则返回一个关联列表（assoc-list）来显示他们是如何匹配的：
 
 ::
 
@@ -93,7 +93,7 @@ Chapter 15 示例：推论 (Example: Inference)
           (or (binding (cdr b) binds)
               (cdr b)))))
 
-** 图 15.1: 匹配函数。**
+**图 15.1: 匹配函数。**
 
 ::
 
