@@ -128,7 +128,7 @@ Notes 备注
 `Foderaro, John K.  Introduction to the Special Lisp Section. CACM 34:9 (Setember 1991), p.27 <http://www.informatik.uni-trier.de/~ley/db/journals/cacm/cacm34.html>`_
 
 备注 176 (Notes 176)
-================
+===============================
 
 关于 CLOS 更详细的信息，参考下列书目：
 
@@ -137,7 +137,7 @@ Keene, Sonya E. `Object Oriented Programming in Common Lisp <http://en.wikipedia
 Kiczales, Gregor, Jim des Rivieres, and Daniel G. Bobrow. `The Art of the Metaobject Protocol <http://en.wikipedia.org/wiki/The_Art_of_the_Metaobject_Protocol>`_ MIT Press, Cambridge, 1991
 
 备注 178 (Notes 178)
-================
+==============================
 
 让我们再回放刚刚的句子一次：\ *我们甚至不需要看程序中其他的代码一眼，就可以完成种种的改动。*\ 这个想法或许对某些读者听起来担忧地熟悉。这是写出\ `面条式代码 <http://zh.wikipedia.org/wiki/%E9%9D%A2%E6%9D%A1%E5%BC%8F%E4%BB%A3%E7%A0%81>`_\ 的食谱。
 

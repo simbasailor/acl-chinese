@@ -3,8 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-ANSI Common Lisp 中文翻譯版 (Chinese Translation)
-======================================================
+ANSI Common Lisp 中文翻譯版 (Chinese Translation of ANSI Common Lisp)
+========================================================================
 
 +-----------------------------------+-----------------------------------+
 |                                   |                                   |

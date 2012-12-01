@@ -135,7 +135,7 @@ Lisp 中最古老的读取宏之一是 ``'`` ，即 ``quote`` 。我们可以定
 
 (译注：困惑的话可以看看 `read 的定义 <https://gist.github.com/3467235>`_ )
 
-你可以 (通过使用 ``make-dispatch-macro-character`` ) 来定义你自己的派发宏字符 (dispatching macro character)，但由于 ``#`` 已经是一个宏字符，所以你亦可直接用它。六个 ``#`` 打头的组合特别保留给你使用： ``#!`` 、 ``#?`` 、 ``##[`` 、 ``##]`` 、 ``#{`` 、 ``#}``。
+你可以（通过使用 ``make-dispatch-macro-character`` ）来定义你自己的派发宏字符（dispatching macro character），但由于 ``#`` 已经是一个宏字符，所以你也可以直接使用。六个 ``#`` 打头的组合特别保留给你使用： ``#!`` 、 ``#?`` 、 ``##[`` 、 ``##]`` 、 ``#{`` 、 ``#}`` 。
 
 你可以通过调用 ``set-dispatch-macro-character`` 定义新的派发宏字符组合，与 ``set-macro-character`` 类似，除了它接受两个字符参数外。下面的代码定义了 ``#?`` 作为返回一个整数列表的读取宏。
 
