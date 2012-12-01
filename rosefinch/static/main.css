@@ -62,11 +62,12 @@ div.warning {
 
 h1 {
   margin: 30px 0px;  
-  text-indent: -9999px;
 }
-
+#logo {
+  text-indent: -9999px;  
+}
 h2, h3 {
-    margin: 20px 0px;
+  margin: 20px 0px;
 }
 
 div.highlight-cl {
@@ -103,14 +104,14 @@ div.linenodiv > pre {
 span.pre {
   color: #468847;  
   padding: 0 3px;
-  border-top: solid 1px #CCCCCC;
-  border-right: solid 1px #DDDDDD;
-  border-bottom: solid 1px #DDDDDD;
-  border-left: solid 1px #CCCCCC;
-  background-color: #fcfcfc;
-  -webkit-border-radius: 5px; 
-  -moz-border-radius: 5px; 
-  border-radius: 5px;
+}
+
+tt {
+  margin:0 2px;
+  padding:0px 5px;
+  border:1px solid #eaeaea;
+  background-color:#fcfcfc;
+  border-radius:3px
 }
 
 div.figure {
@@ -177,3 +178,6 @@ div.sphinxsidebar ul ul {
   margin-bottom: 0px;  
 }
 
+table.footnote.table {
+  margin-top: 20px;  
+}
