@@ -57,10 +57,12 @@ div.warning {
   transition: opacity .2s ease-in-out;   
   margin-left: 30px;
   color: #f6f6f6;
+  text-indent: 0px;
 }
 
 h1 {
   margin: 30px 0px;  
+  text-indent: -9999px;
 }
 
 h2, h3 {
