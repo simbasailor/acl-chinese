@@ -1,7 +1,7 @@
 .. highlight:: cl
    :linenothreshold: 0
 
-Appendix B. Lisp in Lisp
+附录 B：Lisp in Lisp
 ***************************************************
 
 这个附录包含了 58 个最常用的 Common Lisp 操作符。因为如此多的 Lisp 是（或可以）用 Lisp 所写成，而由於 Lisp 程序（或可以）相当精简，这是一种方便解释语言的方式。

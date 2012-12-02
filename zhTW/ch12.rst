@@ -1,7 +1,7 @@
 .. highlight:: cl
    :linenothreshold: 0
 
-Chapter 12 結構 (Structure)
+第十二章：結構
 ***************************************************
 
 12.1 Shared Structure

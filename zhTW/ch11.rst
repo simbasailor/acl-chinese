@@ -1,8 +1,8 @@
 .. highlight:: cl
    :linenothreshold: 0
 
-Chapter 11 Common Lisp 物件系統 (CLOS)
-***************************************************
+第十一章：Common Lisp 物件系統
+**********************************
 
 11.1 Object-Oriented Programming
 ======================================

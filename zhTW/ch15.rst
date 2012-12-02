@@ -1,7 +1,7 @@
 .. highlight:: cl
    :linenothreshold: 0
 
-Chapter 15 範例：推論 (Example: Inference)
+第十五章：範例：推論
 ***************************************************
 
 15.1 The Aim

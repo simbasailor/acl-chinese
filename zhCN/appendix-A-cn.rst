@@ -1,7 +1,7 @@
 .. highlight:: cl
    :linenothreshold: 0
 
-Appendix A 调试 (Debugging)
+附录 A：调试
 ***************************************************
 
 这个附录演示了如何调试 Lisp 程序，并给出你可能会遇到的常见错误。

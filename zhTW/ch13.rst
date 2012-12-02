@@ -1,7 +1,7 @@
 .. highlight:: cl
    :linenothreshold: 0
 
-Chapter 13 速度 (Speed)
+第十三章：速度
 ***************************************************
 
 13.1 The Bottleneck Rule

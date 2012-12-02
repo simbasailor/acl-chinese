@@ -1,7 +1,7 @@
 .. highlight:: cl
    :linenothreshold: 0
 
-Chapter 3 列表 (Lists)
+第三章：列表
 **********************************
 
 列表是 Lisp 的基本数据结构之一。在最早的 Lisp 方言里，他们是唯一的数据结构： “Lisp” 这个名字起初是 “LISt Processor” 的缩写。但 Lisp 已经超越这个缩写很久了。 Common Lisp 是一个有着各式各样数据结构的通用性程序语言(general-purpose programming language)。

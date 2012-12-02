@@ -1,7 +1,7 @@
 .. highlight:: cl
    :linenothreshold: 0
 
-Chapter 17 範例：物件 (Example: Objects)
+第十七章：範例：物件
 ***************************************************
 
 17.1 Inheritance

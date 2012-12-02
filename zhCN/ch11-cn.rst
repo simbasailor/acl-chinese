@@ -2,7 +2,7 @@
 .. highlight:: cl
    :linenothreshold: 0
 
-Chapter 11 Common Lisp 对象系统 (CLOS)
+第十一章：Common Lisp 对象系统
 **************************************************
 
 Common Lisp 对象系统，或称为 CLOS，是一组用来实作面向对象编程的操作集。由于它们有著同样的历史，通常将这些操作视为一个群组。`λ <http://ansi-common-lisp.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-176>`_ 技术上来说，它们与其他部分的 Common Lisp 没有不同： ``defmethod`` 只不过和 ``defun`` 一样是语言中的一个整合部分。

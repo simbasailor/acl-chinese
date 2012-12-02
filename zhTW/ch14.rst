@@ -1,7 +1,7 @@
 .. highlight:: cl
    :linenothreshold: 0
 
-Chapter 14 進階議題 (Advanced Topics)
+第十四章：進階議題
 ***************************************************
 
 14.1 Type Specifiers

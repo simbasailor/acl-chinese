@@ -1,7 +1,7 @@
 .. highlight:: cl
    :linenothreshold: 0
 
-Chapter 9 数字 (Numbers)
+第九章：数字
 ***************************************************
 
 处理数字是 Common Lisp 的强项之一。Common Lisp 有着丰富的数值类型 (numeric types)，而 Common Lisp 操作数字的特性与其他语言比起来更受人喜爱。

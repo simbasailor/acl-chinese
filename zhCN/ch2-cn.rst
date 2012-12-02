@@ -1,7 +1,7 @@
   .. highlight:: cl
    :linenothreshold: 0
 
-Chapter 2 欢迎来到 Lisp (Welcome to Lisp)
+第二章：欢迎来到 Lisp
 **************************************************
 
 本章的目的是让你尽快开始编程。本章结束时，你会掌握足够多的 Common Lisp 知识来开始写程序。

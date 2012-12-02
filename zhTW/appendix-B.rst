@@ -1,8 +1,8 @@
 .. highlight:: cl
    :linenothreshold: 0
 
-Appendix B. Lisp in Lisp
-***************************************************
+附錄 B：Lisp in Lisp
+**************************
 
 這個附錄包含了 58 個最常用的 Common Lisp 運算元。因為如此多的 Lisp 是（或可以）用 Lisp 所寫成，而由於 Lisp 程式（或可以）相當精簡，這是一種方便解釋語言的方式。
 

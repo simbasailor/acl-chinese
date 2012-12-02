@@ -1,2 +1,5 @@
-Notes 備註
+.. highlight:: cl
+   :linenothreshold: 0
+
+備註
 ******************************
