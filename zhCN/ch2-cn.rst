@@ -616,71 +616,71 @@ Lisp 不对程序、过程以及函数作区别。函数做了所有的事情（
 2.13 迭代 (Iteration)
 =========================
 
-当我们想作一些重复的事情时，用迭代比用递归更来得自然。典型的例子是用迭代来产生某种表格。这个函数
+当我们想作一些重复的事情时，迭代比递归来得更自然。典型的例子是用迭代来产生某种表格。这个函数
 
 ::
 
-   (defun show-squares (start end)
-      (do ((i start (+ i 1)))
-          ((> i end) 'done)
-        (format t "~A ~A~%" i (* i i))))
+  (defun show-squares (start end)
+    (do ((i start (+ i 1)))
+        ((> i end) 'done)
+      (format t "~A ~A~%" i (* i i))))
 
 列印从 ``start`` 到 ``end`` 之间的整数的平方：
 
 ::
 
-   > (show-squares 2 5)
-   2 4
-   3 9
-   4 16
-   5 25
-   DONE
+  > (show-squares 2 5)
+  2 4
+  3 9
+  4 16
+  5 25
+  DONE
 
-这个 ``do`` 宏是 Common Lisp 中最基本的迭代操作符。跟 ``let`` 一样， ``do`` 可以创造变量，而且第一个参数是一列变量的规格说明。每一个在这个列表的元素可以是以下的形式
-
-::
-
-               (variable initial update)
-
-其中 *variable* 是一个符号， *initial* 和 *update* 是表达式。最初每个变量会被赋予相应的 *initial* 的值；每一次迭代中，它会被赋予相应的 *update* 的值。在 ``show-squares`` 中， ``do`` 只创造了一个变量 ``i`` 。在第一次迭代中， ``i`` 被赋与 ``start`` 的值，在之后的迭代中，它的值会被增加 1 。
-
-第二个传给 ``do`` 的参数包含了一个或多个表达式。第一个表达式用来测试迭代是否停止。在上面的例子中，测试表达式是 ``(> i end)`` 。剩下来在列表中的表达式会依序被求值，直到迭代停止，而最后一个值会被当作 ``do`` 的返回值来返回。所以 ``show-squares`` 总是返回 ``done`` 。
-
-``do`` 剩下来的参数组成了循环的主体。它们会在每次迭代中依序被求值。在每一次迭代里，变量被更新，检查终止测试条件，然后（若测试失败）主体被求值。
-
-作为比较，以下是递归版本的 ``show-squares`` ：
+``do`` 宏是 Common Lisp 中最基本的迭代操作符。与 ``let`` 相同， ``do`` 可以创建变量，而第一个参数是一组变量的规格说明。在这个列表的每一个元素可以是以下的形式
 
 ::
 
-   (defun show-squares (i end)
-       (if (> i end)
-         'done
-         (progn
-           (format t "~A ~A~%" i (* i i))
-           (show-squares (+ i 1) end))))
+  (variable initial update)
 
-在这函数中唯一的新东西是 ``progn`` 。它接受任意数目个表达式，对它们依序求值，并返回最后一个值。
+其中 *variable* 是一个符号， *initial* 和 *update* 是表达式。最初每个变量会被赋予相应的 *initial* 的值；每一次迭代时，会被赋予相应的 *update* 的值。在 ``show-squares`` 函数里， ``do`` 只创建了一个变量 ``i`` 。第一次迭代时， ``i`` 被赋与 ``start`` 的值，在之后的迭代中，它的值会被增加 ``1`` 。
 
-为了某些特殊情况， Common Lisp 有更简单的迭代操作符。举例来说，要遍历一个列表的元素，你可能会使用 ``dolist``  。以下是一个返回列表长度的函数：
+第二个传给 ``do`` 的时参包含了一个或多个表达式。第一个表达式用来测试迭代是否结束。在上面的例子中，测试表达式是 ``(> i end)`` 。剩下来在列表中的表达式会依序被求值，直到迭代结束，而最后一个值会被当作 ``do`` 的返回值来返回。所以 ``show-squares`` 总是返回 ``done`` 。
 
-::
+``do`` 的其馀参数组成了循环的函数主体。会在每次迭代时，依序被求值。在每一次迭代过程中，变量被更新，检查终止测试条件，接著（若测试失败）求值函数主体。
 
-    (defun our-length (lst)
-      (let ((len 0))
-        (dolist (obj lst)
-          (setf len (+ len 1)))
-        len))
-
-这里 ``dolist`` 接受这样形式的参数 ``(variable expression)`` ，跟着一个具有表达式的主体。主体会被求值，而变量相继与表达式所返回的列表元素绑定。因此上面的循环说，对于列表 ``lst`` 中的每一个 ``obj`` ，递增 ``len`` 。很显然的这个函数的递归版本是：
+作为对比，以下是递归版本的 ``show-squares`` ：
 
 ::
 
-   (defun our-length (lst)
-     (if (null lst)
-         0
-         (+ (our-length (cdr lst)) 1)))
+  (defun show-squares (i end)
+     (if (> i end)
+       'done
+       (progn
+         (format t "~A ~A~%" i (* i i))
+         (show-squares (+ i 1) end))))
 
-也就是说，如果这个列表是空表，它的长度是 ``0`` ; 否则它的长度就是 ``cdr`` 的长度加一。递归版本的 ``our-length`` 比较易懂，但因为它不是尾递归 (tail-recursive)的形式 (見 13.2 节)，它的效率不那么高。
+唯一的新东西是 ``progn`` 。接受任意数量的表达式，依序对它们求值，并返回最后一个值。
+
+为了处理某些特殊情况， Common Lisp 有更简单的迭代操作符。举例来说，要遍历列表的元素，你可能会使用 ``dolist``  。以下是一个返回列表长度的函数：
+
+::
+
+  (defun our-length (lst)
+    (let ((len 0))
+      (dolist (obj lst)
+        (setf len (+ len 1)))
+      len))
+
+这里 ``dolist`` 接受这样形式的参数\ *(variable expression)*\ ，跟着一个具有表达式的函数主体。函数主体会被求值，而变量相继与表达式所返回的列表元素绑定。因此上面的循环说，对于列表 ``lst`` 中的每一个 ``obj`` ，递增 ``len`` 。很显然的这个函数的递归版本是：
+
+::
+
+  (defun our-length (lst)
+   (if (null lst)
+       0
+       (+ (our-length (cdr lst)) 1)))
+
+也就是说，如果这个列表是空表，它的长度是 ``0`` ；否则它的长度就是 ``cdr`` 列表的长度加一。递归版本的 ``our-length`` 比较易懂，但因为它不是尾递归 (tail-recursive)的形式 (見 13.2 节)，效率不是那么高。
 
 2.14 作为对象的函数 (Functions as Objects)
 ==========================================
