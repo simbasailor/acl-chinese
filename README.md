@@ -6,7 +6,7 @@
 
 ## 译文词汇表
 
-依据 [Computer Science Glossary](https://github.com/JuanitoFatas/Computer-Science-Glossary)。
+部分依据 [Computer Science Glossary](https://github.com/JuanitoFatas/Computer-Science-Glossary)。
 
 ## 贡献者
 
@@ -52,13 +52,6 @@
 
 特别感谢 HuangZ 与 Feng Di 这两个朋友一路以来的鼓励及帮助。
 
-## 译文声明
-
-译文请勿用于商业用途、仅供同好学习交流之用、**禁止全文转载**。
-
 ## 其他问题
 
 发送邮件至 huangz1990 或 katehuang0320 的 gmail。
-
-[quick-rst]: http://docutils.sourceforge.net/docs/user/rst/quickref.html
-[rst-primer]: http://docutils.sourceforge.net/docs/user/rst/quickstart.html
