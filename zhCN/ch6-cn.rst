@@ -282,7 +282,7 @@
 
 ::
 
-  > (map-int #'(lambda (x) (random 100)
+  > (map-int #'(lambda (x) (random 100))
              10)
   (85 50 73 64 28 21 40 67 5 32)
 
