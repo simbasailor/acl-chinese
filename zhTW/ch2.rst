@@ -209,7 +209,7 @@ Lisp 提供我們所有其他語言有的資料型態 (data types)，和一些�
 
    > (cons 'a (cons 'b nil))
    (A B)
-   > (list a b)
+   > (list 'a 'b)
    (A B)
 
 來取出列表元素的基本函數是  ``car``  和  ``cdr``  。列表的  ``car``  是第一個元素，而列表的  ``cdr``  是第一個元素之後的所有元素：
