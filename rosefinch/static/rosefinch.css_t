@@ -82,3 +82,7 @@ a.footnote-reference {
 .highlight pre {
   margin-top: 10px;
 }
+
+div.navbar ul.nav {
+    display: none;
+}
