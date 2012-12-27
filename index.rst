@@ -6,57 +6,14 @@
 ANSI Common Lisp 中文翻譯版 (Chinese Translation of ANSI Common Lisp)
 ========================================================================
 
-+-----------------------------------+-----------------------------------+
-|                                   |                                   |
-| **正體中文**                      | **简体中文**                      |
-|                                   |                                   |
-| :doc:`zhTW/preface`               | :doc:`zhCN/preface-cn`            |
-|                                   |                                   |
-| :doc:`zhTW/ch1`                   | :doc:`zhCN/ch1-cn`                |
-|                                   |                                   |
-| :doc:`zhTW/ch2`                   | :doc:`zhCN/ch2-cn`                |
-|                                   |                                   |
-| :doc:`zhTW/ch3`                   | :doc:`zhCN/ch3-cn`                |
-|                                   |                                   |
-| :doc:`zhTW/ch4`                   | :doc:`zhCN/ch4-cn`                |
-|                                   |                                   |
-| :doc:`zhTW/ch5`                   | :doc:`zhCN/ch5-cn`                |
-|                                   |                                   |
-| :doc:`zhTW/ch6`                   | :doc:`zhCN/ch6-cn`                |
-|                                   |                                   |
-| :doc:`zhTW/ch7`                   | :doc:`zhCN/ch7-cn`                |
-|                                   |                                   |
-| :doc:`zhTW/ch8`                   | :doc:`zhCN/ch8-cn`                |
-|                                   |                                   |
-| :doc:`zhTW/ch9`                   | :doc:`zhCN/ch9-cn`                |
-|                                   |                                   |
-| :doc:`zhTW/ch10`                  | :doc:`zhCN/ch10-cn`               |
-|                                   |                                   |
-| :doc:`zhTW/ch11`                  | :doc:`zhCN/ch11-cn`               |
-|                                   |                                   |
-| :doc:`zhTW/ch12`                  | :doc:`zhCN/ch12-cn`               |
-|                                   |                                   |
-| :doc:`zhTW/ch13`                  | :doc:`zhCN/ch13-cn`               |
-|                                   |                                   |
-| :doc:`zhTW/ch14`                  | :doc:`zhCN/ch14-cn`               |
-|                                   |                                   |
-| :doc:`zhTW/ch15`                  | :doc:`zhCN/ch15-cn`               |
-|                                   |                                   |
-| :doc:`zhTW/ch16`                  | :doc:`zhCN/ch16-cn`               |
-|                                   |                                   |
-| :doc:`zhTW/ch17`                  | :doc:`zhCN/ch17-cn`               |
-|                                   |                                   |
-| :doc:`zhTW/appendix-A`            | :doc:`zhCN/appendix-A-cn`         |
-|                                   |                                   |
-| :doc:`zhTW/appendix-B`            | :doc:`zhCN/appendix-B-cn`         |
-|                                   |                                   |
-| :doc:`zhTW/appendix-C`            | :doc:`zhCN/appendix-C-cn`         |
-|                                   |                                   |
-| :doc:`zhTW/appendix-D`            | :doc:`zhCN/appendix-D-cn`         |
-|                                   |                                   |
-| :doc:`zhTW/notes`                 | :doc:`zhCN/notes-cn`              |
-|                                   |                                   |
-+-----------------------------------+-----------------------------------+
++------------------+-------------------+
+|                  |                   |
+| .. toctree::     | .. toctree::      |
+|   :maxdepth: 2   |    :maxdepth: 2   |
+|                  |                   |
+|   zhTW/index     |    zhCN/index     |
+|                  |                   |
++------------------+-------------------+
 
 ANSI Common Lisp 勘误表 (Errata)
 ------------------------------------
