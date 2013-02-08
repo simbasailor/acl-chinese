@@ -8,6 +8,6 @@ ANSI Common Lisp 中文翻譯版 (Chinese Translation of ANSI Common Lisp)
 
 文档的域名已变更。
 
-请访问 acl.readthedocs.org 阅读最新更新的文档。
+请访问 http://acl.readthedocs.org/ 阅读最新更新的文档。
 
-友情提示：短链接 acl.rtfd.org
+友情提示：短链接 http://acl.rtfd.org/
