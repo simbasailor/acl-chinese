@@ -35,6 +35,8 @@ ANSI Common Lisp 勘误表 (Errata)
 
 `Chris Riesbeck 关于本书的剖析 <http://www.cs.northwestern.edu/academics/courses/325/readings/graham/graham-notes.html>`_
 
+`Google Common Lisp 编码风格指南 <http://juanitofatas.github.com/Google-Common-Lisp-Style-Guide/GoogleCLSG-zhCN.xml>`_
+
 下载离线版本 (Download)
 ---------------------------------------
 
