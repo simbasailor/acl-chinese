@@ -159,7 +159,7 @@ Lisp 提供了所有在其他语言找的到的，以及其他语言所找不到
 ::
 
   > '(my 3 "Sons")
-  (MY 3 SONS)
+  (MY 3 "Sons")
   > '(the list (a b c) has 3 elements)
   (THE LIST (A B C) HAS 3 ELEMENTS)
 
