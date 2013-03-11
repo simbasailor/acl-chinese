@@ -224,7 +224,7 @@
 
 ::
 
-  > (month-weeks 'out)
+  > (month-weeks 'oct)
   Error: NIL is not a valud argument to /.
 
 问题发生的原因是因为 ``month-length`` 在 ``case`` 找不到匹配 。当这个情形发生时， ``case`` 返回 ``nil`` 。然后 ``month-weeks`` ，认为获得了一个数字，将值传给 ``/`` ，``/`` 就抱怨了。
