@@ -200,7 +200,7 @@ we can say
 
 	(setf (uniform-color *marbles*) 'red)
 
-to make the color of each element of ``*marbles**`` be red.
+to make the color of each element of ``*marbles*`` be red.
 
 备注 100-2 (Notes 100-2)
 ==================================
@@ -633,14 +633,14 @@ then this function pops (in the old sense) a list of ballons:
 
 Gabriel, Richard P. `Lisp Good News, Bad News, How to Win Big <http://www.dreamsongs.com/Files/LispGoodNewsBadNews.pdf>`_ *AI Expert*\ , June 1991, p.35.
 
-早在 1973 年，`Richard Fateman <http://en.wikipedia.org/wiki/Richard_Fateman>`_ 已经能证明在 `PDP-10 <http://en.wikipedia.org/wiki/PDP-10>`_ 主机上，`MacLisp <http://en.wikipedia.org/wiki/Maclisp>`_ 编译器比制造商的 FORTRAN 编译器，产生出更快速的代码。
+早在 1973 年， `Richard Fateman <http://en.wikipedia.org/wiki/Richard_Fateman>`_ 已经能证明在 `PDP-10 <http://en.wikipedia.org/wiki/PDP-10>`_ 主机上， `MacLisp <http://en.wikipedia.org/wiki/Maclisp>`_ 编译器比制造商的 FORTRAN 编译器，产生出更快速的代码。
 
 **译注:** `该篇 MacLisp 编译器在 PDP-10 可产生比 Fortran 快的代码的论文在这可以找到 <http://dl.acm.org/citation.cfm?doid=1086803.1086804>`_
 
 备注 399 (Notes 399)
 ==================================
 
-It's easiest to understand backquote if we suppose that backquote and comma are like quote,	and	that ```,x``	simply expands	into ``(bq (comma	x))`` .	If this were so, we could handle backquote by augmenting ``eval`` as in this sketch:
+It's easiest to understand backquote if we suppose that backquote and comma are like quote,	and	that ```,x``	simply expands	into ``(bq (comma x))`` .	If this were so, we could handle backquote by augmenting ``eval`` as in this sketch:
 
 ::
 
@@ -681,7 +681,9 @@ Richard Dawkins
 
 The Selfish Gene
 
+
 We shall first define a class of symbolic expressions in terms of ordered pairs and lists. Then we shall define five elementary functions and predicates, and build from them by composition, conditional expressions, and recursive definitions an extensive class of functions of which we shall give a number of examples. We shall then show how these functions themselves can be expressed as symbolic expressions, and we shall define a universal function apply that allows us to compute from the expression for a given function its value for given arguments.
+
 
 John McCarthy
 
