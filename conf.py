@@ -41,7 +41,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'ANSI Common Lisp 中文'
-copyright = u'2012, Juanito Fatas Huang'
+copyright = u'2013, Juanito Fatas Huang'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
