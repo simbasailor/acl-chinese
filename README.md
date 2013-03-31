@@ -2,7 +2,7 @@
 
 《ANSI Common Lisp》—— 由 Paul Graham 编写的、一本非常棒的 Common Lisp 入门书籍，对于学习 Lisp/FP 、或者在《实用 Common Lisp 编程》或《On Lisp》之前阅读也非常有价值。
 
-> 《On Lisp》国内知名 Lisper 冰河已翻译完成。可以在网络上找到。
+> 《On Lisp》国内知名 Lisper 田春已翻译完成。细心的读者可以在网络轻易地找到。另《实用 Common Lisp 编程》也由田春翻译完毕，可以考虑购买一本。
 
 ## 译文词汇表
 
