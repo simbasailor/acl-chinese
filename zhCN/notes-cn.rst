@@ -23,7 +23,7 @@
 备注 3 (Notes 3)
 ==================================
 
-Brooks, Frederick P. The Mythical Man-Month. Addison-Wesley, Reading (MA), 1975, p. 16.
+`Brooks, Frederick P <http://en.wikipedia.org/wiki/Frederick_Brooks>`_\ . `The Mythical Man-Month <http://www.amazon.com/Mythical-Man-Month-Software-Engineering-Anniversary/dp/0201835959>`_\ . Addison-Wesley, Reading (MA), 1975, p. 16.
 
 Rapid prototyping is not just a way to write programs faster or better. It is a way to write programs that otherwise might not get written at all.
 Even the most ambitious people shrink from big undertakings. It's easier to start something if one can convince oneself (however speciously) that it won't be too much work. That's why so many big things have begun as small things. Rapid prototyping lets us start small.
@@ -36,12 +36,12 @@ Even the most ambitious people shrink from big undertakings. It's easier to star
 备注 5 (Notes 5)
 ==================================
 
-Murray, Peter and Linda. The Art of the Renaissance. Thames and Hudson, London, 1963, p.85.
+Murray, Peter and Linda. `The Art of the Renaissance <http://www.amazon.com/Art-Renaissance-World/dp/0500200084>`_\ . Thames and Hudson, London, 1963, p.85.
 
 备注 5-2 (Notes 5-2)
 ==================================
 
-Janson, W.J. History of Art, 3rd Edition. Abrams, New York, 1986, p. 374.
+Janson, W.J. `History of Art <http://www.amazon.com/History-Art-H-W-Janson/dp/0810934019/ref=sr_1_1?s=books&ie=UTF8&qid=1365042074&sr=1-1&keywords=History+of+Art>`_\ , 3rd Edition. Abrams, New York, 1986, p. 374.
 
 The analogy applies, of course, only to paintings done on panels and later on canvases. Well-paintings continued to be done in fresco. Nor do I mean to suggest that painting styles were driven by technological change; the opposite seems more nearly true.
 
@@ -55,9 +55,11 @@ The analogy applies, of course, only to paintings done on panels and later on ca
 
 对递归概念有困扰的读者，可以查阅下列的书籍：
 
-Touretzky, David S. Common Lisp: A Gentle Introduction to Symbolic Computation. Benjamin/Cummings, Redwood City (CA), 1990, Chapter 8.
+Touretzky, David S. `Common Lisp: A Gentle Introduction to Symbolic Computation <http://www.amazon.com/Common-Lisp-Introduction-Computation-Benjamin-Cummings/dp/B008T1B8WQ/ref=sr_1_3?s=books&ie=UTF8&qid=1365042108&sr=1-3&keywords=A+Gentle+Introduction+to+Symbolic+Computation>`_\ . Benjamin/Cummings, Redwood City (CA), 1990, Chapter 8.
 
 Friedman, Daniel P., and Matthias Felleisen. The Little Lisper. MIT Press, Cambridge, 1987.
+
+譯註：這本書有再版，可在\ `這裡 <http://www.amazon.com/Common-LISP-Introduction-Symbolic-Computation/dp/0486498204/ref=sr_1_1?s=books&ie=UTF8&qid=1365042108&sr=1-1&keywords=A+Gentle+Introduction+to+Symbolic+Computation>`_\ 找到。
 
 备注 26 (Notes 26)
 ==================================
@@ -87,7 +89,7 @@ Though most implementations use the ASCII character set, the only ordering that 
 备注 76 (Notes 76)
 ==================================
 
-The standard way to implement a priority queue is to use a structure called a heap. See: Sedgewick, Robert. Algorithms. Addison-Wesley, Reading (MA), 1988.
+The standard way to implement a priority queue is to use a structure called a heap. See: Sedgewick, Robert. `Algorithms <http://www.amazon.com/Algorithms-4th-Robert-Sedgewick/dp/032157351X/ref=sr_1_1?s=books&ie=UTF8&qid=1365042619&sr=1-1&keywords=algorithms+sedgewick>`_\ . Addison-Wesley, Reading (MA), 1988.
 
 备注 81 (Notes 81)
 ==================================
@@ -121,7 +123,7 @@ is not. The same problem arises if you try to define do in terms of ``labels`` .
 备注 89 (Notes 89)
 ==================================
 
-Steele, Guy L., Jr., and Richard P. Gabriel. The Evolution of Lisp. ACM SIGPLANNotices 28:3 (March 1993). The example in the quoted passage was translated from Scheme into Common Lisp.
+Steele, Guy L., Jr., and Richard P. Gabriel. `The Evolution of Lisp <http://www.dreamsongs.com/Files/HOPL2-Uncut.pdf>`_\ . ACM SIGPLANNotices 28:3 (March 1993). The example in the quoted passage was translated from Scheme into Common Lisp.
 
 备注 91 (Notes 91)
 ==================================
@@ -141,7 +143,7 @@ In a letter of March 18 (old style) 1751, Chesterfield writes:
 
 “It was notorious, that the Julian Calendar was erroneous, and had overcharged the solar year with eleven days. Pope Gregory the Thirteenth corrected this error [in 1582]; his reformed calendar was immediately received by all the Catholic powers of Europe, and afterwards adopted by all the Protestant ones, except Russia, Sweden, and England. It was not, in my opinion, very honourable for England to remain in a gross and avowed error, especially in such company; the inconveniency of it was likewise felt by all those who had foreign correspondences, whether political or mercantile. I determined, therefore, to attempt the reformation; I consulted the best lawyers, and the most skillful astronomers, and we cooked up a bill for that purpose. But then my difficulty began; I was to bring in this bill, which was necessarily composed of law jargon and astronomical calculations, to both of which I am an utter stranger. However, it was absolutely necessary to make the House of Lords think that I knew something of the matter; and also to make them believe that they knew something of it themselves, which they do not. For my own part, I could just as soon have talked Celtic or Sclavonian to them, as astronomy, and they would have understood me full as well; so I resolved to do better than speak to the purpose, and to please instead of informing them. I gave them, therefore, only an historical account of calendars, from the Egyptian down to the Gregorian, amusing them now and then with little episodes; but I was particularly attentive to the choice of my words, to the harmony and roundness of my periods, to my elocution, to my action. This succeeded, and ever will succeed; they thought I informed them, because I pleased them; and many of them said I had made the whole very clear to them; when, God knows, I had not even attempted it.”
 
-See: Roberts, David (Ed.) Lord Chesterfield's Letters. Oxford University
+See: Roberts, David (Ed.) `Lord Chesterfield's Letters <http://books.google.com.tw/books/about/Lord_Chesterfield_s_Letters.html?id=nFZP1WQ6XDoC&redir_esc=y>`_\ . Oxford University
 Press, Oxford, 1992.
 
 备注 95 (Notes 95)
@@ -205,7 +207,7 @@ to make the color of each element of ``*marbles*`` be red.
 备注 100-2 (Notes 100-2)
 ==================================
 
-In	older	Common	Lisp	implementations,	you	have	to	use	def	s e t f	to	define how a call should be treated when it appears as the first argument to setf. Be careful when translating, because the parameter representing the new value comes last in the definition of a function whose name is given as the second argument to def setf. That is, the call
+In	older	Common	Lisp	implementations,	you	have to use ``defsetf`` to define how a call should be treated when it appears as the first argument to setf. Be careful when translating, because the parameter representing the new value comes last in the definition of a function whose name is given as the second argument to ``defsetf`` . That is, the call
 
 ::
 
@@ -229,18 +231,18 @@ C, for example, lets you pass a pointer to a function, but there's less you can 
 备注 109 (Notes 109)
 ==================================
 
-For many examples of the versatility of closures, see: Abelson, Harold, and Gerald Jay Sussman, with Julie Sussman. Structure and Interpretation of Computer Programs. MIT Press, Cambridge, 1985.
+For many examples of the versatility of closures, see: Abelson, Harold, and Gerald Jay Sussman, with Julie Sussman. `Structure and Interpretation of Computer Programs <http://mitpress.mit.edu/sicp/>`_\ . MIT Press, Cambridge, 1985.
 
 备注 109-2 (Notes 109-2)
 ==================================
 
-For more information about Dylan, see: Shalit, Andrew, with Kim Barrett, David Moon, Orca Starbuck, and Steve Strassmann. Dylan Interim Reference Manual. Apple Computer, 1994.
+For more information about Dylan, see: Shalit, Andrew, with Kim Barrett, David Moon, Orca Starbuck, and Steve Strassmann. `Dylan Interim Reference Manual <http://jim.studt.net/dirm/interim-contents.html>`_\ . Apple Computer, 1994.
 
 At the time of printing this document was accessible from several sites, including http://www.harlequin.com and http://www.apple.com. Scheme is a very small, clean dialect of Lisp. It was invented by Guy L. Steele Jr. and Gerald J. Sussman in 1975, and is currently defined by: Clinger, William, and Jonathan A. Rees (Eds.) :math:`Revised^4` Report on the Algorithmic Language Scheme. 1991.
 
-This report, and various implementations of Scheme, were at the time of printing available by anonymous FTP from swiss-ftp.ai.mit. edu: pub.
+This report, and various implementations of Scheme, were at the time of printing available by anonymous FTP from swiss-ftp.ai.mit.edu:pub\ .
 
-There are two especially good textbooks that use Scheme—Structure and Interpretation (see preceding note) and: Springer, George and Daniel P. Friedman. Scheme and the Art of Programming. MIT Press, Cambridge, 1989.
+There are two especially good textbooks that use Scheme—Structure and Interpretation (see preceding note) and: Springer, George and Daniel P. Friedman. `Scheme and the Art of Programming <http://www.amazon.com/Scheme-Art-Programming-George-Springer/dp/0262192888>`_\ . MIT Press, Cambridge, 1989.
 
 备注 112 (Notes 112)
 ==================================
@@ -276,7 +278,7 @@ Newer implementations of Common Lisp include avariable ``*read-eval*`` that can 
 备注 125 (Notes 125)
 ==================================
 
-There are a number of ingenious algorithms for fast string-matching, but string-matching in text files is one of the cases where the brute-force approach is still reasonably fast. For more on string-matching algorithms, see: Sedgewick, Robert. Algorithms. Addison-Wesley, Reading (MA), 1988.
+There are a number of ingenious algorithms for fast string-matching, but string-matching in text files is one of the cases where the brute-force approach is still reasonably fast. For more on string-matching algorithms, see: Sedgewick, Robert. `Algorithms <http://www.amazon.com/Algorithms-4th-Robert-Sedgewick/dp/032157351X/ref=sr_1_1?s=books&ie=UTF8&qid=1365042619&sr=1-1&keywords=algorithms+sedgewick>`_\ . Addison-Wesley, Reading (MA), 1988.
 
 备注 141 (Notes 141)
 ==================================
