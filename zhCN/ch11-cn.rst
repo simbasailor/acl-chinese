@@ -1,4 +1,3 @@
-
 .. highlight:: cl
    :linenothreshold: 0
 
@@ -199,7 +198,7 @@ Common Lisp 对象系统，或称为 CLOS，是一组用来实作面向对象编
 	   (visible :accessor graphic-visible :initarg :visible
 	            :initform t)))
 
-	(defclass screen-circle (circle graphic))
+	(defclass screen-circle (circle graphic) ())
 
 则 ``screen-circle`` 的实例会有四个槽，分别从两个基类继承而来。一个类别不需要自己创建任何新槽； ``screen-circle`` 的存在，只是为了提供一个可创建同时从 ``circle`` 及 ``graphic`` 继承的实例。
 

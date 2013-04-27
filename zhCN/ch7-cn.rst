@@ -31,7 +31,7 @@ Common Lisp 有两种流 (streams)，字符流与二进制流。本章描述了�
 ::
 
   > (setf str (open path :direction :output
-                         :if-exists :supercede))
+                         :if-exists :supersede))
   #<Stream C017E6>
 
 流的印出表示法 (printed-representation) 因实现而异 (implementation-dependent)。
