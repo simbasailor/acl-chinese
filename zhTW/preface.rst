@@ -37,7 +37,9 @@ ANSI Common Lisp 這本書適合學生或者是專業的程式設計師去讀。
 ftp://ftp.eecs.harvard.edu:/pub/onlisp/
 讀者的問題和意見可以發送到 pg@eecs.harvard.edu 。
 
-譯註：下載的連結已失效，請參考這裡：http://lib.store.yahoo.net/lib/paulgraham/acl2.lisp
+.. tip::
+
+	譯註：下載的連結已失效，本書的源代碼請至此下載：https://raw.github.com/acl-translation/acl-chinese/master/code/acl2.lisp
 
 On Lisp
 ==========

@@ -46,7 +46,7 @@ ftp://ftp.eecs.harvard.edu:/pub/onlisp/
 
 .. tip::
 
-	译注：下载的链接都坏掉了，本书的代码可以到此下载：http://lib.store.yahoo.net/lib/paulgraham/acl2.lisp
+	译注：下载的链接都坏掉了，本书的代码可以到此下载：https://raw.github.com/acl-translation/acl-chinese/master/code/acl2.lisp
 
 On Lisp
 =============
