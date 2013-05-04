@@ -437,7 +437,7 @@ Common Lisp 提供大量的操控、比较字串的函数。收录在附录 D，
 
 图 4.3 解析日期的函数
 
-``parse-date`` 使用 ``tokens`` 来解析日期字串，接著调用 ``parse-month`` 及 ``parse-integer`` 来转译年、月、日。要找到月份，调用 ``parse-month`` ，由于使用的是 ``string-equal`` 来匹配月份的名字，所以输入可以不分大小写。要找到年和日，调用内建的 ``parse-integer`` ， ``parse-integer`` 接受一个字串并返回对应的整数。
+``parse-date`` 使用 ``tokens`` 来解析日期字串，接著调用 ``parse-month`` 及 ``parse-integer`` 来转译年、月、日。要找到月份，调用 ``parse-month`` ，由于使用的是 ``string-equal`` 来匹配月份的名字，所以输入可以不分大小写。要找到年和日，调用内置的 ``parse-integer`` ， ``parse-integer`` 接受一个字串并返回对应的整数。
 
 如果需要自己写程序来解析整数，也许可以这么写：
 
