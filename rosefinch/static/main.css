@@ -210,11 +210,11 @@ table.footnote.table {
       background: rgba(208, 208, 198, .5); }
 
 ::-moz-selection {
-    background: #e51937;
+    background: #db7132;
     text-shadow: none;
 }
 
 ::selection {
-    background: #e51937;
+    background: #db7132;
     text-shadow: none;
 }
