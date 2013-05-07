@@ -403,7 +403,7 @@ Common Lisp 有幾個內建的給樹使用的函數。舉例來說， ``copy-tre
 
 ::
 
-   > (substitute 'x 'y '(and (integerp x) (zerop (mod x 2))))
+   > (substitute 'y 'x '(and (integerp x) (zerop (mod x 2))))
    (AND (INTEGERP X) (ZEROP (MOD X 2)))
 
 這個呼叫是無效的，因為列表有三個元素，沒有一個元素是 x 。我們在這所需要的是 ``subst`` ，它替換樹中的元素。
