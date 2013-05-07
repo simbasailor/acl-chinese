@@ -209,3 +209,12 @@ table.footnote.table {
     #sidenav ul li a:hover {
       background: rgba(208, 208, 198, .5); }
 
+::-moz-selection {
+    background: #e51937;
+    text-shadow: none;
+}
+
+::selection {
+    background: #e51937;
+    text-shadow: none;
+}
