@@ -23,7 +23,7 @@ ANSI Common Lisp 中文翻譯版
 譯文詞彙
 ------------------------------
 
-本书词汇部分参考\ `计算机科学词汇表 <http://github.com/JuanitoFatas/Computer-Science-Glossary>`_\ 。
+本書詞彙部分參考\ `計算機科學詞彙表 <http://github.com/JuanitoFatas/Computer-Science-Glossary>`_\ 。
 
 相關閱讀
 -----------------------------
@@ -37,7 +37,12 @@ ANSI Common Lisp 中文翻譯版
 
 注意，因為文檔總是在不斷地更新和修正當中，請定期下載最新的離線文檔，確保獲得最好的閱讀體驗。
 
-`HTML 格式下载 <https://media.readthedocs.org/htmlzip/ansi-common-lisp/latest/ansi-common-lisp.zip>`_
+`HTML 格式下載 <https://media.readthedocs.org/htmlzip/ansi-common-lisp/latest/ansi-common-lisp.zip>`_
+
+樣式
+--------------
+
+使用 `huangz1990 <http://huangz.me>`_ 所開發的 `der <https://github.com/huangz1990/der>`_ 樣式。
 
 貢獻
 --------------
