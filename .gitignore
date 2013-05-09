@@ -6,3 +6,4 @@ _templates/*
 make.bat
 wip/*
 *.swp
+deploy.sh
