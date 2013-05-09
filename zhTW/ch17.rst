@@ -1,29 +1,577 @@
 .. highlight:: cl
-   :linenothreshold: 0
 
 第十七章：範例：物件
-***************************************************
+**************************************************
 
-17.1 Inheritance
+在本章裡，我們將使用 Lisp 來自己實現物件導向語言。這樣子的程式稱爲嵌入式語言 (\ *embedded language*\ )。嵌入一個物件導向語言到 Lisp 裡是一個絕佳的例子。同時作爲一個 Lisp 的典型用途，並演示了面向物件的抽象是如何多自然地在 Lisp 基本的抽象上構建出來。
+
+17.1 繼承 (Inheritance)
 ==================================
 
-17.2 Multiple Inheritance
+11.10 小節解釋過通用函數與訊息傳遞的差別。
+
+在訊息傳遞模型裡，
+
+1. 物件有屬性，
+
+2. 並回應消息，
+
+3. 並從其父類繼承屬性與方法。
+
+當然了，我們知道 CLOS 使用的是通用函數模型。但本章我們只對於寫一個迷你的物件系統 (minimal object system)感興趣，而不是一個可與 CLOS 匹敵的系統，所以我們將使用訊息傳遞模型。
+
+我們已經在 Lisp 裡看過許多保存屬性集合的方法。一種可能的方法是使用雜湊表來代表物件，並將屬性作爲雜湊表的條目保存。接著可以通過 ``gethash`` 來存取每個屬性：
+
+::
+
+	(gethash 'color obj)
+
+由於函數是資料物件，我們也可以將函數作爲屬性保存起來。這表示我們也可以有方法；要調用一個物件特定的方法，可以通過 ``funcall`` 一下雜湊表裡的同名屬性：
+
+::
+
+	(funcall (gethash 'move obj) obj 10)
+
+我們可以在這個概念上，定義一個 Smalltalk 風格的訊息傳遞語法，
+
+::
+
+	(defun tell (obj message &rest args)
+	  (apply (gethash message obj) obj args))
+
+所以想要一個物件 ``obj`` 移動 10 單位，我們可以說：
+
+::
+
+	(tell obj 'move 10)
+
+事實上，純 Lisp 唯一缺少的原料是繼承。我們可以通過定義一個遞迴版本的 ``gethash`` 來實現一個簡單版，如圖 17.1 。現在僅用共 8 行
+
+程式碼，便實現了物件導向程式設計的 3 個基本元素。
+
+::
+
+	(defun rget (prop obj)
+	  (multiple-value-bind (val in) (gethash prop obj)
+	    (if in
+	        (values val in)
+	        (let ((par (gethash :parent obj)))
+	          (and par (rget prop par))))))
+
+	(defun tell (obj message &rest args)
+	  (apply (rget message obj) obj args))
+
+**圖 17.1：繼承**
+
+讓我們用這段
+
+程式碼，來試試本來的例子。我們創建兩個物件，其中一個物件是另一個的子類：
+
+::
+
+	> (setf circle-class (make-hash-table)
+	        our-circle   (make-hash-table)
+	        (gethash :parent our-circle) circle-class
+	        (gethash 'radius our-circle) 2)
+	2
+
+``circle-class`` 物件會持有給所有圓形使用的 ``area`` 方法。它是接受一個參數的函數，該參數爲傳來原始消息的物件：
+
+::
+
+	> (setf (gethash 'area circle-class)
+	        #'(lambda (x)
+	            (* pi (expt (rget 'radius x) 2))))
+	#<Interpreted-Function BF1EF6>
+
+現在當我們詢問 ``our-circle`` 的面積時，會根據此類所定義的方法來計算。我們使用 ``rget`` 來讀取一個屬性，用 ``tell`` 來調用一個方法：
+
+::
+
+	> (rget 'radius our-circle)
+	2
+	T
+	> (tell our-circle 'area)
+	12.566370614359173
+
+在開始改善這個程式之前，值得停下來想想我們到底做了什麼。僅使用 8 行
+
+程式碼，我們使純的、舊的、無 CLOS 的 Lisp ，轉變成一個物件導向語言。我們是怎麼完成這項壯舉的？應該用了某種祕訣，才會僅用了 8 行
+
+程式碼，就實現了物件導向程式設計。
+
+的確有一個祕訣存在，但不是編程的奇技淫巧。這個祕訣是，Lisp 本來就是一個面向物件的語言了，甚至說，是種更通用的語言。我們需要做的事情，不過就是把本來就存在的抽象，再重新包裝一下。
+
+17.2 多重繼承 (Multiple Inheritance)
 ==================================================
 
-17.3 Defining Objects
+到目前爲止我們只有單繼承 ── 一個物件只可以有一個父類。但可以通過使 ``parent`` 屬性變成一個列表來獲得多重繼承，並重新定義 ``rget`` ，如圖 17.2 所示。
+
+在只有單繼承的情況下，當我們想要從物件取出某些屬性，只需要遞迴地延著祖先的方嚮往上找。如果物件本身沒有我們想要屬性的有關信息，可以檢視其父類，以此類推。有了多重繼承後，我們仍想要執行同樣的搜索，但這件簡單的事，卻被物件的祖先可形成一個圖，而不再是簡單的樹給複雜化了。不能只使用深度優先來搜索這個圖。有多個父類時，可以有如圖 17.3 所示的層級存在： ``a`` 起源於 ``b`` 及 ``c`` ，而他們都是 ``d`` 的子孫。一個深度優先（或說高度優先）的遍歷結果會是 ``a`` , ``b`` , ``d``, ``c`` , ``d`` 。而如果我們想要的屬性在 ``d`` 與 ``c`` 都有的話，我們會獲得存在 ``d`` 的值，而不是存在 ``c`` 的值。這違反了子類可覆寫父類提供預設值的原則。
+
+如果我們想要實現普遍的繼承概念，就不應該在檢查其子孫前，先檢查該物件。在這個情況下，適當的搜索順序會是 ``a`` , ``b`` , ``c`` , ``d`` 。那如何保證搜索總是先搜子孫呢？最簡單的方法是用一個物件，以及按正確優先順序排序的，由祖先所構成的列表。通過調用 ``traverse`` 開始，建構一個列表，表示深度優先遍歷所遇到的物件。如果任一個物件有共享的父類，則列表中會有重復元素。如果僅保存最後出現的複本，會獲得一般由 CLOS 定義的優先序列表。（刪除所有除了最後一個之外的複本，根據 183 頁所描述的算法，規則三。）Common Lisp 函數 ``delete-duplicates`` 定義成如此作用的，所以我們只要在深度優先的基礎上調用它，我們就會得到正確的優先序列表。一旦優先序列表創建完成， ``rget`` 根據需要的屬性搜索第一個符合的物件。
+
+我們可以通過利用優先序列表的優點，舉例來說，一個愛國的無賴先是一個無賴，然後才是愛國者：
+
+::
+
+	> (setf scoundrel           (make-hash-table)
+	        patriot             (make-hash-table)
+	        patriotic-scoundrel (make-hash-table)
+	        (gethash 'serves scoundrel) 'self
+	        (gethash 'serves patriot) 'country
+	        (gethash :parents patriotic-scoundrel)
+	                 (list scoundrel patriot))
+	(#<Hash-Table C41C7E> #<Hash-Table C41F0E>)
+	> (rget 'serves patriotic-scoundrel)
+	SELF
+	T
+
+到目前爲止，我們有一個強大的程式，但極其醜陋且低效。在一個 Lisp 程式生命週期的第二階段，我們將這個初步框架提煉成有用的東西。
+
+17.3 定義物件 (Defining Objects)
 ================================
 
-17.4 Functional Syntax
+第一個我們需要改善的是，寫一個用來創建物件的函數。我們程式表示物件以及其父類的方式，不需要給用戶知道。如果我們定義一個函數來創建物件，用戶將能夠一個步驟就創建出一個物件，並指定其父類。我們可以在創建一個物件的同時，順道構造優先序列表，而不是在每次當我們需要找一個屬性或方法時，才花費龐大代價來重新構造。
+
+如果我們要維護優先序列表，而不是在要用的時候再構造它們，我們需要處理列表會過時的可能性。我們的策略會是用一個列表來保存所有存在的物件，而無論何時當某些父類被改動時，重新給所有受影響的物件生成優先序列表。這代價是相當昂貴的，但由於查詢比重定義父類的可能性來得高許多，我們會省下許多時間。這個改變對我們的程式的靈活性沒有任何影響；我們只是將花費從頻繁的操作轉到不頻繁的操作。
+
+圖 17.4 包含了新的
+
+程式碼。 `λ <http://ansi-common-lisp.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-273>`_ 全局的 ``*objs*`` 會是一個包含所有當前物件的列表。函數 ``parents`` 取出一個物件的父類；相反的 ``(setf parents)`` 不僅配置一個物件的父類，也調用 ``make-precedence`` 來重新構造任何需要變動的優先序列表。這些列表與之前一樣，由 ``precedence`` 來構造。
+
+用戶現在不用調用 ``make-hash-table`` 來創建物件，調用 ``obj`` 來取代， ``obj`` 一步完成創建一個新物件及定義其父類。我們也重定義了 ``rget`` 來利用保存優先序列表的好處。
+
+
+::
+
+	(defvar *objs* nil)
+
+	(defun parents (obj) (gethash :parents obj))
+
+	(defun (setf parents) (val obj)
+	  (prog1 (setf (gethash :parents obj) val)
+	         (make-precedence obj)))
+
+	(defun make-precedence (obj)
+	  (setf (gethash :preclist obj) (precedence obj))
+	  (dolist (x *objs*)
+	    (if (member obj (gethash :preclist x))
+	        (setf (gethash :preclist x) (precedence x)))))
+
+	(defun obj (&rest parents)
+	  (let ((obj (make-hash-table)))
+	    (push obj *objs*)
+	    (setf (parents obj) parents)
+	    obj))
+
+	(defun rget (prop obj)
+	  (dolist (c (gethash :preclist obj))
+	    (multiple-value-bind (val in) (gethash prop c)
+	      (if in (return (values val in))))))
+
+**圖 17.4：創建物件**
+
+17.4 函數式語法 (Functional Syntax)
 ===================================================
 
-17.5 Defining Methods
+另一個可以改善的空間是消息調用的語法。 ``tell`` 本身是無謂的雜亂不堪，這也使得動詞在第三順位才出現，同時代表著我們的程式不再可以像一般 Lisp 前序表達式那樣閱讀:
+
+::
+
+	(tell (tell obj 'find-owner) 'find-owner)
+
+我們可以使用圖 17.5 所定義的 ``defprop`` 宏，通過定義作爲函數的屬性名稱來擺脫這種 ``tell`` 語法。若選擇性參數 ``meth?`` 爲真的話，會將此屬性視爲方法。不然會將屬性視爲槽，而由 ``rget`` 所取回的值會直接返回。一旦我們定義了屬性作爲槽或方法的名字，
+
+::
+
+	(defmacro defprop (name &optional meth?)
+	  `(progn
+	     (defun ,name (obj &rest args)
+	       ,(if meth?
+	          `(run-methods obj ',name args)
+	          `(rget ',name obj)))
+	     (defun (setf ,name) (val obj)
+	       (setf (gethash ',name obj) val))))
+
+	(defun run-methods (obj name args)
+	  (let ((meth (rget name obj)))
+	    (if meth
+	        (apply meth obj args)
+	        (error "No ~A method for ~A." name obj))))
+
+**圖 17.5: 函數式語法**
+
+::
+
+	(defprop find-owner t)
+
+我們就可以在函數調用裡引用它，則我們的
+
+程式碼讀起來將會再次回到 Lisp 本來那樣：
+
+::
+
+	(find-owner (find-owner obj))
+
+我們的前一個例子在某種程度上可讀性變得更高了：
+
+::
+
+	> (progn
+	    (setf scoundrel           (obj)
+	          patriot             (obj)
+	          patriotic-scoundrel (obj scoundrel patriot))
+	    (defprop serves)
+	    (setf (serves scoundrel) 'self
+	          (serves patriot) 'country)
+	    (serves patriotic-scoundrel))
+	SELF
+	T
+
+17.5 定義方法 (Defining Methods)
 =======================================
 
-17.6 Instances
+到目前爲止，我們藉由敘述如下的東西來定義一個方法：
+
+::
+
+	(defprop area t)
+
+	(setf circle-class (obj))
+
+	(setf (area circle-class)
+	      #'(lambda (c) (* pi (expt (radius c) 2))))
+
+::
+
+	(defmacro defmeth (name obj parms &rest body)
+	  (let ((gobj (gensym)))
+	    `(let ((,gobj ,obj))
+	       (setf (gethash ',name ,gobj)
+	             (labels ((next () (get-next ,gobj ',name)))
+	               #'(lambda ,parms ,@body))))))
+
+	(defun get-next (obj name)
+	  (some #'(lambda (x) (gethash name x))
+	        (cdr (gethash :preclist obj))))
+
+**圖 17.6 定義方法。**
+
+在一個方法裡，我們可以通過給物件的 ``:preclist`` 	的 ``cdr``  獲得如內建 ``call-next-method`` 方法的效果。所以舉例來說，若我們想要定義一個特殊的圓形，這個圓形在返回面積的過程中印出某個東西，我們可以說：
+
+::
+
+	(setf grumpt-circle (obj circle-class))
+
+	(setf (area grumpt-circle)
+	      #'(lambda (c)
+	          (format t "How dare you stereotype me!~%")
+	          (funcall (some #'(lambda (x) (gethash 'area x))
+	                         (cdr (gethash :preclist c)))
+	                   c)))
+
+這裡 ``funcall`` 等同於一個 ``call-next-method`` 調用，但他..
+
+圖 17.6 的 ``defmeth`` 宏提供了一個便捷方式來定義方法，並使得調用下個方法變得簡單。一個 ``defmeth`` 的調用會展開成一個 ``setf`` 表達式，但 ``setf`` 在一個 ``labels`` 表達式裡定義了 ``next`` 作爲取出下個方法的函數。這個函數與 ``next-method-p`` 類似（第 188 頁「譯註: 11.7 節」），但返回的是我們可以調用的東西，同時作為 ``call-next-method`` 。 `λ <http://ansi-common-lisp.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-273>`_ 前述兩個方法可以被定義成：
+
+::
+
+	(defmeth area circle-class (c)
+	  (* pi (expt (radius c) 2)))
+
+	(defmeth area grumpy-circle (c)
+	  (format t "How dare you stereotype me!~%")
+	  (funcall (next) c))
+
+順道一提，注意 ``defmeth`` 的定義也利用到了符號捕捉。方法的主體被插入至函數 ``next`` 是區域定義的一個上下文裡。
+
+
+17.6 實體 (Instances)
 =======================================
 
-17.7 New Implementation
+到目前爲止，我們還沒有將類別與實體做區別。我們使用了一個術語來表示兩者，\ *物件*\ (\ *object*\ )。將所有的物件視爲一體是優雅且靈活的，但這非常沒效率。在許多面向物件應用裡，繼承圖的底部會是複雜的。舉例來說，模擬一個交通情況，我們可能有少於十個物件來表示車子的種類，但會有上百個物件來表示特定的車子。由於後者會全部共享少數的優先序列表，創建它們是浪費時間的，並且浪費空間來保存它們。
+
+圖 17.7 定義一個宏 ``inst`` ，用來創建實體。實體就像其他物件一樣（現在也可稱爲類別），有區別的是只有一個父類且不需維護優先序列表。它們也沒有包含在列表 ``*objs**`` 裡。在前述例子裡，我們可以說：
+
+::
+
+	(setf grumpy-circle (inst circle-class))
+
+由於某些物件不再有優先序列表，函數 ``rget`` 以及 ``get-next`` 現在被重新定義，檢查這些物件的父類來取代。獲得的效率不用拿靈活性交換。我們可以對一個實體做任何我們可以給其它種物件做的事，包括創建一個實體以及重定義其父類。在後面的情況裡， ``(setf parents)`` 會有效地將物件轉換成一個“類別”。
+
+17.7 新的實現 (New Implementation)
 ==================================================
 
-17.8 Analysis
+我們到目前爲止所做的改善都是犧牲靈活性交換而來。在這個系統的開發後期，一個 Lisp 程式通常可以犧牲些許靈活性來獲得好處，這裡也不例外。目前爲止我們使用雜湊表來表示所有的物件。這給我們帶來了超乎我們所需的靈活性，以及超乎我們所想的花費。在這個小節裡，我們會重寫我們的程式，用簡單向量來表示物件。
+
+::
+
+	(defun inst (parent)
+	  (let ((obj (make-hash-table)))
+	    (setf (gethash :parents obj) parent)
+	    obj))
+
+	(defun rget (prop obj)
+	  (let ((prec (gethash :preclist obj)))
+	    (if prec
+	        (dolist (c prec)
+	          (multiple-value-bind (val in) (gethash prop c)
+	            (if in (return (values val in)))))
+	      (multiple-value-bind (val in) (gethash prop obj)
+	        (if in
+	            (values val in)
+	            (rget prop (gethash :parents obj)))))))
+
+	(defun get-next (obj name)
+	  (let ((prec (gethash :preclist obj)))
+	    (if prec
+	        (some #'(lambda (x) (gethash name x))
+	              (cdr prec))
+	      (get-next (gethash obj :parents) name))))
+
+**圖 17.7: 定義實體**
+
+這個改變意味著放棄動態定義新屬性的可能性。目前我們可通過引用任何物件，給它定義一個屬性。現在當一個類別被創建時，我們會需要給出一個列表，列出該類有的新屬性，而當實體被創建時，他們會恰好有他們所繼承的屬性。
+
+在先前的實現裡，類別與實體沒有實際區別。一個實體只是一個恰好有一個父類的類別。如果我們改動一個實體的父類，它就變成了一個類別。在新的實現裡，類別與實體有實際區別；它使得將實體轉成類別不再可能。
+
+在圖 17.8-17.10 的
+
+程式碼是一個完整的新實現。圖片 17.8 給創建類別與實體定義了新的運算子。類別與實體用向量來表示。表示類別與實體的向量的前三個元素包含程式自身要用到的信息，而圖 17.8 的前三個宏是用來引用這些元素的：
+
+::
+
+	(defmacro parents (v) `(svref ,v 0))
+	(defmacro layout (v) `(the simple-vector (svref ,v 1)))
+	(defmacro preclist (v) `(svref ,v 2))
+
+	(defmacro class (&optional parents &rest props)
+	  `(class-fn (list ,@parents) ',props))
+
+	(defun class-fn (parents props)
+	  (let* ((all (union (inherit-props parents) props))
+	         (obj (make-array (+ (length all) 3)
+	                          :initial-element :nil)))
+	    (setf (parents obj)  parents
+	          (layout obj)   (coerce all 'simple-vector)
+	          (preclist obj) (precedence obj))
+	    obj))
+
+	(defun inherit-props (classes)
+	  (delete-duplicates
+	    (mapcan #'(lambda (c)
+	                (nconc (coerce (layout c) 'list)
+	                       (inherit-props (parents c))))
+	            classes)))
+
+	(defun precedence (obj)
+	  (labels ((traverse (x)
+	             (cons x
+	                   (mapcan #'traverse (parents x)))))
+	    (delete-duplicates (traverse obj))))
+
+	(defun inst (parent)
+	  (let ((obj (copy-seq parent)))
+	    (setf (parents obj)  parent
+	          (preclist obj) nil)
+	    (fill obj :nil :start 3)
+	    obj))
+
+**圖 17.8: 向量實現：創建**
+
+1. ``parents`` 欄位取代舊實現中，雜湊表條目裡 ``:parents`` 的位置。在一個類別裡， ``parents`` 會是一個列出父類的列表。在一個實體裡， ``parents`` 會是一個單一的父類。
+
+2. ``layout`` 欄位是一個包含屬性名字的向量，指出類別或實體的從第四個元素開始的設計 (layout)。
+
+3. ``preclist`` 欄位取代舊實現中，雜湊表條目裡 ``:preclist`` 的位置。它會是一個類別的優先序列表，實體的話就是一個空表。
+
+因爲這些運算子是宏，他們全都可以被 ``setf`` 的第一個參數使用（參考 10.6 節）。
+
+``class`` 宏用來創建類別。它接受一個含有其基類的選擇性列表，伴隨著零個或多個屬性名稱。它返回一個代表類別的物件。新的類別會同時有自己本身的屬性名，以及從所有基類繼承而來的屬性。
+
+::
+
+	> (setf *print-array* nil
+	        gemo-class (class nil area)
+	        circle-class (class (geom-class) radius))
+	#<Simple-Vector T 5 C6205E>
+
+這裡我們創建了兩個類別： ``geom-class`` 沒有基類，且只有一個屬性， ``area`` ； ``circle-class`` 是 ``gemo-class`` 的子類，並添加了一個屬性， ``radius`` 。 [1]_ ``circle-class`` 類的設計
+
+::
+
+	> (coerce (layout circle-class) 'list)
+	(AREA RADIUS)
+
+顯示了五個欄位裡，最後兩個的名稱。 [2]_
+
+``class`` 宏只是一個 ``class-fn`` 的介面，而 ``class-fn`` 做了實際的工作。它調用 ``inherit-props`` 來彙整所有新物件的父類，彙整成一個列表，創建一個正確長度的向量，並適當地配置前三個欄位。（ ``preclist`` 由 ``precedence`` 創建，本質上 ``precedence`` 沒什麼改變。）類別餘下的欄位設置爲 ``:nil`` 來指出它們尚未初始化。要檢視 ``circle-class`` 的 ``area`` 屬性，我們可以：
+
+::
+
+	> (svref circle-class
+	         (+ (position 'area (layout circle-class)) 3))
+	:NIL
+
+稍後我們會定義存取函數來自動辦到這件事。
+
+最後，函數 ``inst`` 用來創建實體。它不需要是一個宏，因爲它僅接受一個參數：
+
+::
+
+	> (setf our-circle (inst circle-class))
+	#<Simple-Vector T 5 C6464E>
+
+比較 ``inst`` 與 ``class-fn`` 是有益學習的，它們做了差不多的事。因爲實體僅有一個父類，不需要決定它繼承什麼屬性。實體可以僅拷貝其父類的設計。它也不需要構造一個優先序列表，因爲實體沒有優先序列表。創建實體因此與創建類別比起來來得快許多，因爲創建實體在多數應用裡比創建類別更常見。
+
+::
+
+	(declaim (inline lookup (setf lookup)))
+
+	(defun rget (prop obj next?)
+	  (let ((prec (preclist obj)))
+	    (if prec
+	        (dolist (c (if next? (cdr prec) prec) :nil)
+	          (let ((val (lookup prop c)))
+	            (unless (eq val :nil) (return val))))
+	        (let ((val (lookup prop obj)))
+	          (if (eq val :nil)
+	              (rget prop (parents obj) nil)
+	              val)))))
+
+	(defun lookup (prop obj)
+	  (let ((off (position prop (layout obj) :test #'eq)))
+	    (if off (svref obj (+ off 3)) :nil)))
+
+	(defun (setf lookup) (val prop obj)
+	  (let ((off (position prop (layout obj) :test #'eq)))
+	    (if off
+	        (setf (svref obj (+ off 3)) val)
+	        (error "Can't set ~A of ~A." val obj))))
+
+**圖 17.9: 向量實現：存取**
+
+現在我們可以創建所需的類別層級及實體，以及需要的函數來讀寫它們的屬性。圖 17.9 的第一個函數是 ``rget`` 的新定義。它的形狀與圖 17.7 的 ``rget`` 相似。條件式的兩個分支，分別處理類別與實體。
+
+1. 若物件是一個類別，我們遍歷其優先序列表，直到我們找到一個物件，其中欲找的屬性不是 ``:nil`` 。如果沒有找到，返回 ``:nil`` 。
+
+2. 若物件是一個實體，我們直接查找屬性，並在沒找到時遞迴地調用 ``rget`` 。
+
+``rget`` 與 ``next?`` 新的第三個參數稍後解釋。現在只要瞭解如果是 ``nil`` ， ``rget`` 會像平常那樣工作。
+
+函數 ``lookup`` 及其反相扮演著先前 ``rget`` 函數裡 ``gethash`` 的角色。它們使用一個物件的 ``layout`` ，來取出或設置一個給定名稱的屬性。這條查詢是先前的一個複本：
+
+::
+
+	> (lookup 'area circle-class)
+	:NIL
+
+由於 ``lookup`` 的 ``setf`` 也定義了，我們可以給 ``circle-class`` 定義一個 ``area`` 方法，通過：
+
+::
+
+	(setf (lookup 'area circle-class)
+	      #'(lambda (c)
+	          (* pi (expt (rget 'radius c nil) 2))))
+
+在這個程式裡，和先前的版本一樣，沒有特別區別出方法與槽。一個“方法”只是一個欄位，裡面有著一個函數。這將很快會被一個更方便的前端所隱藏起來。
+
+::
+
+	(declaim (inline run-methods))
+
+	(defmacro defprop (name &optional meth?)
+	  `(progn
+	     (defun ,name (obj &rest args)
+	       ,(if meth?
+	            `(run-methods obj ',name args)
+	            `(rget ',name obj nil)))
+	     (defun (setf ,name) (val obj)
+	       (setf (lookup ',name obj) val))))
+
+	(defun run-methods (obj name args)
+	  (let ((meth (rget name obj nil)))
+	    (if (not (eq meth :nil))
+	        (apply meth obj args)
+	        (error "No ~A method for ~A." name obj))))
+
+	(defmacro defmeth (name obj parms &rest body)
+	  (let ((gobj (gensym)))
+	    `(let ((,gobj ,obj))
+	       (defprop ,name t)
+	       (setf (lookup ',name ,gobj)
+	             (labels ((next () (rget ,gobj ',name t)))
+	               #'(lambda ,parms ,@body))))))
+
+**圖 17.10: 向量實現：宏介面**
+
+圖 17.10 包含了新的實現的最後部分。這個
+
+程式碼沒有給程式加入任何威力，但使程式更容易使用。宏 ``defprop`` 本質上沒有改變；現在僅調用 ``lookup`` 而不是 ``gethash`` 。與先前相同，它允許我們用函數式的語法來引用屬性：
+
+::
+
+	> (defprop radius)
+	(SETF RADIUS)
+	> (radius our-circle)
+	:NIL
+	> (setf (radius our-circle) 2)
+	2
+
+如果 ``defprop`` 的第二個選擇性參數爲真的話，它展開成一個 ``run-methods`` 調用，基本上也沒什麼改變。
+
+最後，函數 ``defmeth`` 提供了一個便捷方式來定義方法。這個版本有三件新的事情：它隱含了 ``defprop`` ，它調用 ``lookup`` 而不是 ``gethash`` ，且它調用 ``regt`` 而不是 278 頁的 ``get-next`` (譯註: 圖 17.7 的 ``get-next`` )來獲得下個方法。現在我們理解給 ``rget`` 添加額外參數的理由。它與 ``get-next`` 非常相似，我們同樣通過添加一個額外參數，在一個函數裡實現。若這額外參數爲真時， ``rget`` 取代 ``get-next`` 的位置。
+
+現在我們可以達到先前方法定義所有的效果，但更加清晰：
+
+::
+
+	(defmeth area circle-class (c)
+	  (* pi (expt (radius c) 2)))
+
+注意我們可以直接調用 ``radius`` 而無須調用 ``rget`` ，因爲我們使用 ``defprop`` 將它定義成一個函數。因爲隱含的 ``defprop`` 由 ``defmeth`` 實現，我們也可以調用 ``area`` 來獲得 ``our-circle`` 的面積：
+
+::
+
+	> (area our-circle)
+	12.566370614359173
+
+17.8 分析 (Analysis)
 =======================================
+
+我們現在有了一個適合撰寫實際面向物件程式的嵌入式語言。它很簡單，但就大小來說相當強大。而在典型應用裡，它也會是快速的。在一個典型的應用裡，操作實體應比操作類別更常見。我們重新設計的重點在於如何使得操作實體的花費降低。
+
+在我們的程式裡，創建類別既慢且產生了許多垃圾。如果類別不是在速度爲關鍵考量時創建，這還是可以接受的。會需要速度的是存取函數以及創建實體。這個程式裡的沒有做編譯優化的存取函數大約與我們預期的一樣快。 `λ <http://ansi-common-lisp.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-284>`_ 而創建實體也是如此。且兩個操作都沒有用到構造 (consing)。除了用來表達實體的向量例外。會自然的以爲這應該是動態地配置才對。但我們甚至可以避免動態配置實體，如果我們使用像是 13.4 節所提出的策略。
+
+我們的嵌入式語言是 Lisp 編程的一個典型例子。只不過是一個嵌入式語言就可以是一個例子了。但 Lisp 的特性是它如何從一個小的、受限版本的程式，進化成一個強大但低效的版本，最終演化成快速但稍微受限的版本。
+
+Lisp 惡名昭彰的緩慢不是 Lisp 本身導致（Lisp 編譯器早在 1980 年代就可以產生出與 C 編譯器一樣快的
+
+程式碼），而是由於許多程式設計師在第二個階段就放棄的事實。如同 Richard Gabriel 所寫的，
+
+	要在 Lisp 撰寫出性能極差的程式相當簡單；而在 C 這幾乎是不可能的。 `λ <http://ansi-common-lisp.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-284-2>`_
+
+這完全是一個真的論述，但也可以解讀爲讚揚或貶低 Lisp 的論點：
+
+1. 通過犧牲靈活性換取速度，你可以在 Lisp 裡輕鬆地寫出程式；在 C 語言裡，你沒有這個選擇。
+
+2. 除非你優化你的 Lisp 
+
+程式碼，不然要寫出緩慢的軟體根本易如反掌。
+
+你的程式屬於哪一種解讀完全取決於你。但至少在開發初期，Lisp 使你有犧牲執行速度來換取時間的選擇。
+
+有一件我們範例程式沒有做的很好的事是，它不是一個稱職的 CLOS 模型（除了可能沒有說明難以理解的 ``call-next-method`` 如何工作是件好事例外）。如大象般龐大的 CLOS 與這個如蚊子般微小的 70 行程式之間，存在多少的相似性呢？當然，這兩者的差別是出自於教育性，而不是探討有多相似。首先，這使我們理解到“面向物件”的廣度。我們的程式比任何被稱爲是面向物件的都來得強大，而這只不過是 CLOS 的一小部分威力。
+
+我們程式與 CLOS 不同的地方是，方法是屬於某個物件的。這個方法的概念使它們與對第一個參數做派發的函數相同。而當我們使用函數式語法來調用方法時，這看起來就跟 Lisp 的函數一樣。相反地，一個 CLOS 的通用函數，可以派發它的任何參數。一個通用函數的組件稱爲方法，而若你將它們定義成只對第一個參數特化，你可以製造出它們是某個類或實體的方法的錯覺。但用物件導向程式設計的訊息傳遞模型來思考 CLOS 最終只會使你困惑，因爲 CLOS 凌駕在物件導向程式設計之上。
+
+CLOS 的缺點之一是它太龐大了，並且 CLOS 費煞苦心的隱藏了物件導向程式設計，其實只不過是改寫 Lisp 的這個事實。本章的例子至少闡明瞭這一點。如果我們滿足於舊的訊息傳遞模型，我們可以用一頁多一點的
+
+程式碼來實現。物件導向程式設計不過是 Lisp 可以做的小事之一而已。更發人深省的問題是，Lisp 除此之外還能做些什麼？
+
+.. rubric:: 腳註
+
+.. [1] 當類別被顯示時， ``*print-array*`` 應當是 ``nil`` 。 任何類別的 ``preclist`` 的第一個元素都是類別本身，所以試圖顯示類別的內部結構會導致一個無限迴圈。
+
+.. [2] 這個向量被 coerced 成一個列表，只是爲了看看裡面有什麼。有了 ``*print-array*`` 被設成 ``nil`` ，一個向量的內容應該不會顯示出來。

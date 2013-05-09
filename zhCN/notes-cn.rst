@@ -1,5 +1,4 @@
 .. highlight:: cl
-   :linenothreshold: 0
 
 备注
 ******************************

@@ -1,5 +1,4 @@
-  .. highlight:: cl
-   :linenothreshold: 0
+.. highlight:: cl
 
 第二章：欢迎来到 Lisp
 **************************************************

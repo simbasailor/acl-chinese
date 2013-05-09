@@ -1,5 +1,4 @@
 .. highlight:: cl
-   :linenothreshold: 0
 
 附录 B：Lisp in Lisp
 ***************************************************

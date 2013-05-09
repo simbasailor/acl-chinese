@@ -372,6 +372,8 @@ pre, code {
 
 div.highlight-cl {
   margin: 5px 0px 5px 0px; }
+  div.highlight-cl strong {
+    text-align: center; }
   div.highlight-cl > pre {
     margin-left: 40px; }
 
@@ -397,3 +399,6 @@ td.linenos {
 ::selection {
     background: #ff6600;
     color: #ffffff; }
+
+.footnote td {
+    line-height: 120%;}

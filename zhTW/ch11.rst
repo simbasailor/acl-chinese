@@ -1,41 +1,672 @@
 .. highlight:: cl
-   :linenothreshold: 0
+
 
 第十一章：Common Lisp 物件系統
-**********************************
+**************************************************
 
-11.1 Object-Oriented Programming
-======================================
+Common Lisp 物件系統，或稱爲 CLOS，是一組用來實作物件導向程式設計的操作集。由於它們有著同樣的歷史，通常將這些操作視爲一個群組。`λ <http://ansi-common-lisp.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-176>`_ 技術上來說，它們與其他部分的 Common Lisp 沒有不同： ``defmethod`` 只不過和 ``defun`` 一樣是語言中的一個整合部分。
 
-11.2 Class and Instances
+11.1 物件導向程式設計 Object-Oriented Programming
+=====================================================
+
+物件導向程式設計意味著程式組織方式的改變。這個改變跟已經發生過的處理器運算處理能力分配的變化雷同。在 1970 年代，一個多用戶的計算機系統代表著，一個或兩個大型機連接到大量的\ `啞終端 <http://zh.wikipedia.org/wiki/%E5%93%91%E7%BB%88%E7%AB%AF>`_\ (dumb terminal)。現在更可能的是大量相互通過網路連接的工作站 (workstation)。系統的運算處理能力現在分佈至個體用戶上，而不是集中在一臺大型的計算機上。
+
+物件導向程式設計所帶來的變革與上例非常類似，前者打破了傳統程式的組織方式。不再讓單一的程式去操作那些資料，而是告訴資料自己該做什麼，程式隱含在這些新的資料“物件”的交互過程之中。
+
+舉例來說，假設我們要算出一個二維圖形的面積。一個辦法是寫一個單獨的函數，讓它檢查其參數的型態，然後視型態做處理，如圖 11.1 所示。
+
+::
+
+	(defstruct rectangle
+	  height width)
+
+	(defstruct circle
+	  radius)
+
+	(defun area (x)
+	  (cond ((rectangle-p x)
+	         (* (rectangle-height x) (rectangle-width x)))
+	        ((circle-p x)
+	         (* pi (expt (circle-radius x) 2)))))
+
+	> (let ((r (make-rectangle)))
+	    (setf (rectangle-height r) 2
+	          (rectangle-width r) 3)
+	    (area r))
+	6
+
+**圖 11.1: 使用結構及函數來計算面積**
+
+::
+
+	(defclass rectangle ()
+	  (height width))
+
+	(defclass circle ()
+	  (radius))
+
+	(defmethod area ((x rectangle))
+	  (* (slot-value x 'height) (slot-value x 'width)))
+
+	(defmethod area ((x circle))
+	  (* pi (expt (slot-value x 'radius) 2)))
+
+	> (let ((r (make-instance 'rectangle)))
+	    (setf (slot-value r 'height) 2
+	          (slot-value r 'width) 3)
+	    (area r))
+	6
+
+**圖 11.2: 使用型態與方法來計算面積**
+
+使用 CLOS 我們可以寫出一個等效的程式，如圖 11.2 所示。在物件導向模型裡，我們的程式被拆成數個獨一無二的方法，每個方法爲某些特定型態的參數而生。圖 11.2 中的兩個方法，隱性地定義了一個與圖 11.1 相似作用的 ``area`` 函數，當我們調用 ``area`` 時，Lisp 檢查參數的型態，並調用相對應的方法。
+
+通過這種方式，我們將函數拆成獨一無二的方法，面向物件暗指\ *繼承* (*inheritance*) ── 槽（slot）與方法（method）皆有繼承。在圖 11.2 中，作爲第二個參數傳給 ``defclass`` 的空列表列出了所有基類。假設我們要定義一個新類，上色的圓形 (colored-circle)，則上色的圓形有兩個基類， ``colored`` 與 ``circle`` ：
+
+::
+
+	(defclass colored ()
+	  (color))
+
+	(defclass colored-circle (circle colored)
+	  ())
+
+當我們創造 ``colored-circle`` 類的實體 (instance)時，我們會看到兩個繼承：
+
+1. ``colored-circle`` 的實體會有兩個槽：從 ``circle`` 類繼承而來的 ``radius`` 以及從 ``colored`` 類繼承而來的 ``color`` 。
+
+2. 由於沒有特別爲 ``colored-circle`` 定義的 ``area`` 方法存在，若我們對 ``colored-circle`` 實體調用 ``area`` ，我們會獲得替 ``circle`` 類所定義的 ``area`` 方法。
+
+從實踐層面來看，物件導向程式設計代表著以方法、類、實體以及繼承來組織程式。爲什麼你會想這麼組織程式？面向物件方法的主張之一說這樣使得程式更容易改動。如果我們想要改變 ``ob`` 類物件所顯示的方式，我們只需要改動 ``ob`` 類的 ``display`` 方法。如果我們希望創建一個新的類，大致上與 ``ob`` 相同，只有某些方面不同，我們可以創建一個 ``ob`` 類的子類。在這個子類裡，我們僅改動我們想要的屬性，其他所有的屬性會從 ``ob`` 類默認繼承得到。要是我們只是想讓某個 ``ob`` 物件和其他的 ``ob`` 物件不一樣，我們可以新建一個 ``ob`` 物件，直接修改這個物件的屬性即可。若是當時的程式寫的很講究，我們甚至不需要看程式中其他的
+
+程式碼一眼，就可以完成種種的改動。 `λ <http://ansi-common-lisp.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-178>`_
+
+11.2 類與實體 (Class and Instances)
 ==================================================
 
-11.3 Slot Properties
+在 4.6 節時，我們看過了創建結構的兩個步驟：我們調用 ``defstruct`` 來設計一個結構的形式，接著通過一個像是 ``make-point`` 這樣特定的函數來創建結構。創建實體 (instances)同樣需要兩個類似的步驟。首先我們使用 ``defclass`` 來定義一個類別 (Class):
+
+::
+
+	(defclass circle ()
+	  (radius center))
+
+這個定義說明了 ``circle`` 類別的實體會有兩個槽 (\ *slot*\ )，分別名爲 ``radius`` 與 ``center`` （槽類比於結構裡的欄位 「field」）。
+
+要創建這個類的實體，我們調用通用的 ``make-instance`` 函數，而不是調用一個特定的函數，傳入的第一個參數爲類別名稱：
+
+::
+
+	> (setf c (make-instance 'circle))
+	#<CIRCLE #XC27496>
+
+要給這個實體的槽賦值，我們可以使用 ``setf`` 搭配 ``slot-value`` ：
+
+::
+
+	> (setf (slot-value c 'radius) 1)
+	1
+
+與結構的欄位類似，未初始化的槽的值是未定義的 (undefined)。
+
+11.3 槽的屬性 (Slot Properties)
 ================================
 
-11.4 Superclasses
+傳給 ``defclass`` 的第三個參數必須是一個槽定義的列表。如上例所示，最簡單的槽定義是一個表示其名稱的符號。在一般情況下，一個槽定義可以是一個列表，第一個是槽的名稱，伴隨著一個或多個屬性 (property)。屬性像關鍵字參數那樣指定。
+
+通過替一個槽定義一個存取器 (accessor)，我們隱式地定義了一個可以引用到槽的函數，使我們不需要再調用 ``slot-value`` 函數。如果我們如下更新我們的 ``circle`` 類定義，
+
+::
+
+	(defclass circle ()
+	  ((radius :accessor circle-radius)
+	   (center :accessor circle-center)))
+
+那我們能夠分別通過 ``circle-radius`` 及 ``circle-center`` 來引用槽：
+
+::
+
+	> (setf c (make-instance 'circle))
+	#<CIRCLE #XC5C726>
+
+	> (setf (circle-radius c) 1)
+	1
+
+	> (circle-radius c)
+	1
+
+通過指定一個 ``:writer`` 或是一個 ``:reader`` ，而不是 ``:accessor`` ，我們可以獲得存取器的寫入或讀取行爲。
+
+要指定一個槽的預設值，我們可以給入一個 ``:initform`` 參數。若我們想要在 ``make-instance`` 調用期間就將槽初始化，我們可以用 ``:initarg`` 定義一個參數名。 [1]_ 加入剛剛所說的兩件事，現在我們的類定義變成：
+
+::
+
+	(defclass circle ()
+	  ((radius :accessor circle-radius
+	           :initarg :radius
+	           :initform 1)
+	   (center :accessor circle-center
+	           :initarg :center
+	           :initform (cons 0 0))))
+
+現在當我們創建一個 ``circle`` 類的實體時，我們可以使用關鍵字參數 ``:initarg`` 給槽賦值，或是將槽的值設爲 ``:initform`` 所指定的預設值。
+
+::
+
+	> (setf c (make-instance 'circle :radius 3))
+	#<CIRCLE #XC2DE0E>
+	> (circle-radius c)
+	3
+	> (circle-center c)
+	(0 . 0)
+
+注意 ``initarg`` 的優先序比 ``initform`` 要高。
+
+我們可以指定某些槽是共享的 ── 也就是每個產生出來的實體，共享槽的值都會是一樣的。我們通過宣告槽擁有 ``:acclocation :class`` 來辦到此事。（另一個辦法是讓一個槽有 ``:allocation :instance`` ，但由於這是預設設置，不需要特別再宣告一次。）當我們在一個實體中，改變了共享槽的值，則其它實體共享槽也會獲得相同的值。所以我們會想要使用共享槽來保存所有實體都有的相同屬性。
+
+舉例來說，假設我們想要模擬一羣成人小報 (a flock of tabloids)的行爲。（\ **譯註**\ ：可以看看\ `什麼是 tabloids <http://tinyurl.com/9n4dckk>`_\ 。）在我們的模擬中，我們想要能夠表示一個事實，也就是當一家小報採用一個頭條時，其它小報也會跟進的這個行爲。我們可以通過讓所有的實體共享一個槽來實現。若 ``tabloid`` 類別像下面這樣定義，
+
+::
+
+	(defclass tabloid ()
+	  ((top-story :accessor tabloid-story
+	              :allocation :class)))
+
+那麼如果我們創立兩家小報，無論一家的頭條是什麼，另一家的頭條也會是一樣的：
+
+::
+
+	> (setf daily-blab (make-instance 'tabloid)
+	        unsolicited-mail (make-instance 'tabloid))
+	#<TABLOID #x302000EFE5BD>
+	> (setf (tabloid-story daily-blab) 'adultery-of-senator)
+	ADULTERY-OF-SENATOR
+	> (tabloid-story unsolicited-mail)
+	ADULTERY-OF-SENATOR
+
+**譯註**\ ： ADULTERY-OF-SENATOR 參議員的性醜聞。
+
+若有給入 ``:documentation`` 屬性的話，用來作爲 ``slot`` 的文檔字串。通過指定一個 ``:type`` ，你保證一個槽裡只會有這種型態的元素。型態宣告會在 13.3 節講解。
+
+11.4 基類 (Superclasses)
 ===================================================
 
-11.5 Precedence
+``defclass`` 接受的第二個參數是一個列出其基類的列表。一個類別繼承了所有基類槽的聯集。所以要是我們將 ``screen-circle`` 定義成 ``circle`` 與 ``graphic`` 的子類，
+
+::
+
+	(defclass graphic ()
+	  ((color :accessor graphic-color :initarg :color)
+	   (visible :accessor graphic-visible :initarg :visible
+	            :initform t)))
+
+	(defclass screen-circle (circle graphic) ())
+
+則 ``screen-circle`` 的實體會有四個槽，分別從兩個基類繼承而來。一個類別不需要自己創建任何新槽； ``screen-circle`` 的存在，只是爲了提供一個可創建同時從 ``circle`` 及 ``graphic`` 繼承的實體。
+
+存取器及 ``:initargs`` 參數可以用在 ``screen-circle`` 的實體，就如同它們也可以用在 ``circle`` 或 ``graphic`` 類別那般：
+
+::
+
+	> (graphic-color (make-instance 'screen-circle
+	                                :color 'red :radius 3))
+	RED
+
+我們可以使每一個 ``screen-circle`` 有某種預設的顏色，通過在 ``defclass`` 裡這個槽指定一個 ``:initform`` ：
+
+::
+
+	(defclass screen-circle (circle graphic)
+	  ((color :initform 'purple)))
+
+
+現在 ``screen-circle`` 的實體預設會是紫色的：
+
+::
+
+	> (graphic-color (make-instance 'screen-circle))
+	PURPLE
+
+
+11.5 優先序 (Precedence)
 =======================================
 
-11.6 Generic Functions
+我們已經看過類別是怎樣能有多個基類了。當一個實體的方法同時屬於這個實體所屬的幾個類時，Lisp 需要某種方式來決定要使用哪個方法。優先序的重點在於確保這一切是以一種直觀的方式發生的。
+
+每一個類別，都有一個優先序列表：一個將自身及自身的基類從最具體到最不具體所排序的列表。在目前看過的例子中，優先序還不是需要討論的議題，但在更大的程式裡，它會是一個需要考慮的議題。
+
+以下是一個更複雜的類別層級：
+
+::
+
+	(defclass sculpture () (height width depth))
+
+	(defclass statue (sclpture) (subject))
+
+	(defclass metalwork () (metal-type))
+
+	(defclass casting (metalwork) ())
+
+	(defclass cast-statue (statue casting) ())
+
+圖 11.3 包含了一個表示 ``cast-statue`` 類別及其基類的網路。
+
+.. figure:: ../images/Figure-11.3.png
+
+**圖 11.3: 類別層級**
+
+要替一個類別建構一個這樣的網路，從最底層用一個節點表示該類別開始。接著替類別最近的基類畫上節點，其順序根據 ``defclass`` 調用裡的順序由左至右畫，再來給每個節點重複這個過程，直到你抵達一個類別，這個類別最近的基類是 ``standard-object`` ── 即傳給 ``defclass`` 的第二個參數爲 ``()`` 的類別。最後從這些類別往上建立連結，到表示 ``standard-object`` 節點爲止，接著往上加一個表示類別 ``t`` 的節點與一個連結。結果會是一個網路，最頂與最下層各爲一個點，如圖 11.3 所示。
+
+一個類別的優先序列表可以通過如下步驟，遍歷對應的網路計算出來：
+
+1. 從網路的底部開始。
+
+2. 往上走，遇到未探索的分支永遠選最左邊。
+
+3. 如果你將進入一個節點，你發現此節點右邊也有一條路同樣進入該節點時，則從該節點退後，重走剛剛的老路，直到回到一個節點，這個節點上有尚未探索的路徑。接著返回步驟 2。
+
+4. 當你抵達表示 ``t`` 的節點時，遍歷就結束了。你第一次進入每個節點的順序就決定了節點在優先序列表的順序。
+
+這個定義的結果之一（實際上講的是規則 3）在優先序列表裡，類別不會在其子類別出現前出現。
+
+圖 11.3 的箭頭演示了一個網路是如何遍歷的。由這個圖所決定出的優先序列表爲： ``cast-statue`` , ``statue`` , ``sculpture`` , ``casting`` , ``metalwork`` , ``standard-object`` , ``t`` 。有時候會用 *specific* 這個詞，作爲在一個給定的優先序列表中來引用類別的位置的速記法。優先序列表從最高優先序排序至最低優先序。
+
+優先序的主要目的是，當一個通用函數 (generic function)被調用時，決定要用哪個方法。這個過程在下一節講述。另一個優先序重要的地方是，當一個槽從多個基類繼承時。408 頁的備註解釋了當這情況發生時的應用規則。 `λ <http://ansi-common-lisp.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-183>`_
+
+11.6 通用函數 (Generic Functions)
 =======================================
 
-11.7 Auxiliary Methods
+一個通用函數 (generic function) 是由一個或多個方法組成的一個函數。方法可用 ``defmethod`` 來定義，與 ``defun`` 的定義形式類似：
+
+::
+
+	(defmethod combine (x y)
+	  (list x y))
+
+現在 ``combine`` 有一個方法。若我們在此時調用 ``combine`` ，我們會獲得由傳入的兩個參數所組成的一個列表：
+
+::
+
+	> (combine 'a 'b)
+	(A B)
+
+到現在我們還沒有做任何一般函數做不到的事情。一個通用函數不尋常的地方是，我們可以繼續替它加入新的方法。
+
+首先，我們定義一些可以讓新的方法引用的類別，：
+
+::
+
+	(defclass stuff () ((name :accessor name :initarg :name)))
+	(defclass ice-cream (stuff) ())
+	(defclass topping (stuff) ())
+
+這裡定義了三個類別： ``stuff`` ，只是一個有名字的東西，而 ``ice-cream`` 與 ``topping`` 是 ``stuff`` 的子類。
+
+現在下面是替 ``combine`` 定義的第二個方法：
+
+::
+
+	(defmethod combine ((ic ice-cream) (top topping))
+	  (format nil "~A ice-cream with ~A topping."
+	          (name ic)
+	          (name top)))
+
+在這次 ``defmethod`` 的調用中，參數被特化了 (\ *specialized*\ )：每個出現在列表裡的參數都有一個類別的名字。一個方法的特化指出它是應用至何種類別的參數。我們剛定義的方法僅能在傳給 ``combine`` 的參數分別是 ``ice-cream`` 與 ``topping`` 的實體時。
+
+而當一個通用函數被調用時， Lisp 是怎麼決定要用哪個方法的？Lisp 會使用參數的類別與參數的特化匹配且優先序最高的方法。這表示若我們用 ``ice-cream`` 實體與 ``topping`` 實體去調用 ``combine`` 方法，我們會得到我們剛剛定義的方法：
+
+::
+
+	> (combine (make-instance 'ice-cream :name 'fig)
+	           (make-instance 'topping :name 'treacle))
+	"FIG ice-cream with TREACLE topping"
+
+但使用其他參數時，我們會得到我們第一次定義的方法：
+
+::
+
+	> (combine 23 'skiddoo)
+	(23 SKIDDOO)
+
+因爲第一個方法的兩個參數皆沒有特化，它永遠只有最低優先權，並永遠是最後一個調用的方法。一個未特化的方法是一個安全手段，就像 ``case`` 表達式中的 ``otherwise`` 子句。
+
+一個方法中，任何參數的組合都可以特化。在這個方法裡，只有第一個參數被特化了：
+
+::
+
+	(defmethod combine ((ic ice-cream) x)
+	  (format nil "~A ice-cream with ~A."
+	          (name ic)
+	          x))
+
+若我們用一個 ``ice-cream`` 的實體以及一個 ``topping`` 的實體來調用 ``combine`` ，我們仍然得到特化兩個參數的方法，因爲它是最具體的那個：
+
+::
+
+	> (combine (make-instance 'ice-cream :name 'grape)
+	           (make-instance 'topping :name 'marshmallow))
+	"GRAPE ice-cream with MARSHMALLOW topping"
+
+然而若第一個參數是 ``ice-cream`` 而第二個參數不是 ``topping`` 的實體的話，我們會得到剛剛上面所定義的那個方法：
+
+::
+
+	> (combine (make-instance 'ice-cream :name 'clam)
+	           'reluctance)
+	"CLAM ice-cream with RELUCTANCE"
+
+當一個通用函數被調用時，參數決定了一個或多個可用的方法 (\ *applicable* methods)。如果在調用中的參數在參數的特化約定內，我們說一個方法是可用的。
+
+如果沒有可用的方法，我們會得到一個錯誤。如果只有一個，它會被調用。如果多於一個，最具體的會被調用。最具體可用的方法是由調用傳入參數所屬類別的優先序所決定的。由左往右審視參數。如果有一個可用方法的第一個參數，此參數特化給某個類，其類的優先序高於其它可用方法的第一個參數，則此方法就是最具體的可用方法。平手時比較第二個參數，以此類推。[2]_
+
+在前面的例子裡，很容易看出哪個是最具體的可用方法，因爲所有的物件都是單繼承的。一個 ``ice-cream`` 的實體是，按順序來， ``ice-cream`` ， ``stuff`` ， ``standard-object`` ， 以及 ``t`` 類別的成員。
+
+方法不需要在由 ``defclass`` 定義的類別層級來做特化。他們也可以替型態做特化（更精準的說，可以反映出型態的類別）。以下是一個給 ``combine`` 用的方法，對數字做了特化：
+
+::
+
+	(defmethod combine ((x number) (y number))
+	  (+ x y)
+
+方法甚至可以對單一的物件做特化，用 ``eql`` 來決定：
+
+::
+
+	(defmethod combine ((x (eql 'powder)) (y (eql 'spark)))
+	  'boom)
+
+單一物件特化的優先序比類別特化來得高。
+
+方法可以像一般 Common Lisp 函數一樣有複雜的參數列表，但所有組成通用函數方法的參數列表必須是一致的 (\ *congruent*\ )。他們必須需要同樣數量的參數，同樣數量的選擇性參數（如果有的話）以及一起使用 ``&rest`` 或是 ``&key`` ，會都不要用。下面的參數列表對是全部一致的，
+
+::
+
+	(x)             (a)
+	(x &optional y) (a &optional b)
+	(x y &rest z)   (a b &key c)
+	(x y &key z)    (a b &key c d)
+
+而下列的參數列表對不是一致的：
+
+::
+
+	(x)             (a b)
+	(x &optional y) (a &optional b c)
+	(x &optional y) (a &rest b)
+	(x &key x y)    (a)
+
+只有需要的參數可以被特化。所以每個方法都可以通過名字及必要參數的特化獨一無二地識別出來。如果我們定義另一個方法，有著同樣的修飾符及特化，它會覆寫掉原先的。所以通過說明
+
+::
+
+	(defmethod combine ((x (eql 'powder)) (y (eql 'spark)))
+	  'kaboom)
+
+我們重定義了當 ``combine`` 方法的參數是 ``powder`` 與 ``spark`` 時， ``combine`` 方法幹了什麼事兒。
+
+11.7 輔助方法 (Auxiliary Methods)
 ==================================================
 
-11.8 Method Combination
+方法可以透過輔助方法來增強，包括 ``:before`` ， ``:after`` 以及 ``:around`` 方法。 ``:before`` 方法允許我們說：“嘿首先，先做這個。” 最具體的 ``:before`` 方法\ **優先**\ 被調用，作爲其它方法調用的序幕 (prelude)。 ``:after`` 方法允許我們說 “P.S. 也做這個。” 最具體的 ``:after`` 方法\ **最後**\ 被調用，作爲其它方法調用的閉幕 (epilogue)。在這之間，我們運行的是在這之前僅視爲方法的方法，而準確地說應該叫做主方法 (\ *primary method*\ )。這個主方法調用所返回的值爲方法的返回值，甚至 ``:after`` 方法在之後被調用也不例外。
+
+``:before`` 與 ``:after`` 方法允許我們將新的行爲包在調用主方法的周圍。 ``:around`` 方法提供了一個更戲劇的方式來辦到這件事。如果 ``:around`` 方法存在的話，會調用的是 ``:around`` 方法而不是主方法。則根據它自己的判斷， ``:around`` 方法自己可能會調用主方法（通過函數 ``call-next-method`` ，這也是這個函數存在的目的）。
+
+這稱爲標準方法組合機制 (\ *standard method combination*\ )。在標準方法組合機制裡，調用一個通用函數會調用
+
+1. 最具體的 ``:around`` 方法，如果有的話。
+
+2. 否則，依序，
+
+	(a) 所有的 ``:before`` 方法，從最具體到最不具體。
+	(b) 最具體的主方法
+	(c) 所有的 ``:after`` 方法，從最不具體到最具體
+
+返回值爲 ``:around`` 方法的返回值（情況 1）或是最具體的主方法的返回值（情況 2）。
+
+輔助方法通過在 ``defmethod`` 調用中，在方法名後加上一個修飾關鍵字 (qualifying keyword)來定義。如果我們替 ``speaker`` 類別定義一個主要的 ``speak`` 方法如下：
+
+::
+
+	(defmethod speak ((s speaker) string)
+	  (format t "~A" string))
+
+則使用 ``speaker`` 實體來調用 ``speak`` 僅印出第二個參數：
+
+::
+
+	> (speak (make-instance 'speaker)
+	         "I'm hungry")
+	I'm hungry
+	NIL
+
+通過定義一個 ``intellectual`` 子類，將主要的 ``speak`` 方法用 ``:before`` 與 ``:after`` 方法包起來，
+
+::
+
+	(defmethod speak :before ((i intellectual) string)
+	  (princ "Perhaps "))
+
+	(defmethod speak :after ((i intellectual) string)
+	  (princ " in some sense"))
+
+我們可以創建一個說話前後帶有慣用語的演講者：
+
+::
+
+	> (speak (make-instance 'intellectual)
+	         "I am hungry")
+	Perhaps I am hungry in some sense
+	NIL
+
+如同先前標準方法組合機制所述，所有的 ``:before`` 及 ``:after`` 方法都被調用了。所以如果我們替 ``speaker`` 基類定義 ``:before`` 或 ``:after`` 方法，
+
+::
+
+	(defmethod speak :before ((s speaker) string)
+	  (princ "I think "))
+
+無論是哪個 ``:before`` 或 ``:after`` 方法被調用，整個通用函數所返回的值，是最具體主方法的返回值 ── 在這個情況下，爲 ``format`` 函數所返回的 ``nil`` 。
+
+而在有 ``:around`` 方法時，情況就不一樣了。如果有一個替傳入通用函數特別定義的 ``:around`` 方法，則優先調用 ``:around`` 方法，而其它的方法要看 ``:around`` 方法讓不讓它們被運行。一個 ``:around`` 或主方法，可以通過調用 ``call-next-method`` 來調用下一個方法。在調用下一個方法前，它使用 ``next-method-p`` 來檢查是否有下個方法可調用。
+
+有了 ``:around`` 方法，我們可以定義另一個，更謹慎的， ``speaker`` 的子類別：
+
+::
+
+	(defclass courtier (speaker) ())
+
+	(defmethod speak :around ((c courtier) stirng)
+	  (format t "Does the King believe that ~A?" string)
+	  (if (eql (read) 'yes)
+	      (if (next-method-p) (call-next-method))
+	      (format t "Indeed, it is a preposterous idea. ~%"))
+	  'bow)
+
+當傳給 ``speak`` 的第一個參數是 ``courtier`` 類的實體時，朝臣 (courtier)的舌頭有了 ``:around`` 方法保護，就不會被割掉了：
+
+::
+
+	> (speak (make-instance 'courtier) "kings will last")
+	Does the King believe that kings will last? yes
+	I think kings will last
+	BOW
+	> (speak (make-instance 'courtier) "kings will last")
+	Does the King believe that kings will last? no
+	Indeed, it is a preposterous idea.
+	BOW
+
+記得由 ``:around`` 方法所返回的值即通用函數的返回值，這與 ``:before`` 與 ``:after`` 方法的返回值不一樣。
+
+11.8 方法組合機制 (Method Combination)
 =======================================
 
-11.9 Encapsulation
+在標準方法組閤中，只有最具體的主方法會被調用（雖然它可以通過 ``call-next-method`` 來調用其它方法）。但我們可能會想要把所有可用的主方法的結果彙總起來。
+
+用其它組合手段來定義方法也是有可能的 ── 舉例來說，一個返回所有可用主方法的和的通用函數。\ *運算子* (\ *Operator*\ )方法組合可以這麼理解，想像它是 Lisp 表達式的求值後的結果，其中 Lisp 表達式的第一個元素是某個運算子，而參數是按照具體性調用可用主方法的結果。如果我們定義 ``price`` 使用 ``+`` 來組合數值的通用函數，並且沒有可用的 ``:around`` 方法，它會如它所定義的方式動作：
+
+::
+
+	(defun price (&rest args)
+	  (+ (apply 〈most specific primary method〉 args)
+	     .
+	     .
+	     .
+	     (apply 〈least specific primary method〉 args)))
+
+如果有可用的 ``:around`` 方法的話，它們根據優先序決定，就像是標準方法組合那樣。在運算子方法組合裡，一個 ``around`` 方法仍可以通過 ``call-next-method`` 調用下個方法。然而主方法就不可以使用 ``call-next-method`` 了。
+
+我們可以指定一個通用函數的方法組合所要使用的型態，藉由在 ``defgeneric`` 調用里加入一個 ``method-combination`` 子句：
+
+
+::
+
+	(defgeneric price (x)
+	  (:method-combination +))
+
+現在 ``price`` 方法會使用 ``+`` 方法組合；任何替 ``price`` 定義的 ``defmethod`` 必須有 ``+`` 來作爲第二個參數。如果我們使用 ``price`` 來定義某些型態：
+
+::
+
+	> (price (make-instance 'suit))
+	550
+
+下列符號可以用來作爲 ``defmethod`` 的第二個參數或是作爲 ``defgeneric`` 調用中，``method-combination`` 的選項：
+
+::
+
+    +    and    append    list    max    min    nconc    or    progn
+
+你也可以使用 ``standard`` ，yields 標準方法組合。
+
+一旦你指定了通用函數要用何種方法組合，所有替該函數定義的方法必須用同樣的機制。現在它會拋出一個錯誤，如果我們試著要使用另一個運算子（或是 ``:before`` 或 ``after`` ）作爲給 ``defmethod`` 給 ``price``   的第二個參數。如果我們想要改變 ``price`` 的方法組合機制，我們需要通過調用 ``fmakunbound`` 來移除整個通用函數。
+
+11.9 封裝 (Encapsulation)
 ===================================
 
-11.10 Two Models
+面向物件的語言通常會提供某些手段，來區別物件的表示法以及它們給外在世界存取的介面。隱藏實現細節帶來兩個優點：你可以改變實現方式，而不影響物件對外的樣子，而你可以保護物件在可能的危險方面被改動。隱藏細節有時候被稱爲封裝 (\ *encapsulated*\ )。
+
+雖然封裝通常與物件導向程式設計相關聯，但這兩個概念其實是沒相乾的。你可以只擁有其一，而不需要另一個。我們已經在 108 頁 (\ **譯註：** 6.5 小節。)看過一個小規模的封裝例子。函數 ``stamp`` 及 ``reset`` 通過共享一個計數器工作，但調用時我們不需要知道這個計數器，也保護我們不可直接修改它。
+
+在 Common Lisp 裡，包是標準的手段來區分公開及私有的信息。要限制某個東西的存取，我們將它放在另一個包裡，並且針對外部介面，僅輸出需要用的名字。
+
+我們可以通過輸出可被改動的名字，來封裝一個槽，但不是槽的名字。舉例來說，我們可以定義一個 ``counter`` 類別，以及相關的 ``increment`` 及 ``clear`` 方法如下：
+
+::
+
+	(defpackage "CTR"
+	  (:use "COMMON-LISP")
+	  (:export "COUNTER" "INCREMENT" "CLEAR"))
+
+	(in-package ctr)
+
+	(defclass counter () ((state :initform 0)))
+
+	(defmethod increment ((c counter))
+	  (incf (slot-value c 'state)))
+
+	(defmethod clear ((c counter))
+	  (setf (slot-value c 'state) 0))
+
+在這個定義下，在包外部的
+
+程式碼只能夠創造 ``counter`` 的實體，並調用 ``increment`` 及 ``clear`` 方法，但不能夠存取 ``state`` 。
+
+如果你想要更進一步區別類的內部及外部介面，並使其不可能存取一個槽所存的值，你也可以這麼做。只要在你將所有需要引用它的
+
+程式碼定義完，將槽的名字 unintern：
+
+::
+
+	(unintern 'state)
+
+則沒有任何合法的、其它的辦法，從任何包來引用到這個槽。 `λ <http://ansi-common-lisp.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-191>`_
+
+11.10 兩種模型 (Two Models)
 ========================================
+
+物件導向程式設計是一個令人疑惑的話題，部分的原因是因爲有兩種實現方式：訊息傳遞模型 (message-passing model)與通用函數模型 (generic function model)。一開始先有的訊息傳遞。通用函數是廣義的訊息傳遞。
+
+在訊息傳遞模型裡，方法屬於物件，且方法的繼承與槽的繼承概念一樣。要找到一個物體的面積，我們傳給它一個 ``area`` 消息：
+
+::
+
+	tell obj area
+
+而這調用了任何物件 ``obj`` 所擁有或繼承來的 area 方法。
+
+有時候我們需要傳入額外的參數。舉例來說，一個 ``move`` 方法接受一個說明要移動多遠的參數。如我我們想要告訴 ``obj`` 移動 10 個單位，我們可以傳下面的消息：
+
+::
+
+	(move obj 10)
+
+訊息傳遞模型的侷限性變得清晰。在訊息傳遞模型裡，我們僅特化 (specialize) 第一個參數。
+牽扯到多物件時，沒有規則告訴方法該如何處理 ── 而物件回應消息的這個模型使得這更加難處理了。
+
+在訊息傳遞模型裡，方法是物件所有的，而在通用函數模型裡，方法是特別爲物件打造的 (specialized)。 如果我們僅特化第一個參數，那麼通用函數模型和訊息傳遞模型就是一樣的。但在通用函數模型裡，我們可以更進一步，要特化幾個參數就幾個。這也表示了，功能上來說，訊息傳遞模型是通用函數模型的子集。如果你有通用函數模型，你可以僅特化第一個參數來模擬出訊息傳遞模型。
 
 Chapter 11 總結 (Summary)
 ============================
 
+1. 在物件導向程式設計中，函數 ``f`` 通過定義擁有 ``f`` 方法的物件來隱式地定義。物件從它們的父母繼承方法。
+
+2. 定義一個類別就像是定義一個結構，但更加囉嗦。一個共享的槽屬於一整個類別。
+
+3. 一個類別從基類中繼承槽。
+
+4. 一個類別的祖先被排序成一個優先序列表。理解優先序算法最好的方式就是通過視覺。
+
+5. 一個通用函數由一個給定名稱的所有方法所組成。一個方法通過名稱及特化參數來識別。參數的優先序決定了當調用一個通用函數時會使用哪個方法。
+
+6. 方法可以通過輔助方法來增強。標準方法組合機制意味著如果有 ``:around`` 方法的話就調用它；否則依序調用 ``:before`` ，最具體的主方法以及 ``:after`` 方法。
+
+7. 在運算子方法組合機制中，所有的主方法都被視爲某個運算子的參數。
+
+8. 封裝可以通過包來實現。
+
+10. 物件導向程式設計有兩個模型。通用函數模型是廣義的訊息傳遞模型。
+
+
 Chapter 11 練習 (Exercises)
 ==================================
+
+1. 替圖 11.2 所定義的類定義存取器、 initforms 以及 initargs 。重寫相關的
+
+程式碼使其再也不用調用 ``slot-value`` 。
+
+2. 重寫圖 9.5 的
+
+程式碼，使得球體與點爲類別，而 ``intersect`` 及 ``normal`` 爲通用函數。
+
+3. 假設有若干類別定義如下：
+
+::
+
+	(defclass a (c d)   ...)  (defclass e ()  ...)
+	(defclass b (d c)   ...)  (defclass f (h) ...)
+	(defclass c ()      ...)  (defclass g (h) ...)
+	(defclass d (e f g) ...)  (defclass h ()  ...)
+
+(a) 畫出表示類別 ``a`` 祖先的網路以及列出 ``a`` 的實體歸屬的類別，從最相關至最不相關排列。
+
+(b) 替類別 ``b`` 也做 (a) 小題的要求。
+
+4. 假定你已經有了下列函數：
+
+``precedence`` ：接受一個物件並返回其優先序列表，列表由最具體至最不具體的類組成。
+
+``methods`` ：接受一個通用函數並返回一個列出所有方法的列表。
+
+``specializations`` ：接受一個方法並返回一個列出所有特化參數的列表。返回列表中的每個元素是類別或是這種形式的列表 ``(eql x)`` ，或是 ``t`` （表示該參數沒有被特化）。
+
+使用這些函數（不要使用 ``compute-applicable-methods`` 及 ``find-method`` ），定義一個函數 ``most-spec-app-meth`` ，該函數接受一個通用函數及一個列出此函數被調用過的參數，如果有最相關可用的方法的話，返回它。
+
+5. 不要改變通用函數 ``area`` 的行爲（圖 11.2），
+
+6. 舉一個只有通用函數的第一個參數被特化會很難解決的問題的例子。
+
+.. rubric:: 腳註
+
+.. [1] Initarg 的名稱通常是關鍵字，但不需要是。
+
+.. [2] 我們不可能比較完所有的參數而仍有平手情形存在，因爲這樣我們會有兩個有著同樣特化的方法。這是不可能的，因爲第二個的定義會覆寫掉第一個。

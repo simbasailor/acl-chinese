@@ -1,16 +1,20 @@
 .. highlight:: cl
-   :linenothreshold: 0
 
 附錄 B：Lisp in Lisp
-**************************
+***************************************************
 
-這個附錄包含了 58 個最常用的 Common Lisp 運算元。因為如此多的 Lisp 是（或可以）用 Lisp 所寫成，而由於 Lisp 程式（或可以）相當精簡，這是一種方便解釋語言的方式。
+這個附錄包含了 58 個最常用的 Common Lisp 運算子。因爲如此多的 Lisp 是（或可以）用 Lisp 所寫成，而由於 Lisp 程式（或可以）相當精簡，這是一種方便解釋語言的方式。
 
-這個練習也證明了，概念上 Common Lisp 不像看起來那樣龐大。許多 Common Lisp 運算元是有用的函式庫；要寫出所有其它的東西，你所需要的運算元相當少。在這個附錄的這些定義只需要:
+這個練習也證明了，概念上 Common Lisp 不像看起來那樣龐大。許多 Common Lisp 運算子是有用的函式庫；要寫出所有其它的東西，你所需要的運算子相當少。在這個附錄的這些定義只需要:
 
 ``apply`` ``aref`` ``backquote`` ``block`` ``car`` ``cdr`` ``ceiling`` ``char=`` ``cons`` ``defmacro`` ``documentation`` ``eq`` ``error`` ``expt`` ``fdefinition`` ``function`` ``floor`` ``gensym`` ``get-setf-expansion`` ``if`` ``imagpart`` ``labels`` ``length`` ``multiple-value-bind`` ``nth-value`` ``quote`` ``realpart`` ``symbol-function`` ``tagbody`` ``type-of`` ``typep`` ``=`` ``+`` ``-`` ``/`` ``<`` ``>``
 
-這裡給出的程式碼作為一種解釋 Common Lisp 的方式，而不是實現它的方式。在實際的實現上，這些運算元可以更有效率，也會做更多的錯誤檢查。為了方便參找，這些運算元本身按字母順序排列。如果你真的想要這樣定義 Lisp，每個巨集的定義需要在任何呼叫它們的程式碼之前。
+這裡給出的
+
+程式碼作爲一種解釋 Common Lisp 的方式，而不是實現它的方式。在實際的實現上，這些運算子可以更高效，也會做更多的錯誤檢查。爲了方便參找，這些運算子本身按字母順序排列。如果你真的想要這樣定義 Lisp，每個宏的定義需要在任何呼叫它們的
+
+程式碼之前。
+
 
 ::
 
@@ -300,7 +304,7 @@
 	               ,g
 	               (-or ,@rest))))))
 
-這兩個 Common Lisp 沒有，但這裡有幾個定義會需要用到。
+這兩個 Common Lisp 沒有，但這裡有幾的定義會需要用到。
 
 ::
 

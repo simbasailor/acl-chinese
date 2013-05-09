@@ -1,5 +1,4 @@
 .. highlight:: cl
-   :linenothreshold: 0
 
 第十章：宏
 **************************************************
@@ -29,7 +28,7 @@ Lisp 代码是由 Lisp 对象的列表来表示。2.3 节宣称这让 Lisp 可�
 	    (format t "~%> ")
 	    (print (eval (read)))))
 
-也是因为这个原因，顶层也称为\ **读取–求值–打印循环** (read-eval-print loop, REPL)。
+也是因为这个原因，顶层也称为\ **读取─求值─打印循环** (read-eval-print loop, REPL)。
 
 调用 ``eval`` 是跨越代码与列表界线的一种方法。但它不是一个好方法:
 
@@ -187,7 +186,7 @@ Comma-at 在宏里很有用，举例来说，在用剩馀参数 (rest parameters
 10.4 示例：快速排序法(Example: Quicksort)
 ===================================================
 
-图 10.1 包含了重度依赖宏的一个示例函数 –– 一个使用快速排序演算法 `λ <http://ansi-common-lisp.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-164>`_ 来排序向量的函数。这个函数的工作方式如下:
+图 10.1 包含了重度依赖宏的一个示例函数 ── 一个使用快速排序演算法 `λ <http://ansi-common-lisp.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-164>`_ 来排序向量的函数。这个函数的工作方式如下:
 
 ::
 

@@ -1,23 +1,599 @@
 .. highlight:: cl
-   :linenothreshold: 0
 
 第十四章：進階議題
-***************************************************
+**************************************************
 
-14.1 Type Specifiers
-==================================
+本章是選擇性閱讀的。本章描述了 Common Lisp 裡一些更深奧的特性。Common Lisp 像是一個冰山：大部分的功能對於那些永遠不需要他們的多數用戶是看不見的。你或許永遠不需要自己定義包 (Package)或讀取宏 (read-macros)，但當你需要時，有些例子可以讓你參考是很有用的。
 
-14.2 Binary Streams
+14.1 型態標識符 (Type Specifiers)
+======================================
+
+型態在 Common Lisp 裡不是物件。舉例來說，沒有物件對應到 ``integer`` 這個型態。我們像是從 ``type-of`` 函數裡所獲得的，以及作爲傳給像是 ``typep`` 函數的參數，不是一個型態，而是一個型態標識符 (type specifier)。
+
+一個型態標識符是一個型態的名稱。最簡單的型態標識符是像是 ``integer`` 的符號。這些符號形成了 Common Lisp 裡的型態層級。在層級的最頂端是型態 ``t`` ── 所有的物件皆爲型態 ``t`` 。而型態層級不是一棵樹。從 ``nil`` 至頂端有兩條路，舉例來說：一條從 ``atom`` ，另一條從 ``list`` 與 ``sequence`` 。
+
+一個型態實際上只是一個物件集合。這意味著有多少型態就有多少個物件的集合：一個無窮大的數目。我們可以用原子的型態標識符 (atomic type specifiers)來表示某些集合：比如 ``integer`` 表示所有整數集合。但我們也可以建構一個複合型態標識符 (compound type specifiers)來參照到任何物件的集合。
+
+舉例來說，如果 ``a`` 與 ``b`` 是兩個型態標識符，則 ``(or a b)`` 表示分別由 ``a`` 與 ``b`` 型態所表示的聯集 (union)。也就是說，一個型態 ``(or a b)`` 的物件是型態 ``a`` 或 型態 ``b`` 。
+
+如果 ``circular?`` 是一個對於 ``cdr`` 爲環狀的列表返回真的函數，則你可以使用適當的序列集合來表示： [1]_
+
+::
+
+	(or vector (and list (not (satisfies circular?))))
+
+某些原子的型態標識符也可以出現在複合型態標識符。要表示介於 1 至 100 的整數（包含），我們可以用：
+
+::
+
+	(integer 1 100)
+
+這樣的型態標識符用來表示一個有限的型態 (finite type)。
+
+在一個複合型態標識符裡，你可以通過在一個參數的位置使用 ``*`` 來留下某些未指定的信息。所以
+
+::
+
+	(simple-array fixnum (* *))
+
+描述了指定給 ``fixnum`` 使用的二維簡單陣列 (simple array)集合，而
+
+::
+
+	(simple-array fixnum *)
+
+描述了指定給 ``finxnum`` 使用的簡單陣列集合 (前者的超型態 「supertype」)。尾隨的星號可以省略，所以上個例子可以寫爲：
+
+::
+
+	(simple-array fixnum)
+
+若一個複合型態標識符沒有傳入參數，你可以使用一個原子。所以 ``simple-array`` 描述了所有簡單陣列的集合。
+
+如果有某些複合型態標識符你想重複使用，你可以使用 ``deftype`` 定義一個縮寫。這個宏與 ``defmacro`` 相似，但會展開成一個型態標識符，而不是一個表達式。通過表達
+
+::
+
+	(deftype proseq ()
+		'(or vector (and list (not (satisfies circular?)))))
+
+我們定義了 ``proseq`` 作爲一個新的原子型態標識符：
+
+::
+
+	> (typep #(1 2) 'proseq)
+	T
+
+如果你定義一個接受參數的型態標識符，參數會被視爲 Lisp 形式（即沒有被求值），與 ``defmacro`` 一樣。所以
+
+::
+
+	(deftype multiple-of (n)
+	  `(and integer (satisfies (lambda (x)
+	                             (zerop (mod x ,n))))))
+
+(譯註: 注意上面
+
+程式碼是使用反引號 ````` )
+
+定義了 `(multiple-of n)` 當成所有 ``n`` 的倍數的標識符：
+
+::
+
+	> (type 12 '(multiple-of 4))
+	T
+
+型態標識符會被直譯 (interpreted)，因此很慢，所以通常你最好定義一個函數來處理這類的測試。
+
+14.2 二進制流 (Binary Streams)
 ==================================================
 
-14.3 Read-Macros
+第 7 章曾提及的流有二進制流 (binary streams)以及字元流 (character streams)。一個二進制流是一個整數的來源及/或終點，而不是字元。你通過指定一個整數的子型態來創建一個二進制流 ── 當你打開流時，通常是用 ``unsigned-byte`` ── 來作爲 ``:element-type`` 的參數。
+
+關於二進制流的 I/O 函數僅有兩個， ``read-byte`` 以及 ``write-byte`` 。所以下面是如何定義複製一個檔案的函數：
+
+::
+
+	(defun copy-file (from to)
+	  (with-open-file (in from :direction :input
+	                           :element-type 'unsigned-byte)
+	    (with-open-file (out to :direction :output
+	                            :element-type 'unsigned-byte)
+	      (do ((i (read-byte in nil -1)
+	              (read-byte in nil -1)))
+	          ((minusp i))
+	        (declare (fixnum i))
+	        (write-byte i out)))))
+
+僅通過指定 ``unsigned-byte`` 給 ``:element-type`` ，你讓操作系統選擇一個字節 (byte)的長度。舉例來說，如果你明確地想要讀寫 7 比特的整數，你可以使用：
+
+::
+
+	(unsigned-byte 7)
+
+來傳給 ``:element-type`` 。
+
+14.3 讀取宏 (Read-Macros)
 ================================
 
-14.4 Packages
+7.5 節介紹過宏字元 (macro character)的概念，一個對於 ``read`` 有特別意義的字元。每一個這樣的字元，都有一個相關聯的函數，這函數告訴 ``read`` 當遇到這個字元時該怎麼處理。你可以變更某個已存在宏字元所相關聯的函數，或是自己定義新的宏字元。
+
+函數 ``set-macro-character`` 提供了一種方式來定義讀取宏 (read-macros)。它接受一個字元及一個函數，因此當 ``read`` 碰到該字元時，它返回調用傳入函數後的結果。
+
+Lisp 中最古老的讀取宏之一是 ``'`` ，即 ``quote`` 。我們可以定義成：
+
+::
+
+	(set-macro-character #\'
+		#'(lambda (stream char)
+			(list (quote quote) (read stream t nil t))))
+
+當 ``read`` 在一個普通的語境下遇到 ``'`` 時，它會返回在當前流和字元上調用這個函數的結果。(這個函數忽略了第二個參數，第二個參數永遠是引用字元。)所以當 ``read`` 看到 ``'a`` 時，會返回 ``(quote a)`` 。
+
+譯註: ``read`` 函數接受的參數 ``(read &optional stream eof-error eof-value recursive)``
+
+現在我們明白了 ``read`` 最後一個參數的用途。它表示無論 ``read`` 調用是否在另一個 ``read`` 裡。傳給 ``read`` 的參數在幾乎所有的讀取宏裡皆相同：傳入參數有流 (stream)；接著是第二個參數， ``t`` ，說明了 ``read`` 若讀入的東西是 end-of-file 時，應不應該報錯；第三個參數說明了不報錯時要返回什麼，因此在這裡也就不重要了；而第四個參數 ``t`` 說明了這個 ``read`` 調用是遞迴的。
+
+(譯註：困惑的話可以看看 `read 的定義 <https://gist.github.com/3467235>`_ )
+
+你可以（通過使用 ``make-dispatch-macro-character`` ）來定義你自己的派發宏字元（dispatching macro character），但由於 ``#`` 已經是一個宏字元，所以你也可以直接使用。六個 ``#`` 打頭的組合特別保留給你使用： ``#!`` 、 ``#?`` 、 ``##[`` 、 ``##]`` 、 ``#{`` 、 ``#}`` 。
+
+你可以通過調用 ``set-dispatch-macro-character`` 定義新的派發宏字元組合，與 ``set-macro-character`` 類似，除了它接受兩個字元參數外。下面的
+
+程式碼定義了 ``#?`` 作爲返回一個整數列表的讀取宏。
+
+::
+
+	(set-dispatch-macro-character #\# #\?
+	  #'(lambda (stream char1 char2)
+	      (list 'quote
+	            (let ((lst nil))
+	              (dotimes (i (+ (read stream t nil t) 1))
+	                (push i lst))
+	              (nreverse lst)))))
+
+現在 ``#?n`` 會被讀取成一個含有整數 ``0`` 至 ``n`` 的列表。舉例來說：
+
+::
+
+	> #?7
+	(1 2 3 4 5 6 7)
+
+除了簡單的宏字元，最常定義的宏字元是列表分隔符 (list delimiters)。另一個保留給用戶的字元組是 ``#{`` 。以下我們定義了一種更複雜的左括號：
+
+::
+
+	(set-macro-character #\} (get-macro-character #\)))
+
+	(set-dispatch-macro-character #\# #\{
+	  #'(lambda (stream char1 char2)
+	      (let ((accum nil)
+	            (pair (read-delimited-list #\} stream t)))
+	        (do ((i (car pair) (+ i 1)))
+	            ((> i (cadr pair))
+	             (list 'quote (nreverse accum)))
+	          (push i accum)))))
+
+這定義了一個這樣形式 ``#{x y}`` 的表達式，使得這樣的表達式被讀取爲所有介於 ``x`` 與 ``y`` 之間的整數列表，包含 ``x`` 與 ``y`` ：
+
+::
+
+	> #{2 7}
+	(2 3 4 4 5 6 7)
+
+函數 ``read-delimited-list`` 正是爲了這樣的讀取宏而生的。它的第一個參數是被視爲列表結束的字元。爲了使 ``}`` 被識別爲分隔符，必須先給它這個角色，所以程式在開始的地方調用了 ``set-macro-character`` 。
+
+如果你想要在定義一個讀取宏的檔案裡使用該讀取宏，則讀取宏的定義應要包在一個 ``eval-when`` 表達式裡，來確保它在編譯期會被求值。不然它的定義會被編譯，但不會被求值，直到編譯檔案被載入時才會被求值。
+
+14.4 包 (Packages)
 ===================================================
 
-14.5 The Loop Facility
+一個包是一個將名字映對到符號的 Lisp 物件。當前的包總是存在全局變數 ``*package*`` 裡。當 Common Lisp 啓動時，當前的包會是 ``*common-lisp-user*`` ，通常稱爲用戶包 (user package)。函數 ``package-name`` 返回包的名字，而 ``find-package`` 返回一個給定名稱的包:
+
+::
+
+	> (package-name *package*)
+	"COMMON-LISP-USER"
+	> (find-package "COMMON-LISP-USER")
+	#<Package "COMMON-LISP-USER" 4CD15E>
+
+通常一個符號在讀入時就被 interned 至當前的包裡面了。函數 ``symbol-package`` 接受一個符號並返回該符號被 interned 的包。
+
+::
+
+	(symbol-package 'sym)
+	#<Package "COMMON-LISP-USER" 4CD15E>
+
+有趣的是，這個表達式返回它該返回的值，因爲表達式在可以被求值前必須先被讀入，而讀取這個表達式導致 ``sym`` 被 interned。爲了之後的用途，讓我們給 ``sym`` 一個值:
+
+::
+
+	> (setf sym 99)
+	99
+
+現在我們可以創建及切換至一個新的包：
+
+::
+
+	> (setf *package* (make-package 'mine
+	                                :use '(common-lisp)))
+	#<Package "MINE" 63390E>
+
+現在應該會聽到詭異的背景音樂，因爲我們來到一個不一樣的世界了：
+在這裡 ``sym`` 不再是本來的 ``sym`` 了。
+
+::
+
+	MINE> sym
+	Error: SYM has no value
+
+爲什麼會這樣？因爲上面我們設爲 99 的 ``sym`` 與 ``mine`` 裡的 ``sym`` 是兩個不同的符號。 [2]_ 要在用戶包之外參照到原來的 ``sym`` ，我們必須把包的名字加上兩個冒號作爲前綴：
+
+::
+
+	MINE> common-lisp-user::sym
+	99
+
+所以有着相同打印名稱的不同符號能夠在不同的包內共存。可以有一個 ``sym`` 在 ``common-lisp-user`` 包，而另一個 ``sym`` 在 ``mine`` 包，而他們會是不一樣的符號。這就是包存在的意義。如果你在分開的包內寫你的程式，你大可放心選擇函數與變數的名字，而不用擔心某人使用了同樣的名字。即便是他們使用了同樣的名字，也不會是相同的符號。
+
+包也提供了信息隱藏的手段。程式應通過函數與變數的名字來參照它們。如果你不讓一個名字在你的包之外可見的話，那麼另一個包中的
+
+程式碼就無法使用或者修改這個名字所參照的物件。
+
+通常使用兩個冒號作爲包的前綴也是很差的風格。這麼做你就違反了包本應提供的模組性。如果你不得不使用一個雙冒號來參照到一個符號，這是因爲某人根本不想讓你用。
+
+通常我們應該只參照被輸出 ( *exported* )的符號。如果我們回到用戶包裡，並輸出一個被 interned 的符號，
+
+::
+
+	MINE> (in-package common-lisp-user)
+	#<Package "COMMON-LISP-USER" 4CD15E>
+	> (export 'bar)
+	T
+	> (setf bar 5)
+	5
+
+我們使這個符號對於其它的包是可視的。現在當我們回到 ``mine`` ，我們可以僅使用單冒號來參照到 ``bar`` ，因爲他是一個公開可用的名字：
+
+::
+
+	> (in-package mine)
+	#<Package "MINE" 63390E>
+	MINE> common-lisp-user:bar
+	5
+
+通過把 ``bar`` 輸入 ( ``import`` )至 ``mine`` 包，我們就能進一步讓 ``mine`` 和 ``user`` 包可以共享 ``bar`` 這個符號：
+
+::
+
+	MINE> (import 'common-lisp-user:bar)
+	T
+	MINE> bar
+	5
+
+在輸入 ``bar`` 之後，我們根本不需要用任何包的限定符 (package qualifier)，就能參照它了。這兩個包現在共享了同樣的符號；不可能會有一個獨立的 ``mine:bar`` 了。
+
+要是已經有一個了怎麼辦？在這種情況下， ``import`` 調用會產生一個錯誤，如下面我們試著輸入 ``sym`` 時便知：
+
+::
+
+	MINE> (import 'common-lisp-user::sym)
+	Error: SYM is already present in MINE.
+
+在此之前，當我們試着在 ``mine`` 包裡對 ``sym`` 進行了一次不成功的求值，我們使 ``sym`` 被 interned 至 ``mine`` 包裡。而因爲它沒有值，所以產生了一個錯誤，但輸入符號名的後果就是使這個符號被 intern 進這個包。所以現在當我們試著輸入 ``sym`` 至 ``mine`` 包裡，已經有一個相同名稱的符號了。
+
+另一個方法來獲得別的包內符號的存取權是使用( ``use`` )它：
+
+::
+
+	MINE> (use-package 'common-lisp-user)
+	T
+
+現在所有由用戶包 (譯註: common-lisp-user 包）所輸出的符號，可以不需要使用任何限定符在 ``mine`` 包裡使用。(如果 ``sym`` 已經被用戶包輸出了，這個調用也會產生一個錯誤。)
+
+含有自帶運算子及變數名字的包叫做 ``common-lisp`` 。由於我們將這個包的名字在創建 ``mine`` 包時作爲 ``make-package`` 的 ``:use`` 參數，所有的 Common Lisp 自帶的名字在 ``mine`` 裡都是可視的:
+
+::
+
+	MINE> #'cons
+	#<Compiled-Function CONS 462A3E>
+
+在編譯後的
+
+程式碼中, 通常不會像這樣在頂層進行包的操作。更常見的是包的調用會包含在源檔案裡。通常，只要把 ``in-package`` 和 ``defpackage`` 放在源檔案的開頭就可以了，正如 137 頁所示。
+
+這種由包所提供的模組性實際上有點奇怪。我們不是物件的模組 (modules)，而是名字的模組。
+
+每一個使用了 ``common-lisp`` 的包，都可以存取 ``cons`` ，因爲 ``common-lisp`` 包裡有一個叫這個名字的函數。但這會導致一個名字爲 ``cons`` 的變數也會在每個使用了 ``common-lisp`` 包裡是可視的。如果包使你困惑，這就是主要的原因；因爲包不是基於物件而是基於名字。
+
+14.5 Loop 宏 (The Loop Facility)
 =======================================
 
-14.6 Conditions
+``loop`` 宏最初是設計來幫助無經驗的 Lisp 用戶來寫出迭代的
+
+程式碼。與其撰寫 Lisp 
+
+程式碼，你用一種更接近英語的形式來表達你的程式，然後這個形式被翻譯成 Lisp。不幸的是， ``loop`` 比原先設計者預期的更接近英語：你可以在簡單的情況下使用它，而不需瞭解它是如何工作的，但想在抽象層面上理解它幾乎是不可能的。
+
+如果你是曾經計劃某天要理解 ``loop`` 怎麼工作的許多 Lisp 程式設計師之一，有一些好消息與壞消息。好消息是你並不孤單：幾乎沒有人理解它。壞消息是你永遠不會理解它，因爲 ANSI 標準實際上並沒有給出它行爲的正式規範。
+
+這個宏唯一的實際定義是它的實現方式，而唯一可以理解它（如果有人可以理解的話）的方法是通過實體。ANSI 標準討論 ``loop`` 的章節大部分由例子組成，而我們將會使用同樣的方式來介紹相關的基礎概念。
+
+第一個關於 ``loop`` 宏我們要注意到的是語法 ( *syntax* )。一個 ``loop`` 表達式不是包含子表達式而是子句 (*clauses*)。這些子句不是由括號分隔出來；而是每種都有一個不同的語法。在這個方面上， ``loop`` 與傳統的 Algol-like 語言相似。但其它 ``loop`` 獨特的特性，使得它與 Algol 不同，也就是在 ``loop`` 宏裡調換子句的順序與會發生的事情沒有太大的關聯。
+
+一個 ``loop`` 表達式的求值分爲三個階段，而一個給定的子句可以替多於一個的階段貢獻
+
+程式碼。這些階段如下：
+
+1. *序幕* (*Prologue*)。 被求值一次來做爲迭代過程的序幕。包括了將變數設至它們的初始值。
+
+2. *主體* (*Body*) 每一次迭代時都會被求值。
+
+3. *閉幕* (*Epilogue*) 當迭代結束時被求值。決定了 ``loop`` 表達式的返回值（可能返回多個值）。
+
+我們會看幾個 ``loop`` 子句的例子，並考慮何種
+
+程式碼會貢獻至何個階段。
+
+舉例來說，最簡單的 ``loop`` 表達式，我們可能會看到像是下列的
+
+程式碼：
+
+::
+
+	> (loop for x from 0 to 9
+	        do (princ x))
+	0123456789
+	NIL
+
+這個 ``loop`` 表達式印出從 ``0`` 至 ``9`` 的整數，並返回 ``nil`` 。第一個子句，
+
+``for x from 0 to 9``
+
+貢獻
+
+程式碼至前兩個階段，導致 ``x`` 在序幕中被設爲 ``0`` ，在主體開頭與 ``9`` 來做比較，在主體結尾被遞增。第二個子句，
+
+``do (princ x)``
+
+貢獻
+
+程式碼給主體。
+
+一個更通用的 ``for`` 子句說明了起始與更新的形式 (initial and update form)。停止迭代可以被像是 ``while`` 或 ``until`` 子句來控制。
+
+::
+
+	> (loop for x = 8 then (/ x 2)
+	        until (< x 1)
+	        do (princ x))
+	8421
+	NIL
+
+你可以使用 ``and`` 來創建複合的 ``for`` 子句，同時初始及更新兩個變數：
+
+::
+
+	> (loop for x from 1 to 4
+	        and y from 1 to 4
+	        do (princ (list x y)))
+	(1 1)(2 2)(3 3)(4 4)
+	NIL
+
+要不然有多重 ``for`` 子句時，變數會被循序更新。
+
+另一件在迭代
+
+程式碼通常會做的事是累積某種值。舉例來說：
+
+::
+
+	> (loop for x in '(1 2 3 4)
+	        collect (1+ x))
+	(2 3 4 5)
+
+在 ``for`` 子句使用 ``in`` 而不是 ``from`` ，導致變數被設爲一個列表的後續元素，而不是連續的整數。
+
+在這個情況裡， ``collect`` 子句貢獻
+
+程式碼至三個階段。在序幕，一個匿名累加器 (anonymous accumulator)設為 ``nil`` ；在主體裡， ``(1+ x)`` 被累加至這個累加器，而在閉幕時返回累加器的值。
+
+這是返回一個特定值的第一個例子。有用來明確指定返回值的子句，但沒有這些子句時，一個 ``collect`` 子句決定了返回值。所以我們在這裡所做的其實是重複了 ``mapcar`` 。
+
+``loop`` 最常見的用途大概是蒐集調用一個函數數次的結果：
+
+::
+
+	> (loop for x from 1 to 5
+	        collect (random 10))
+	(3 8 6 5 0)
+
+這裡我們獲得了一個含五個隨機數的列表。這跟我們定義過的 ``map-int`` 情況類似 (105 頁「譯註: 6.4 小節。」)。如果我們有了 ``loop`` ，爲什麼還需要 ``map-int`` ？另一個人也可以說，如果我們有了 ``map-int`` ，爲什麼還需要 ``loop`` ？
+
+一個 ``collect`` 子句也可以累積值到一個有名字的變數上。下面的函數接受一個數字的列表並返回偶數與奇數列表：
+
+::
+
+	(defun even/odd (ns)
+	  (loop for n in ns
+	        if (evenp n)
+	           collect n into evens
+	           else collect n into odds
+	        finally (return (values evens odds))))
+
+一個 ``finally`` 子句貢獻
+
+程式碼至閉幕。在這個情況它指定了返回值。
+
+一個 ``sum`` 子句和一個 ``collect`` 子句類似，但 ``sum`` 子句累積一個數字，而不是一個列表。要獲得 ``1`` 至 ``n`` 的和，我們可以寫：
+
+::
+
+	(defun sum (n)
+	  (loop for x from 1 to n
+	        sum x))
+
+``loop`` 更進一步的細節在附錄 D 討論，從 325 頁開始。舉個例子，圖 14.1 包含了先前章節的兩個迭代函數，而圖 14.2 演示了將同樣的函數翻譯成 ``loop`` 。
+
+::
+
+	(defun most (fn lst)
+	  (if (null lst)
+	      (values nil nil)
+	      (let* ((wins (car lst))
+	             (max (funcall fn wins)))
+	        (dolist (obj (cdr lst))
+	          (let ((score (funcall fn obj)))
+	            (when (> score max)
+	              (setf wins obj
+	                    max  score))))
+	        (values wins max))))
+
+	(defun num-year (n)
+	  (if (< n 0)
+	      (do* ((y (- yzero 1) (- y 1))
+	            (d (- (year-days y)) (- d (year-days y))))
+	           ((<= d n) (values y (- n d))))
+	      (do* ((y yzero (+ y 1))
+	            (prev 0 d)
+	            (d (year-days y) (+ d (year-days y))))
+	           ((> d n) (values y (- n prev))))))
+
+**圖 14.1 不使用 loop 的迭代函數**
+
+::
+
+	(defun most (fn lst)
+	  (if (null lst)
+	      (values nil nil)
+	      (loop with wins = (car lst)
+	            with max = (funcall fn wins)
+	            for obj in (cdr lst)
+	            for score = (funcall fn obj)
+	            when (> score max)
+	                 (do (setf wins obj
+	                           max score)
+	            finally (return (values wins max))))))
+
+	(defun num-year (n)
+	  (if (< n 0)
+	      (loop for y downfrom (- yzero 1)
+	            until (<= d n)
+	            sum (- (year-days y)) into d
+	            finally (return (values (+ y 1) (- n d))))
+	      (loop with prev = 0
+	            for y from yzero
+	            until (> d n)
+	            do (setf prev d)
+	            sum (year-days y) into d
+	            finally (return (values (- y 1)
+	                                    (- n prev))))))
+
+**圖 14.2 使用 loop 的迭代函數**
+
+一個 ``loop`` 的子句可以參照到由另一個子句所設置的變數。舉例來說，在 ``even/odd`` 的定義裡面， ``finally`` 子句參照到由兩個 ``collect`` 子句所創建的變數。這些變數之間的關係，是 ``loop`` 定義最含糊不清的地方。考慮下列兩個表達式：
+
+::
+
+	(loop for y = 0 then z
+	      for x from 1 to 5
+	      sum 1 into z
+	      finally (return y z))
+
+	(loop for x from 1 to 5
+	      for y = 0 then z
+	      sum 1 into z
+	      finally (return y z))
+
+它們看起來夠簡單 ── 每一個有四個子句。但它們返回同樣的值嗎？它們返回的值多少？你若試着在標準中想找答案將徒勞無功。每一個 ``loop`` 子句本身是夠簡單的。但它們組合起來的方式是極爲複雜的 ── 而最終，甚至標準裡也沒有明確定義。
+
+由於這類原因，使用 ``loop`` 是不推薦的。推薦 ``loop`` 的理由，你最多可以說，在像是圖 14.2 這般經典的例子中， ``loop`` 讓
+
+程式碼看起來更容易理解。
+
+14.6 狀況 (Conditions)
 =======================================
+
+在 Common Lisp 裡，狀況 (condition)包括了錯誤以及其它可能在執行期發生的情況。當一個狀況被捕捉時 (signalled)，相應的處理程式 (handler)會被調用。處理錯誤狀況的預設處理程式通常會調用一箇中斷迴圈 (break-loop)。但 Common Lisp 提供了多樣的運算子來捕捉及處理錯誤。要覆寫預設的處理程式，甚至是自己寫一個新的處理程式也是有可能的。
+
+多數的程式設計師不會直接處理狀況。然而有許多更抽象的運算子使用了狀況，而要瞭解這些運算子，知道背後的原理是很有用的。
+
+Common lisp 有數個運算子用來捕捉錯誤。最基本的是 ``error`` 。一個調用它的方法是給入你會給 ``format`` 的相同參數：
+
+::
+
+	> (error "Your report uses ~A as a verb." 'status)
+	Error: Your report uses STATUS as a verb
+				 Options: :abort, :backtrace
+	>>
+
+如上所示，除非這樣的狀況被處理好了，不然執行就會被打斷。
+
+用來捕捉錯誤的更抽象運算子包括了 ``ecase`` 、 ``check-type`` 以及 ``assert`` 。前者與 ``case`` 相似，要是沒有鍵值匹配時會捕捉一個錯誤：
+
+::
+
+	> (ecase 1 (2 3) (4 5))
+	Error: No applicable clause
+				 Options: :abort, :backtrace
+	>>
+
+普通的 ``case`` 在沒有鍵值匹配時會返回 ``nil`` ，但由於利用這個返回值是很差的編碼風格，你或許會在當你沒有 ``otherwise`` 子句時使用 ``ecase`` 。
+
+``check-type`` 宏接受一個位置，一個型態名以及一個選擇性字串，並在該位置的值不是預期的型態時，捕捉一個可修正的錯誤 (correctable error)。一個可修正錯誤的處理程式會給我們一個機會來提供一個新的值：
+
+::
+
+	> (let ((x '(a b c)))
+			(check-type (car x) integer "an integer")
+			x)
+	Error: The value of (CAR X), A, should be an integer.
+	Options: :abort, :backtrace, :continue
+	>> :continue
+	New value of (CAR X)? 99
+	(99 B C)
+	>
+
+在這個例子裡， ``(car x)`` 被設爲我們提供的新值，並重新執行，返回了要是 ``(car x)`` 本來就包含我們所提供的值所會返回的結果。
+
+這個宏是用更通用的 ``assert`` 所定義的， ``assert`` 接受一個測試表達式以及一個有着一個或多個位置的列表，伴隨着你可能傳給 ``error`` 的參數：
+
+::
+
+	> (let ((sandwich '(ham on rye)))
+	    (assert (eql (car sandwich) 'chicken)
+	            ((car sandwich))
+	            "I wanted a ~A sandwich." 'chicken)
+	    sandwich)
+	Error: I wanted a CHICKEN sandwich.
+	Options: :abort, :backtrace, :continue
+	>> :continue
+	New value of (CAR SANDWICH)? 'chicken
+	(CHICKEN ON RYE)
+
+要建立新的處理程式也是可能的，但大多數程式設計師只會間接的利用這個可能性，通過使用像是 ``ignore-errors`` 的宏。如果它的參數沒產生錯誤時像在 ``progn`` 裡求值一樣，但要是在求值過程中，不管什麼參數報錯，執行是不會被打斷的。取而代之的是， ``ignore-errors`` 表達式會直接返回兩個值： ``nil`` 以及捕捉到的狀況。
+
+舉例來說，如果在某個時候，你想要用戶能夠輸入一個表達式，但你不想要在輸入是語法上不合時中斷執行，你可以這樣寫：
+
+::
+
+	(defun user-input (prompt)
+	  (format t prompt)
+	  (let ((str (read-line)))
+	    (or (ignore-errors (read-from-string str))
+	        nil)))
+
+若輸入包含語法錯誤時，這個函數僅返回 ``nil`` :
+
+::
+
+	> (user-input "Please type an expression")
+	Please type an expression> #%@#+!!
+	NIL
+
+
+.. rubric:: 腳註
+
+.. [1] 雖然標準沒有提到這件事，你可以假定 ``and`` 以及 ``or`` 型態標示符僅考慮它們所要考慮的參數，與 ``or`` 及 ``and`` 宏類似。
+
+.. [2] 某些 Common Lisp 實現，當我們不在用戶包下時，會在頂層提示符前打印包的名字。

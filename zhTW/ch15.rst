@@ -1,18 +1,375 @@
 .. highlight:: cl
-   :linenothreshold: 0
 
 第十五章：範例：推論
 ***************************************************
 
-15.1 The Aim
+接下來三章提供了大量的 Lisp 程式例子。選擇這些例子來說明那些較長的程式所採取的形式，和 Lisp 所擅長解決的問題型態。
+
+在這一章中我們將要寫一個基於一組 ``if-then`` 規則的推論程式。這是一個經典的例子 —— 不僅在於其經常出現在教科書上，還因爲它反映了 Lisp 作爲一個“符號計算”語言的本意。這個例子散發着很多早期 Lisp 程式的氣息。
+
+15.1 目標 (The Aim)
 ==================================
 
-15.2 Matching
+在這個程式中，我們將用一種熟悉的形式來表示信息：包含單個判斷式，以及跟在之後的零個或多個參數所組成的列表。要表示 Donald 是 Nancy 的家長，我們可以這樣寫：
+
+::
+
+   (parent donald nancy)
+
+事實上，我們的程式是要表示一些從已有的事實作出推斷的規則。我們可以這樣來表示規則：
+
+::
+
+   (<- head body)
+
+其中， ``head`` 是 **那麼...部分** (then-part)， ``body`` 是 **如果...部分** (if-part)。在 ``head`` 和 ``body`` 中我們使用以問號爲前綴的符號來表示變數。所以下面這個規則：
+
+::
+
+   (<- (child ?x ?y) (parent ?y ?x))
+
+表示：如果 y 是 x 的家長，那麼 x 是 y 的孩子；更恰當地說，我們可以通過證明 ``(parent y x)`` 來證明 ``(child x y)`` 的所表示的事實。
+
+可以把規則中的 *body* 部分(if-part) 寫成一個複雜的表達式，其中包含 ``and`` , ``or`` 和 ``not`` 等邏輯操作。所以當我們想要表達 “如果 x 是 y 的家長，並且 x 是男性，那麼 x 是 y 的父親” 這樣的規則，我們可以寫：
+
+::
+
+   (<- (father ?x ?y) (and (parent ?x ?y) (male ?x)))
+
+一些規則可能依賴另一些規則所產生的事實。比如，我們寫的第一個規則是爲了證明 ``(child x y)`` 的事實。如果我們定義如下規則：
+
+::
+
+   (<- (daughter ?x ?y) (and (child ?x ?y) (female ?x)))
+
+然後使用它來證明 ``(daughter x y)`` 可能導致程式使用第一個規則去證明 ``(child x y)`` 。
+
+表達式的證明可以回溯任意數量的規則，只要它最終結束於給出的已知事實。這個過程有時候被稱爲反向連結 (backward-chaining)。之所以說 *反向* (backward) 是因爲這一類推論先考慮 *head* 部分，這是爲了在繼續證明 *body* 部分之前檢查規則是否有效。*連結* (chaining) 來源於規則之間的依賴關係，從我們想要證明的內容到我們的已知條件組成一個連結 (儘管事實上它更像一棵樹)。 `λ <http://ansi-common-lisp.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-248>`_
+
+15.2 匹配 (Matching)
 ==================================================
 
-15.3 Answering Queries
-================================
+我們需要有一個函數來做模式匹配以完成我們的反向連結 (back-chaining) 程式，這個函數能夠比較兩個包含變數的列表，它會檢查在給變數賦值後是否可以使兩個列表相等。舉例，如果 ``?x`` 和 ``?y`` 是變數，那麼下面兩個列表：
 
-15.4 Analysis
+::
+
+   (p ?x ?y c ?x)
+   (p  a  b c  a)
+
+當 ``?x = a`` 且 ``?y = b`` 時匹配，而下面兩個列表：
+
+::
+
+   (p ?x b ?y a)
+   (p ?y b  c a)
+
+當 ``?x = ?y = c`` 時匹配。
+
+我們有一個 ``match`` 函數，它接受兩棵樹，如果這兩棵樹能匹配，則返回一個關聯列表（assoc-list）來顯示他們是如何匹配的：
+
+::
+
+  (defun match (x y &optional binds)
+    (cond
+     ((eql x y) (values binds t))
+     ((assoc x binds) (match (binding x binds) y binds))
+     ((assoc y binds) (match x (binding y binds) binds))
+     ((var? x) (values (cons (cons x y) binds) t))
+     ((var? y) (values (cons (cons y x) binds) t))
+     (t
+      (when (and (consp x) (consp y))
+        (multiple-value-bind (b2 yes)
+                             (match (car x) (car y) binds)
+          (and yes (match (cdr x) (cdr y) b2)))))))
+
+  (defun var? (x)
+    (and (symbolp x)
+         (eql (char (symbol-name x) 0) #\?)))
+
+  (defun binding (x binds)
+    (let ((b (assoc x binds)))
+      (if b
+          (or (binding (cdr b) binds)
+              (cdr b)))))
+
+**圖 15.1: 匹配函數。**
+
+::
+
+   > (match '(p a b c a) '(p ?x ?y c ?x))
+   ((?Y . B) (?X . A))
+   T
+   > (match '(p ?x b ?y a) '(p ?y b c a))
+   ((?Y . C) (?X . ?Y))
+   T
+   > (match '(a b c) '(a a a))
+   NIL
+
+當 ``match`` 函數逐個元素地比較它的參數時候，它把 ``binds`` 參數中的值分配給變數，這被稱爲綁定 (bindings)。如果成功匹配， ``match`` 函數返回生成的綁定；否則，返回 ``nil`` 。當然並不是所有成功的匹配都會產生綁定，我們的 ``match`` 函數就像 ``gethash`` 函數那樣返回第二個值來表明匹配成功：
+
+::
+
+   > (match '(p ?x) '(p ?x))
+   NIL
+   T
+
+如果 ``match`` 函數像上面那樣返回 ``nil`` 和 ``t`` ，表明這是一個沒有產生綁定的成功匹配。下面用中文來描述 ``match`` 算法是如何工作的：
+
+1. 如果 x 和 y 在 ``eql`` 上相等那麼它們匹配；否則，
+2. 如果 x 是一個已綁定的變數，並且綁定匹配 y ，那麼它們匹配；否則，
+3. 如果 y 是一個已綁定的變數，並且綁定匹配 x ，那麼它們匹配；否則，
+4. 如果 x 是一個未綁定的變數，那麼它們匹配，並且爲 x 建立一個綁定；否則，
+5. 如果 y 是一個未綁定的變數，那麼它們匹配，並且爲 y 建立一個綁定；否則，
+6. 如果 x 和 y 都是 ``cons`` ，並且它們的 ``car`` 匹配，由此產生的綁定又讓 ``cdr`` 匹配，那麼它們匹配。
+
+下面是一個例子，按順序來說明以上六種情況：
+
+::
+
+   > (match '(p ?v  b ?x  d (?z ?z))
+            '(p  a ?w  c ?y ( e  e))
+	    '((?v . a) (?w . b)))
+   ((?Z . E) (?Y . D) (?X . C) (?V . A) (?W . B))
+   T
+
+``match`` 函數通過調用 ``binding`` 函數在一個綁定列表中尋找變數（如果有的話）所關聯的值。這個函數必須是遞迴的，因爲有這樣的情況 “匹配建立一個綁定列表，而列表中變數只是間接關聯到它的值： ``?x`` 可能被綁定到一個包含 ``(?x . ?y)`` 和 ``(?y . a)`` 的列表”：
+
+::
+
+   > (match '(?x a) '(?y ?y))
+   ((?Y . A) (?X . ?Y))
+   T
+
+先匹配 ``?x`` 和 ``?y`` ，然後匹配 ``?y`` 和 ``a`` ，我們間接確定 ``?x`` 是 ``a`` 。
+
+15.3 回答查詢 (Answering Queries)
+====================================
+
+在介紹了綁定的概念之後，我們可以更準確的說一下我們的程式將要做什麼：它得到一個可能包含變數的表達式，根據我們給定的事實和規則返回使它正確的所有綁定。比如，我們只有下面這個事實：
+
+::
+
+   (parent donald nancy)
+
+然後我們想讓程式證明：
+
+::
+
+   (parent ?x ?y)
+
+它會返回像下面這樣的表達：
+
+::
+
+   (((?x . donald) (?y . nancy)))
+
+它告訴我們只有一個可以讓這個表達式爲真的方法： ``?x`` 是 ``donald`` 並且 ``?y`` 是 ``nancy`` 。
+
+在通往目標的路上，我們已經有了一個的重要部分：一個匹配函數。
+下面是用來定義規則的一段
+
+程式碼：
+
+::
+
+   (defvar *rules* (make-hash-table))
+
+   (defmacro <- (con &optional ant)
+     `(length (push (cons (cdr ',con) ',ant)
+                    (gethash (car ',con) *rules*))))
+
+**圖 15.2 定義規則**
+
+規則將被包含於一個叫做 ``*rules*`` 的雜湊表，通過頭部 (head) 的判斷式構建這個哈系表。這樣做加強了我們無法使用判斷式中的變數的限制。雖然我們可以通過把所有這樣的規則放在分離的列表中來消除限制，但是如果這樣做，當我們需要證明某件事的時侯不得不和每一個列表進行匹配。
+
+我們將要使用同一個宏 ``<-`` 去定義事實 (facts)和規則 (rules)。一個事實將被表示成一個沒有 *body* 部分的規則。這和我們對規則的定義保持一致。一個規則告訴我們你可以通過證明 *body* 部分來證明 *head* 部分，所以沒有 *body* 部分的規則意味着你不需要通過證明任何東西來證明 *head* 部分。這裡有兩個對應的例子：
+
+::
+
+   > (<- (parent donald nancy))
+   1
+   > (<- (child ?x ?y) (parent ?y ?x))
+   1
+
+調用 ``<-`` 返回的是給定判斷式下存儲的規則數量；用 ``length`` 函數來包裝 ``push`` 能使我們免於看到頂層中的一大堆返回值。
+
+下面是我們的推論程式所需的大多數
+
+程式碼：
+
+::
+
+  (defun prove (expr &optional binds)
+    (case (car expr)
+      (and (prove-and (reverse (cdr expr)) binds))
+      (or  (prove-or (cdr expr) binds))
+      (not (prove-not (cadr expr) binds))
+      (t   (prove-simple (car expr) (cdr expr) binds))))
+
+  (defun prove-simple (pred args binds)
+    (mapcan #'(lambda (r)
+                (multiple-value-bind (b2 yes)
+                                     (match args (car r)
+                                            binds)
+                  (when yes
+                    (if (cdr r)
+                        (prove (cdr r) b2)
+                        (list b2)))))
+            (mapcar #'change-vars
+                    (gethash pred *rules*))))
+
+  (defun change-vars (r)
+    (sublis (mapcar #'(lambda (v) (cons v (gensym "?")))
+                    (vars-in r))
+            r))
+
+  (defun vars-in (expr)
+    (if (atom expr)
+        (if (var? expr) (list expr))
+      (union (vars-in (car expr))
+             (vars-in (cdr expr)))))
+
+**圖 15.3: 推論。**
+
+上面
+
+程式碼中的 ``prove`` 函數是推論進行的樞紐。它接受一個表達式和一個可選的綁定列表作爲參數。如果表達式不包含邏輯操作，它調用 ``prove-simple`` 函數，前面所說的連結 (chaining)正是在這個函數裡產生的。這個函數查看所有擁有正確判斷式的規則，並嘗試對每一個規則的 *head* 部分和它想要證明的事實做匹配。對於每一個匹配的 *head* ，使用匹配所產生的新的綁定在 *body* 上調用 ``prove`` 。對 ``prove`` 的調用所產生的綁定列表被 ``mapcan`` 收集並返回：
+
+::
+
+   > (prove-simple 'parent '(donald nancy) nil)
+   (NIL)
+   > (prove-simple 'child '(?x ?y) nil)
+   (((#:?6 . NANCY) (#:?5 . DONALD) (?Y . #:?5) (?X . #:?6)))
+
+以上兩個返回值指出有一種方法可以證明我們的問題。（一個失敗的證明將返回 nil。）第一個例子產生了一組空的綁定，第二個例子產生了這樣的綁定： ``?x`` 和 ``?y`` 被（間接）綁定到 ``nancy`` 和 ``donald`` 。
+
+順便說一句，這是一個很好的例子來實踐 2.13 節提出的觀點。因爲我們用函數式的風格來寫這個程式，所以可以交互式地測試每一個函數。
+
+第二個例子返回的值裡那些 *gensyms* 是怎麼回事？如果我們打算使用含有變數的規則，我們需要避免兩個規則恰好包含相同的變數。如果我們定義如下兩條規則：
+
+::
+
+   (<- (child ?x ?y) (parent ?y ?x))
+
+   (<- (daughter ?y ?x) (and (child ?y ?x) (female ?y)))
+
+第一條規則要表達的意思是：對於任何的 ``x`` 和 ``y`` ， 如果 ``y`` 是 ``x`` 的家長，則 ``x`` 是 ``y`` 的孩子。第二條則是：對於任何的 ``x`` 和 ``y`` ， 如果 ``y`` 是 ``x`` 的孩子並且 ``y`` 是女性，則 ``y`` 是 ``x`` 的女兒。在每一條規則內部，變數之間的關係是顯著的，但是兩條規則使用了相同的變數並非我們刻意爲之。
+
+如果我們使用上面所寫的規則，它們將不會按預期的方式工作。如果我們嘗試證明“ a 是 b 的女兒”，匹配到第二條規則的 *head* 部分時會將 ``a`` 綁定到 ``?y`` ，將 ``b`` 綁定到 ?x。我們無法用這樣的綁定匹配第一條規則的 *head* 部分：
+
+::
+
+   > (match '(child ?y ?x)
+            '(child ?x ?y)
+	    '((?y . a) (?x . b)))
+   NIL
+
+爲了保證一條規則中的變數只表示規則中各參數之間的關係，我們用 *gensyms* 來代替規則中的所有變數。這就是 ``change-vars`` 函數的目的。一個 *gensym* 不可能在另一個規則中作爲變數出現。但是因爲規則可以是遞迴的，我們必須防止出現一個規則和自身衝突的可能性，所以在定義和使用一個規則時都要調用 ``chabge-vars`` 函數。
+
+現在只剩下定義用以證明複雜表達式的函數了。下面就是需要的函數：
+
+::
+
+  (defun prove-and (clauses binds)
+    (if (null clauses)
+        (list binds)
+        (mapcan #'(lambda (b)
+                    (prove (car clauses) b))
+                (prove-and (cdr clauses) binds))))
+
+  (defun prove-or (clauses binds)
+    (mapcan #'(lambda (c) (prove c binds))
+            clauses))
+
+  (defun prove-not (clause binds)
+    (unless (prove clause binds)
+      (list binds)))
+
+**圖 15.4 邏輯運算子 (Logical operators)**
+
+操作一個 ``or`` 或者 ``not`` 表達式是非常簡單的。操作 ``or`` 時，我們提取在 ``or`` 之間的每一個表達式返回的綁定。操作 ``not`` 時，當且僅當在 ``not`` 裡的表達式產生 ``none`` 時，返回當前的綁定。
+
+``prove-and`` 函數稍微複雜一點。它像一個過濾器，它用之後的表達式所建立的每一個綁定來證明第一個表達式。這將導致 ``and`` 裡的表達式以相反的順序被求值。除非調用 ``prove`` 中的 ``prove-and`` 函數則會先逆轉它們。
+
+現在我們有了一個可以工作的程式，但它不是很友好。必須要解析 ``prove-and`` 返回的綁定列表是令人厭煩的，它們會變得更長隨着規則變得更加複雜。下面有一個宏來幫助我們更愉快地使用這個程式：
+
+::
+
+   (defmacro with-answer (query &body body)
+     (let ((binds (gensym)))
+       `(dolist (,binds (prove ',query))
+          (let ,(mapcar #'(lambda (v)
+                            `(,v (binding ',v ,binds)))
+                        (vars-in query))
+            ,@body))))
+
+**圖 15.5 介面宏 (Interface macro)**
+
+它接受一個 ``query`` （不被求值）和若干表達式構成的 ``body`` 作爲參數，把 ``query`` 所生成的每一組綁定的值賦給 ``query`` 中對應的模式變數，並計算 ``body`` 。
+
+::
+
+   > (with-answer (parent ?x ?y)
+       (format t "~A is the parent of ~A.~%" ?x ?y))
+   DONALD is the parent of NANCY.
+   NIL
+
+這個宏幫我們做瞭解析綁定的工作，同時爲我們在程式中使用 ``prove`` 提供了一個便捷的方法。下面是這個宏展開的情況：
+
+::
+
+  (with-answer (p ?x ?y)
+    (f ?x ?y))
+
+  ;;將被展開成下面的
+
+程式碼
+
+  (dolist (#:g1 (prove '(p ?x ?y)))
+    (let ((?x (binding '?x #:g1))
+          (?y (binding '?y #:g1)))
+      (f ?x ?y)))
+
+**圖 15.6: with-answer 調用的展開式**
+
+下面是使用它的一個例子：
+
+::
+
+   (<- (parent donald nancy))
+   (<- (parent donald debbie))
+   (<- (male donald))
+   (<- (father ?x ?y) (and (parent ?x ?y) (male ?x)))
+   (<- (= ?x ?y))
+   (<- (sibling ?x ?y) (and (parent ?z ?x)
+                            (parent ?z ?y)
+			    (not (= ?x ?y))))
+
+   ;;我們可以像下面這樣做出推論
+
+   > (with-answer (father ?x ?y)
+       (format t "~A is the father of ~A.~%" ?x ?y))
+   DONALD is the father of DEBBIE.
+   DONALD is the father of NANCY.
+   NIL
+   > (with-answer (sibling ?x ?y))
+       (format t "~A is the sibling of ~A.~%" ?x ?y))
+   DEBBLE is the sibling of NANCY.
+   NANCY is the  sibling of DEBBIE.
+   NIL
+
+**圖 15.7: 使用中的程式**
+
+15.4 分析 (Analysis)
 ===================================================
 
+看上去，我們在這一章中寫的
+
+程式碼，是用簡單自然的方式去實現這樣一個程式。事實上，它的效率非常差。我們在這裡是其實是做了一個解釋器。我們能夠把這個程式做得像一個編譯器。
+
+這裡做一個簡單的描述。基本的思想是把整個程式打包到兩個宏 ``<-`` 和 ``with-answer`` ，把已有程式中在\ *運行期*\ 做的多數工作搬到\ *宏展開期*\ （在 10.7 節的 ``avg`` 可以看到這種構思的雛形) 用函數取代列表來表示規則，我們不在運行時用 ``prove`` 和 ``prove-and`` 這樣的函數來解釋表達式，而是用相應的函數把表達式轉化成
+
+程式碼。當一個規則被定義的時候就有表達式可用。爲什麼要等到使用的時候才去分析它呢？這同樣適用於和 ``<-`` 調用了相同的函數來進行宏展開的 ``with-answer`` 。
+
+聽上去好像比我們已經寫的這個程式複雜很多，但其實可能只是長了兩三倍。想要學習這種技術的讀者可以看 *On Lisp* 或者 *Paradigms of Artificial Intelligence Programming* ，這兩本書有一些使用這種風格寫的範例程式。
