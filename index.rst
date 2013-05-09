@@ -18,7 +18,7 @@ ANSI Common Lisp 中文翻譯版
 參考解答
 ----------------------------------
 
-`P.Graham “ANSI Common LISP” Answer for Practice <http://www.shido.info/lisp/pacl2_e.html>`_ –– by SHIDO, Takafumi (takafumi@shido.info)
+`P.Graham “ANSI Common LISP” Answer for Practice <http://www.shido.info/lisp/pacl2_e.html>`_ ── by SHIDO, Takafumi (takafumi@shido.info)
 
 譯文詞彙
 ------------------------------
