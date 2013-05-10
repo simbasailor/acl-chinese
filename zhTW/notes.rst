@@ -345,7 +345,7 @@ See also the Emacs Dissociated Press feature, which uses an equivalent algorithm
 備註 176 (Notes 176)
 ===============================
 
-關於 CLOS 更詳細的信息，參考下列書目：
+關於 CLOS 更詳細的資訊，參考下列書目：
 
 Keene, Sonya E. `Object Oriented Programming in Common Lisp <http://en.wikipedia.org/wiki/Object-Oriented_Programming_in_Common_Lisp:_A_Programmer's_Guide_to_CLOS>`_ , Addison-Wesley, Reading (MA), 1989
 

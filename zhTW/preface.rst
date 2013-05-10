@@ -14,7 +14,7 @@ ANSI Common Lisp 這本書適合學生或者是專業的程式設計師去讀。
 ====================
 
 學習 Lisp 最好的辦法就是拿它來編程。況且在學習的同時用你學到的技術進行編程，也是非常有趣的一件事。編寫本書的目的就是讓讀者儘快的入門，在對 Lisp 進行簡短的介紹之後，
-第 2 章開始用 21 頁的內容，介紹了着手編寫 Lisp 程式時可能會用到的所有知識。
+第 2 章開始用 21 頁的內容，介紹了著手編寫 Lisp 程式時可能會用到的所有知識。
 3-9 章講解了 Lisp 裡面一些重要的知識點。這些章節特彆強調了一些重要的概念，比如指標在 Lisp 中扮演的角色，如何使用遞迴來解決問題，以及第一級函數的重要性等等。
 
 針對那些想要更深入瞭解 Lisp 的讀者：
@@ -48,7 +48,7 @@ ANSI Common Lisp 這本書適合學生或者是專業的程式設計師去讀。
 
 程式碼都可以在互聯網上下載到。你可以在網路上找到這些
 
-程式碼，它們還附帶着一個免費軟體的連結，一些過去的論文，以及 Lisp 的 FAQ 。還有很多有關 Lisp 的資源可以在此找到：
+程式碼，它們還附帶著一個免費軟體的連結，一些過去的論文，以及 Lisp 的 FAQ 。還有很多有關 Lisp 的資源可以在此找到：
 http://www.eecs.harvard.edu/onlisp/
 源
 
@@ -65,7 +65,7 @@ ftp://ftp.eecs.harvard.edu:/pub/onlisp/
 On Lisp
 =============
 
-在整本 On Lisp 書中，我一直試着指出一些 Lisp 獨一無二的特性，這些特性使得 Lisp 更像 “Lisp” 。並展示一些 Lisp 能讓你完成的新事情。比如說宏： Lisp 程式設計師能夠並且經常編寫一些能夠寫程式的程式。對於程式生成程式這種特性，因爲 Lisp 是主流語言中唯一一個提供了相關抽象使得你能夠方便地實現這種特性的編程語言，所以 Lisp 是主流語言中唯一一個廣泛運用這個特性的語言。我非常樂意邀請那些想要更進一步瞭解宏和其他高級 Lisp 技術的讀者，讀一下本書的姐妹篇：\ `On Lisp <http://www.paulgraham.com/onlisp.html>`_\ 。
+在整本 On Lisp 書中，我一直試著指出一些 Lisp 獨一無二的特性，這些特性使得 Lisp 更像 “Lisp” 。並展示一些 Lisp 能讓你完成的新事情。比如說宏： Lisp 程式設計師能夠並且經常編寫一些能夠寫程式的程式。對於程式生成程式這種特性，因爲 Lisp 是主流語言中唯一一個提供了相關抽象使得你能夠方便地實現這種特性的編程語言，所以 Lisp 是主流語言中唯一一個廣泛運用這個特性的語言。我非常樂意邀請那些想要更進一步瞭解宏和其他高級 Lisp 技術的讀者，讀一下本書的姐妹篇：\ `On Lisp <http://www.paulgraham.com/onlisp.html>`_\ 。
 
 .. note::
 
@@ -91,7 +91,7 @@ On Lisp
 
 我還需要感謝其他的許多人，包括：Henry Baker, Kim Barrett, Ingrid Bassett, Trevor Blackwell, Paul Becker, Gary Bisbee, Frank Deutschmann, Frances Dickey, Rich 和 Scott Draves, Bill Dubuque, Dan Friedman, Jenny Graham, Alice Hartley, David Hendler, Mike Hewett, Glenn Holloway, Brad Karp, Sonya Keene, Ross Knights, Mutsumi Komuro, Steffi Kutzia, David Kuznick, Madi Lord, Julie Mallozzi, Paul McNamee, Dave Moon, Howard Mullings, Mark Nitzberg, Nancy Parmet 和其家人, Robert Penny, Mike Plusch, Cheryl Sacks, Hazem Sayed, Shannon Spires, Lou Steinberg, Paul Stoddard, John Stone, Guy Steele, Steve Strassmann, Jim Veitch, Dave Watkins, Idelle and Julian Weber, the Weickers, Dave Yost 和 Alan Yuille。
 
-另外，着重感謝我的父母和 Jackie。
+另外，著重感謝我的父母和 Jackie。
 
 `高德納 <http://zh.wikipedia.org/zh-cn/%E9%AB%98%E5%BE%B7%E7%BA%B3>`_\ 給他的經典叢書起名爲《計算機程式設計藝術》。在他的圖靈獎獲獎感言中，他解釋說這本書的書名源自於內心深處的潛意識 ── 潛意識告訴他，編程其實就是追求編寫最優美的程式。
 
