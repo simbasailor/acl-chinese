@@ -17,7 +17,7 @@ ANSI Common Lisp 這本書適合學生或者是專業的程式設計師去讀。
 第 2 章開始用 21 頁的內容，介紹了著手編寫 Lisp 程式時可能會用到的所有知識。
 3-9 章講解了 Lisp 裡面一些重要的知識點。這些章節特彆強調了一些重要的概念，比如指標在 Lisp 中扮演的角色，如何使用遞迴來解決問題，以及第一級函數的重要性等等。
 
-針對那些想要更深入瞭解 Lisp 的讀者：
+針對那些想要更深入了解 Lisp 的讀者：
 10-14 章包含了宏、CLOS、列表操作、程式優化，以及一些更高級的課題，比如包和讀取宏。
 
 15-17 章通過 3 個 Common Lisp 的實際應用，總結了之前章節所講解的知識：一個是進行邏輯推理的程式，另一個是 HTML 生成器，最後一個是針對物件導向程式設計的嵌入式語言。
@@ -25,9 +25,7 @@ ANSI Common Lisp 這本書適合學生或者是專業的程式設計師去讀。
 本書的最後一部分包含了 4 個附錄，這些附錄應該對所有的讀者都有用：
 附錄 A-D 包括了一個如何除錯程式的指南， 58 個 Common Lisp 運算子的源程式，一個關於 ANSI Common Lisp 和以前的 Lisp 語言區別的總結，以及一個包括所有 ANSI Common Lisp 的參考手冊。
 
-本書還包括一節備註。這些備註包括一些說明，一些參考條目，一些額外的
-
-程式碼，以及一些對偶然出現的不正確表述的糾正。備註在文中用一個小圓圈來表示，像這樣：○
+本書還包括一節備註。這些備註包括一些說明，一些參考條目，一些額外的程式，以及一些對偶然出現的不正確表述的糾正。備註在文中用一個小圓圈來表示，像這樣：○
 
 .. tip::
 
@@ -37,35 +35,22 @@ ANSI Common Lisp 這本書適合學生或者是專業的程式設計師去讀。
 
 
 
-程式碼
+原始碼
 ==========
 
-雖然本書介紹的是 ANSI Common Lisp ，但是本書中的
+雖然本書介紹的是 ANSI Common Lisp ，但是本書中的程式可以在任何版本的 Common Lisp 中運行。那些依賴 Lisp 語言新特性的例子的旁邊，會有註釋告訴你如何把它們運行於舊版本的 Lisp 中。
 
-程式碼可以在任何版本的 Common Lisp 中運行。那些依賴 Lisp 語言新特性的例子的旁邊，會有註釋告訴你如何把它們運行於舊版本的 Lisp 中。
+本書中所有的程式都可以在互聯網上下載到。你可以在網路上找到這些程式，它們還附帶著一個免費軟體的連結，一些過去的論文，以及 Lisp 的 FAQ 。還有很多有關 Lisp 的資源可以在此找到：http://www.eecs.harvard.edu/onlisp/ 原始碼可以在此 FTP 服務器上下載：
+ftp://ftp.eecs.harvard.edu:/pub/onlisp/ 讀者的問題和意見可以發送到 pg@eecs.harvard.edu 。
 
-本書中所有的
+.. note::
 
-程式碼都可以在互聯網上下載到。你可以在網路上找到這些
-
-程式碼，它們還附帶著一個免費軟體的連結，一些過去的論文，以及 Lisp 的 FAQ 。還有很多有關 Lisp 的資源可以在此找到：
-http://www.eecs.harvard.edu/onlisp/
-源
-
-程式碼可以在此 FTP 服務器上下載：
-ftp://ftp.eecs.harvard.edu:/pub/onlisp/
-讀者的問題和意見可以發送到 pg@eecs.harvard.edu 。
-
-.. tip::
-
-	譯註：下載的連結都壞掉了，本書的
-
-程式碼可以到此下載：https://raw.github.com/acl-translation/acl-chinese/master/code/acl2.lisp
+	譯註：下載的連結都壞掉了，本書的原始碼可以到此下載：https://raw.github.com/acl-translation/acl-chinese/master/code/acl2.lisp
 
 On Lisp
 =============
 
-在整本 On Lisp 書中，我一直試著指出一些 Lisp 獨一無二的特性，這些特性使得 Lisp 更像 “Lisp” 。並展示一些 Lisp 能讓你完成的新事情。比如說宏： Lisp 程式設計師能夠並且經常編寫一些能夠寫程式的程式。對於程式生成程式這種特性，因爲 Lisp 是主流語言中唯一一個提供了相關抽象使得你能夠方便地實現這種特性的編程語言，所以 Lisp 是主流語言中唯一一個廣泛運用這個特性的語言。我非常樂意邀請那些想要更進一步瞭解宏和其他高級 Lisp 技術的讀者，讀一下本書的姐妹篇：\ `On Lisp <http://www.paulgraham.com/onlisp.html>`_\ 。
+在整本 On Lisp 書中，我一直試著指出一些 Lisp 獨一無二的特性，這些特性使得 Lisp 更像 “Lisp” 。並展示一些 Lisp 能讓你完成的新事情。比如說宏： Lisp 程式設計師能夠並且經常編寫一些能夠寫程式的程式。對於程式生成程式這種特性，因爲 Lisp 是主流語言中唯一一個提供了相關抽象使得你能夠方便地實現這種特性的編程語言，所以 Lisp 是主流語言中唯一一個廣泛運用這個特性的語言。我非常樂意邀請那些想要更進一步了解宏和其他高級 Lisp 技術的讀者，讀一下本書的姐妹篇：\ `On Lisp <http://www.paulgraham.com/onlisp.html>`_\ 。
 
 .. note::
 
@@ -77,9 +62,7 @@ On Lisp
 
 在所有幫助我完成這本的朋友當中，我想特別的感謝一下 Robert Morris 。他的重要影響反應在整本書中。他的良好影響使這本書更加優秀。本書中好一些實體程式都源自他手。這些程式包括 138 頁的 Henley 和 249 頁的模式匹配器。
 
-我很高興能有一個高水平的技術審稿小組：Skona Brittain, John Foderaro, Nick Levine, Peter Norvig 和 Dave Touretzky。本書中幾乎所有部分都得益於它們的意見。 John Foderaro 甚至重寫了本書 5.7 節中一些
-
-程式碼。
+我很高興能有一個高水平的技術審稿小組：Skona Brittain, John Foderaro, Nick Levine, Peter Norvig 和 Dave Touretzky。本書中幾乎所有部分都得益於它們的意見。 John Foderaro 甚至重寫了本書 5.7 節中一些程式。
 
 另外一些人通篇閱讀了本書的手稿，它們是：Ken Anderson, Tom Cheatham, Richard Fateman, Steve Hain, Barry Margolin, Waldo Pacheco, Wheeler Ruml 和 Stuart Russell。特別要提一下，Ken Anderson 和 Wheeler Ruml 給予了很多有用的意見。
 
@@ -97,8 +80,6 @@ On Lisp
 
 就像建築設計一樣，編程既是一門工程技藝也是一門藝術。一個程式要遵循數學原理也要符合物理定律。但是建築師的目的不僅僅是建一個不會倒塌的建築。更重要的是，他們要建一個優美的建築。
 
-像高德納一樣，很多程式設計師認爲編程的真正目的，不僅僅是編寫出正確的程式，更重要的是寫出優美的
-
-程式碼。幾乎所有的 Lisp 黑客也是這麼想的。 Lisp 黑客精神可以用兩句話來概括：編程應該是有趣的。程式應該是優美的。這就是我在這本書中想要傳達的精神。
+像高德納一樣，很多程式設計師認爲編程的真正目的，不僅僅是編寫出正確的程式，更重要的是寫出優美的程式。幾乎所有的 Lisp 黑客也是這麼想的。 Lisp 黑客精神可以用兩句話來概括：編程應該是有趣的。程式應該是優美的。這就是我在這本書中想要傳達的精神。
 
 `保羅•葛拉漢姆 (Paul Graham) <http://paulgraham.com/>`_

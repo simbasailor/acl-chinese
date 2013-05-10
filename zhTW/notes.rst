@@ -354,23 +354,11 @@ Kiczales, Gregor, Jim des Rivieres, and Daniel G. Bobrow. `The Art of the Metaob
 備註 178 (Notes 178)
 ==============================
 
-讓我們再回放剛剛的句子一次：\ *我們甚至不需要看程式中其他的
+讓我們再回放剛剛的句子一次：\ *我們甚至不需要看程式中其他的程式碼一眼，就可以完成種種的改動。*\ 這個想法或許對某些讀者聽起來擔憂地熟悉。這是寫出\ `麵條式程式碼 <http://zh.wikipedia.org/wiki/%E9%9D%A2%E6%9D%A1%E5%BC%8F%E4%BB%A3%E7%A0%81>`_\ 的食譜。
 
-程式碼一眼，就可以完成種種的改動。*\ 這個想法或許對某些讀者聽起來擔憂地熟悉。這是寫出\ `麵條式
+物件導向模型使得通過一點一點的來構造程式變得簡單。但這通常意味著，在實踐上它提供了一種有結構的方法來寫出麵條式程式碼。這不一定是壞事，但也不會是好事。
 
-程式碼 <http://zh.wikipedia.org/wiki/%E9%9D%A2%E6%9D%A1%E5%BC%8F%E4%BB%A3%E7%A0%81>`_\ 的食譜。
-
-物件導向模型使得通過一點一點的來構造程式變得簡單。但這通常意味著，在實踐上它提供了一種有結構的方法來寫出麵條式
-
-程式碼。這不一定是壞事，但也不會是好事。
-
-很多現實世界中的
-
-程式碼是麵條式
-
-程式碼，這也許不能很快改變。針對那些終將成爲麵條式
-
-程式碼的程式來說，物件導向模型是好的：它們最起碼會是有結構的麵條。但針對那些也許可以避免誤入崎途的程式來說，面向物件抽象只是更加危險的，而不是有用的。
+很多現實世界中的程式碼是麵條式程式碼，這也許不能很快改變。針對那些終將成爲麵條式程式碼的程式來說，物件導向模型是好的：它們最起碼會是有結構的麵條。但針對那些也許可以避免誤入崎途的程式來說，面向物件抽象只是更加危險的，而不是有用的。
 
 備註 183 (Notes 183)
 ==================================
@@ -647,13 +635,9 @@ then this function pops (in the old sense) a list of ballons:
 
 Gabriel, Richard P. `Lisp Good News, Bad News, How to Win Big <http://www.dreamsongs.com/Files/LispGoodNewsBadNews.pdf>`_ *AI Expert*\ , June 1991, p.35.
 
-早在 1973 年， `Richard Fateman <http://en.wikipedia.org/wiki/Richard_Fateman>`_ 已經能證明在 `PDP-10 <http://en.wikipedia.org/wiki/PDP-10>`_ 主機上， `MacLisp <http://en.wikipedia.org/wiki/Maclisp>`_ 編譯器比製造商的 FORTRAN 編譯器，產生出更快速的
+早在 1973 年， `Richard Fateman <http://en.wikipedia.org/wiki/Richard_Fateman>`_ 已經能證明在 `PDP-10 <http://en.wikipedia.org/wiki/PDP-10>`_ 主機上， `MacLisp <http://en.wikipedia.org/wiki/Maclisp>`_ 編譯器比製造商的 FORTRAN 編譯器，產生出更快速的程式碼。
 
-程式碼。
-
-**譯註:** `該篇 MacLisp 編譯器在 PDP-10 可產生比 Fortran 快的
-
-程式碼的論文在這可以找到 <http://dl.acm.org/citation.cfm?doid=1086803.1086804>`_
+**譯註:** `該篇 MacLisp 編譯器在 PDP-10 可產生比 Fortran 快的程式碼的論文在這可以找到 <http://dl.acm.org/citation.cfm?doid=1086803.1086804>`_
 
 備註 399 (Notes 399)
 ==================================
