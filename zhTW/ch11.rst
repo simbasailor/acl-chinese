@@ -4,7 +4,7 @@
 第十一章：Common Lisp 物件系統
 **************************************************
 
-Common Lisp 物件系統，或稱爲 CLOS，是一組用來實作物件導向程式設計的操作集。由於它們有著同樣的歷史，通常將這些操作視爲一個群組。 `λ <http://ansi-common-lisp.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-176>`_ 技術上來說，它們與其他部分的 Common Lisp 沒有不同： ``defmethod`` 只不過和 ``defun`` 一樣是語言中的一個整合部分。
+Common Lisp 物件系統，或稱爲 CLOS，是一組用來實作物件導向程式設計的操作集。由於它們有著同樣的歷史，通常將這些操作視爲一個群組。 `λ <http://acl.readthedocs.org/en/latest/zhTW/notes.html#notes-176>`_ 技術上來說，它們與其他部分的 Common Lisp 沒有不同： ``defmethod`` 只不過和 ``defun`` 一樣是語言中的一個整合部分。
 
 11.1 物件導向程式設計 Object-Oriented Programming
 =====================================================
@@ -79,7 +79,7 @@ Common Lisp 物件系統，或稱爲 CLOS，是一組用來實作物件導向程
 
 從實踐層面來看，物件導向程式設計代表著以方法、類、實體以及繼承來組織程式。爲什麼你會想這麼組織程式？面向物件方法的主張之一說這樣使得程式更容易改動。如果我們想要改變 ``ob`` 類物件所顯示的方式，我們只需要改動 ``ob`` 類的 ``display`` 方法。如果我們希望創建一個新的類，大致上與 ``ob`` 相同，只有某些方面不同，我們可以創建一個 ``ob`` 類的子類。在這個子類裡，我們僅改動我們想要的屬性，其他所有的屬性會從 ``ob`` 類默認繼承得到。要是我們只是想讓某個 ``ob`` 物件和其他的 ``ob`` 物件不一樣，我們可以新建一個 ``ob`` 物件，直接修改這個物件的屬性即可。若是當時的程式寫的很講究，我們甚至不需要看程式中其他的
 
-程式碼一眼，就可以完成種種的改動。 `λ <http://ansi-common-lisp.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-178>`_
+程式碼一眼，就可以完成種種的改動。 `λ <http://acl.readthedocs.org/en/latest/zhTW/notes.html#notes-178>`_
 
 11.2 類與實體 (Class and Instances)
 ==================================================
@@ -271,7 +271,7 @@ Common Lisp 物件系統，或稱爲 CLOS，是一組用來實作物件導向程
 
 圖 11.3 的箭頭演示了一個網路是如何遍歷的。由這個圖所決定出的優先序列表爲： ``cast-statue`` , ``statue`` , ``sculpture`` , ``casting`` , ``metalwork`` , ``standard-object`` , ``t`` 。有時候會用 *specific* 這個詞，作爲在一個給定的優先序列表中來引用類別的位置的速記法。優先序列表從最高優先序排序至最低優先序。
 
-優先序的主要目的是，當一個通用函數 (generic function)被調用時，決定要用哪個方法。這個過程在下一節講述。另一個優先序重要的地方是，當一個槽從多個基類繼承時。408 頁的備註解釋了當這情況發生時的應用規則。 `λ <http://ansi-common-lisp.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-183>`_
+優先序的主要目的是，當一個通用函數 (generic function)被調用時，決定要用哪個方法。這個過程在下一節講述。另一個優先序重要的地方是，當一個槽從多個基類繼承時。408 頁的備註解釋了當這情況發生時的應用規則。 `λ <http://acl.readthedocs.org/en/latest/zhTW/notes.html#notes-183>`_
 
 11.6 通用函數 (Generic Functions)
 =======================================
@@ -579,7 +579,7 @@ Common Lisp 物件系統，或稱爲 CLOS，是一組用來實作物件導向程
 
 	(unintern 'state)
 
-則沒有任何合法的、其它的辦法，從任何包來引用到這個槽。 `λ <http://ansi-common-lisp.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-191>`_
+則沒有任何合法的、其它的辦法，從任何包來引用到這個槽。 `λ <http://acl.readthedocs.org/en/latest/zhTW/notes.html#notes-191>`_
 
 11.10 兩種模型 (Two Models)
 ========================================

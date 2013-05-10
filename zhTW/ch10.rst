@@ -205,7 +205,7 @@ Comma-at 在宏裡很有用，舉例來說，在用剩餘參數 (rest parameters
 10.4 範例：快速排序法(Example: Quicksort)
 ===================================================
 
-圖 10.1 包含了重度依賴宏的一個範例函數 ── 一個使用快速排序演算法 `λ <http://ansi-common-lisp.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-164>`_ 來排序向量的函數。這個函數的工作方式如下:
+圖 10.1 包含了重度依賴宏的一個範例函數 ── 一個使用快速排序演算法 `λ <http://acl.readthedocs.org/en/latest/zhTW/notes.html#notes-164>`_ 來排序向量的函數。這個函數的工作方式如下:
 
 ::
 
@@ -571,7 +571,7 @@ Common Lisp 提供了 ``define-modify-macro`` 作爲寫出對於 ``setf`` 限制
 
 現在宏已經介紹過了，我們看過更多的 Lisp 是由超乎我們想像的 Lisp 寫成。許多不是函數的 Common Lisp 運算子是宏，而他們全部用 Lisp 寫成的。只有二十五個 Common Lisp 內建的運算子是特殊運算子。
 
-`John Foderaro <http://www.franz.com/about/bios/jkf.lhtml>`_ 將 Lisp 稱爲“可程式的程式語言。” `λ <http://ansi-common-lisp.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-173>`_ 通過撰寫你自己的函數與宏，你將 Lisp 變成任何你想要的語言。 (我們會在 17 章看到這個可能性的圖形化示範)無論你的程式適合何種形式，你確信你可以將 Lisp 塑造成適合它的語言。
+`John Foderaro <http://www.franz.com/about/bios/jkf.lhtml>`_ 將 Lisp 稱爲“可程式的程式語言。” `λ <http://acl.readthedocs.org/en/latest/zhTW/notes.html#notes-173>`_ 通過撰寫你自己的函數與宏，你將 Lisp 變成任何你想要的語言。 (我們會在 17 章看到這個可能性的圖形化示範)無論你的程式適合何種形式，你確信你可以將 Lisp 塑造成適合它的語言。
 
 宏是這個靈活性的主要成分之一。它們允許你將 Lisp 變得完全認不出來，但仍然用一種有原則且高效的方法來實作。在 Lisp 社區裡，宏是個越來越感興趣的主題。可以使用宏辦到驚人之事是很清楚的，但更確信的是宏背後還有更多需要被探索。如果你想的話，可以通過你來發現。Lisp 永遠將進化放在程式設計師手裡。這是它爲什麼存活的原因。
 

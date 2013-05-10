@@ -44,7 +44,7 @@
 
 然后使用它来证明 ``(daughter x y)`` 可能导致程序使用第一个规则去证明 ``(child x y)`` 。
 
-表达式的证明可以回溯任意数量的规则，只要它最终结束于给出的已知事实。这个过程有时候被称为反向链接 (backward-chaining)。之所以说 *反向* (backward) 是因为这一类推论先考虑 *head* 部分，这是为了在继续证明 *body* 部分之前检查规则是否有效。*链接* (chaining) 来源于规则之间的依赖关系，从我们想要证明的内容到我们的已知条件组成一个链接 (尽管事实上它更像一棵树)。 `λ <http://ansi-common-lisp.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-248>`_
+表达式的证明可以回溯任意数量的规则，只要它最终结束于给出的已知事实。这个过程有时候被称为反向链接 (backward-chaining)。之所以说 *反向* (backward) 是因为这一类推论先考虑 *head* 部分，这是为了在继续证明 *body* 部分之前检查规则是否有效。*链接* (chaining) 来源于规则之间的依赖关系，从我们想要证明的内容到我们的已知条件组成一个链接 (尽管事实上它更像一棵树)。 `λ <http://acl.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-248>`_
 
 15.2 匹配 (Matching)
 ==================================================

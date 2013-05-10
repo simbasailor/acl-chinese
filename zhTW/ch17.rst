@@ -138,7 +138,7 @@
 
 圖 17.4 包含了新的
 
-程式碼。 `λ <http://ansi-common-lisp.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-273>`_ 全局的 ``*objs*`` 會是一個包含所有當前物件的列表。函數 ``parents`` 取出一個物件的父類；相反的 ``(setf parents)`` 不僅配置一個物件的父類，也調用 ``make-precedence`` 來重新構造任何需要變動的優先序列表。這些列表與之前一樣，由 ``precedence`` 來構造。
+程式碼。 `λ <http://acl.readthedocs.org/en/latest/zhTW/notes.html#notes-273>`_ 全局的 ``*objs*`` 會是一個包含所有當前物件的列表。函數 ``parents`` 取出一個物件的父類；相反的 ``(setf parents)`` 不僅配置一個物件的父類，也調用 ``make-precedence`` 來重新構造任何需要變動的優先序列表。這些列表與之前一樣，由 ``precedence`` 來構造。
 
 用戶現在不用調用 ``make-hash-table`` 來創建物件，調用 ``obj`` 來取代， ``obj`` 一步完成創建一個新物件及定義其父類。我們也重定義了 ``rget`` 來利用保存優先序列表的好處。
 
@@ -273,7 +273,7 @@
 
 這裡 ``funcall`` 等同於一個 ``call-next-method`` 調用，但他..
 
-圖 17.6 的 ``defmeth`` 宏提供了一個便捷方式來定義方法，並使得調用下個方法變得簡單。一個 ``defmeth`` 的調用會展開成一個 ``setf`` 表達式，但 ``setf`` 在一個 ``labels`` 表達式裡定義了 ``next`` 作爲取出下個方法的函數。這個函數與 ``next-method-p`` 類似（第 188 頁「譯註: 11.7 節」），但返回的是我們可以調用的東西，同時作為 ``call-next-method`` 。 `λ <http://ansi-common-lisp.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-273>`_ 前述兩個方法可以被定義成：
+圖 17.6 的 ``defmeth`` 宏提供了一個便捷方式來定義方法，並使得調用下個方法變得簡單。一個 ``defmeth`` 的調用會展開成一個 ``setf`` 表達式，但 ``setf`` 在一個 ``labels`` 表達式裡定義了 ``next`` 作爲取出下個方法的函數。這個函數與 ``next-method-p`` 類似（第 188 頁「譯註: 11.7 節」），但返回的是我們可以調用的東西，同時作為 ``call-next-method`` 。 `λ <http://acl.readthedocs.org/en/latest/zhTW/notes.html#notes-273>`_ 前述兩個方法可以被定義成：
 
 ::
 
@@ -542,7 +542,7 @@
 
 我們現在有了一個適合撰寫實際面向物件程式的嵌入式語言。它很簡單，但就大小來說相當強大。而在典型應用裡，它也會是快速的。在一個典型的應用裡，操作實體應比操作類別更常見。我們重新設計的重點在於如何使得操作實體的花費降低。
 
-在我們的程式裡，創建類別既慢且產生了許多垃圾。如果類別不是在速度爲關鍵考量時創建，這還是可以接受的。會需要速度的是存取函數以及創建實體。這個程式裡的沒有做編譯優化的存取函數大約與我們預期的一樣快。 `λ <http://ansi-common-lisp.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-284>`_ 而創建實體也是如此。且兩個操作都沒有用到構造 (consing)。除了用來表達實體的向量例外。會自然的以爲這應該是動態地配置才對。但我們甚至可以避免動態配置實體，如果我們使用像是 13.4 節所提出的策略。
+在我們的程式裡，創建類別既慢且產生了許多垃圾。如果類別不是在速度爲關鍵考量時創建，這還是可以接受的。會需要速度的是存取函數以及創建實體。這個程式裡的沒有做編譯優化的存取函數大約與我們預期的一樣快。 `λ <http://acl.readthedocs.org/en/latest/zhTW/notes.html#notes-284>`_ 而創建實體也是如此。且兩個操作都沒有用到構造 (consing)。除了用來表達實體的向量例外。會自然的以爲這應該是動態地配置才對。但我們甚至可以避免動態配置實體，如果我們使用像是 13.4 節所提出的策略。
 
 我們的嵌入式語言是 Lisp 編程的一個典型例子。只不過是一個嵌入式語言就可以是一個例子了。但 Lisp 的特性是它如何從一個小的、受限版本的程式，進化成一個強大但低效的版本，最終演化成快速但稍微受限的版本。
 
@@ -550,7 +550,7 @@ Lisp 惡名昭彰的緩慢不是 Lisp 本身導致（Lisp 編譯器早在 1980 �
 
 程式碼），而是由於許多程式設計師在第二個階段就放棄的事實。如同 Richard Gabriel 所寫的，
 
-	要在 Lisp 撰寫出性能極差的程式相當簡單；而在 C 這幾乎是不可能的。 `λ <http://ansi-common-lisp.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-284-2>`_
+	要在 Lisp 撰寫出性能極差的程式相當簡單；而在 C 這幾乎是不可能的。 `λ <http://acl.readthedocs.org/en/latest/zhTW/notes.html#notes-284-2>`_
 
 這完全是一個真的論述，但也可以解讀爲讚揚或貶低 Lisp 的論點：
 

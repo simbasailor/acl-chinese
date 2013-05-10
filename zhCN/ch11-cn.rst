@@ -3,7 +3,7 @@
 第十一章：Common Lisp 对象系统
 **************************************************
 
-Common Lisp 对象系统，或称为 CLOS，是一组用来实作面向对象编程的操作集。由于它们有著同样的历史，通常将这些操作视为一个群组。 `λ <http://ansi-common-lisp.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-176>`_ 技术上来说，它们与其他部分的 Common Lisp 没有不同： ``defmethod`` 只不过和 ``defun`` 一样是语言中的一个整合部分。
+Common Lisp 对象系统，或称为 CLOS，是一组用来实作面向对象编程的操作集。由于它们有著同样的历史，通常将这些操作视为一个群组。 `λ <http://acl.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-176>`_ 技术上来说，它们与其他部分的 Common Lisp 没有不同： ``defmethod`` 只不过和 ``defun`` 一样是语言中的一个整合部分。
 
 11.1 面向对象编程 Object-Oriented Programming
 ================================================
@@ -76,7 +76,7 @@ Common Lisp 对象系统，或称为 CLOS，是一组用来实作面向对象编
 
 2. 由于没有特别为 ``colored-circle`` 定义的 ``area`` 方法存在，若我们对 ``colored-circle`` 实例调用 ``area`` ，我们会获得替 ``circle`` 类所定义的 ``area`` 方法。
 
-从实践层面来看，面向对象编程代表著以方法、类、实例以及继承来组织程序。为什么你会想这么组织程序？面向对象方法的主张之一说这样使得程序更容易改动。如果我们想要改变 ``ob`` 类对象所显示的方式，我们只需要改动 ``ob`` 类的 ``display`` 方法。如果我们希望创建一个新的类，大致上与 ``ob`` 相同，只有某些方面不同，我们可以创建一个 ``ob`` 类的子类。在这个子类里，我们仅改动我们想要的属性，其他所有的属性会从 ``ob`` 类默认继承得到。要是我们只是想让某个 ``ob`` 对象和其他的 ``ob`` 对象不一样，我们可以新建一个 ``ob`` 对象，直接修改这个对象的属性即可。若是当时的程序写的很讲究，我们甚至不需要看程序中其他的代码一眼，就可以完成种种的改动。 `λ <http://ansi-common-lisp.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-178>`_
+从实践层面来看，面向对象编程代表著以方法、类、实例以及继承来组织程序。为什么你会想这么组织程序？面向对象方法的主张之一说这样使得程序更容易改动。如果我们想要改变 ``ob`` 类对象所显示的方式，我们只需要改动 ``ob`` 类的 ``display`` 方法。如果我们希望创建一个新的类，大致上与 ``ob`` 相同，只有某些方面不同，我们可以创建一个 ``ob`` 类的子类。在这个子类里，我们仅改动我们想要的属性，其他所有的属性会从 ``ob`` 类默认继承得到。要是我们只是想让某个 ``ob`` 对象和其他的 ``ob`` 对象不一样，我们可以新建一个 ``ob`` 对象，直接修改这个对象的属性即可。若是当时的程序写的很讲究，我们甚至不需要看程序中其他的代码一眼，就可以完成种种的改动。 `λ <http://acl.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-178>`_
 
 11.2 类与实例 (Class and Instances)
 ==================================================
@@ -268,7 +268,7 @@ Common Lisp 对象系统，或称为 CLOS，是一组用来实作面向对象编
 
 图 11.3 的箭头演示了一个网络是如何遍历的。由这个图所决定出的优先级列表为： ``cast-statue`` , ``statue`` , ``sculpture`` , ``casting`` , ``metalwork`` , ``standard-object`` , ``t`` 。有时候会用 *specific* 这个词，作为在一个给定的优先级列表中来引用类别的位置的速记法。优先级列表从最高优先级排序至最低优先级。
 
-优先级的主要目的是，当一个通用函数 (generic function)被调用时，决定要用哪个方法。这个过程在下一节讲述。另一个优先级重要的地方是，当一个槽从多个基类继承时。408 页的备注解释了当这情况发生时的应用规则。 `λ <http://ansi-common-lisp.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-183>`_
+优先级的主要目的是，当一个通用函数 (generic function)被调用时，决定要用哪个方法。这个过程在下一节讲述。另一个优先级重要的地方是，当一个槽从多个基类继承时。408 页的备注解释了当这情况发生时的应用规则。 `λ <http://acl.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-183>`_
 
 11.6 通用函数 (Generic Functions)
 =======================================
@@ -572,7 +572,7 @@ Common Lisp 对象系统，或称为 CLOS，是一组用来实作面向对象编
 
 	(unintern 'state)
 
-则没有任何合法的、其它的办法，从任何包来引用到这个槽。 `λ <http://ansi-common-lisp.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-191>`_
+则没有任何合法的、其它的办法，从任何包来引用到这个槽。 `λ <http://acl.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-191>`_
 
 11.10 两种模型 (Two Models)
 ========================================

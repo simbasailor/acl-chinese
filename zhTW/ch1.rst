@@ -3,7 +3,7 @@
 第一章：簡介
 *******************************
 
-`約翰麥卡錫 <http://zh.wikipedia.org/zh-cn/%E7%BA%A6%E7%BF%B0%C2%B7%E9%BA%A6%E5%8D%A1%E9% 94%A1>`_\ 和他的學生於 1958 年展開 Lisp 的初次實現工作。 Lisp 是繼 FORTRAN 之後，仍在使用的最古老的程式語言。 `λ <http://ansi-common-lisp.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-1>`_ 更值得注意的是，它仍走在程式語言技術的最前面。懂 Lisp 的程式設計師會告訴你，有某種東西使 Lisp 與衆不同。
+`約翰麥卡錫 <http://zh.wikipedia.org/zh-cn/%E7%BA%A6%E7%BF%B0%C2%B7%E9%BA%A6%E5%8D%A1%E9% 94%A1>`_\ 和他的學生於 1958 年展開 Lisp 的初次實現工作。 Lisp 是繼 FORTRAN 之後，仍在使用的最古老的程式語言。 `λ <http://acl.readthedocs.org/en/latest/zhTW/notes.html#notes-1>`_ 更值得注意的是，它仍走在程式語言技術的最前面。懂 Lisp 的程式設計師會告訴你，有某種東西使 Lisp 與衆不同。
 
 Lisp 與衆不同的部分原因是，它被設計成能夠自己進化。你能用 Lisp 定義新的 Lisp 運算子。當新的抽象概念風行時（如物件導向程式設計），我們總是發現這些新概念在 Lisp 是最容易來實現的。Lisp 就像生物的 DNA 一樣，這樣的語言永遠不會過時。
 

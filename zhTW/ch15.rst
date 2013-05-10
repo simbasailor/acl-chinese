@@ -44,7 +44,7 @@
 
 然後使用它來證明 ``(daughter x y)`` 可能導致程式使用第一個規則去證明 ``(child x y)`` 。
 
-表達式的證明可以回溯任意數量的規則，只要它最終結束於給出的已知事實。這個過程有時候被稱爲反向連結 (backward-chaining)。之所以說 *反向* (backward) 是因爲這一類推論先考慮 *head* 部分，這是爲了在繼續證明 *body* 部分之前檢查規則是否有效。*連結* (chaining) 來源於規則之間的依賴關係，從我們想要證明的內容到我們的已知條件組成一個連結 (儘管事實上它更像一棵樹)。 `λ <http://ansi-common-lisp.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-248>`_
+表達式的證明可以回溯任意數量的規則，只要它最終結束於給出的已知事實。這個過程有時候被稱爲反向連結 (backward-chaining)。之所以說 *反向* (backward) 是因爲這一類推論先考慮 *head* 部分，這是爲了在繼續證明 *body* 部分之前檢查規則是否有效。*連結* (chaining) 來源於規則之間的依賴關係，從我們想要證明的內容到我們的已知條件組成一個連結 (儘管事實上它更像一棵樹)。 `λ <http://acl.readthedocs.org/en/latest/zhTW/notes.html#notes-248>`_
 
 15.2 匹配 (Matching)
 ==================================================
