@@ -16,7 +16,7 @@ Common Lisp 有两种流 (streams)，字符流与二进制流。本章描述了�
 
 我们已经看过 ``read`` 与 ``format`` 是如何在顶层读取与印出。前者接受一个应是流的选择性参数，缺省是 ``*standard-input*`` 。 ``format`` 的第一个参数也可以是一个流，但当它是 ``t`` 时，输出被送到 ``*standard-output*`` 。所以我们目前为止都只用到缺省的流而已。我们可以在任何流上面做同样的 I/O 操作。
 
-一个路径名 (pathname) 是一种可携的方式 (portable way)来指定一个文件。一个路径名有六个部分：host, device, directory, name, type 及 version。你可以通过调用 ``make-pathname`` 搭配一个或多个对应的关键字参数来产生一个路径。在最简单的情况下，你可以只指明名字，让其他的部分留为缺省：
+路径名（pathname）是一种指定一个文件的可移植方式。路径名包含了六个部分：host、device、directory、name、type 及 version。你可以通过调用 ``make-pathname`` 搭配一个或多个对应的关键字参数来产生一个路径。在最简单的情况下，你可以只指明名字，让其他的部分留为缺省：
 
 ::
 
@@ -25,7 +25,7 @@ Common Lisp 有两种流 (streams)，字符流与二进制流。本章描述了�
 
 开启一个文件的基本函数是 ``open`` 。它接受一个路径名 [1]_ 以及大量的选择性关键字参数，而若是开启成功时，返回一个指向文件的流。
 
-你可以在创建流时，指定你想要怎么使用它。 无论你是要写入流、从流读取或是两者皆是，``direction`` 参数都会侦测到。三个对应的数值是 ``:input`` , ``:output`` , ``:io`` 。如果是用来输出的流， ``if-exists`` 参数说明了如果文件已经存在时该怎么做；通常它应该是 ``:supercede`` (译注: 取代)。所以要创建一个可以写至 ``"myfile"`` 文件的流，你可以：
+你可以在创建流时，指定你想要怎么使用它。 无论你是要写入流、从流读取或是两者皆是， ``direction`` 参数都会侦测到。三个对应的数值是 ``:input`` , ``:output`` , ``:io`` 。如果是用来输出的流， ``if-exists`` 参数说明了如果文件已经存在时该怎么做；通常它应该是 ``:supercede`` (译注: 取代)。所以要创建一个可以写至 ``"myfile"`` 文件的流，你可以：
 
 ::
 
@@ -33,7 +33,7 @@ Common Lisp 有两种流 (streams)，字符流与二进制流。本章描述了�
                          :if-exists :supersede))
   #<Stream C017E6>
 
-流的印出表示法 (printed-representation) 因实现而异 (implementation-dependent)。
+流的打印表示法因实现而异。
 
 现在我们可以把这个流作为第一个参数传给 ``format`` ，它会在流印出，而不是顶层：
 
@@ -97,7 +97,7 @@ Common Lisp 有两种流 (streams)，字符流与二进制流。本章描述了�
 	"Rodrigo de Bivar"
 	NIL
 
-译注: Rodrigo de Bivar 人称熙德 (El cid)，十一世纪的西班牙民族英雄。
+译注：Rodrigo de Bivar 人称熙德 (El cid)，十一世纪的西班牙民族英雄。
 
 如果你想要原封不动的输出，这是你该用的函数。(第二个返回值只在 ``read-line`` 在遇到换行符之前，用尽输入时返回真。)
 
