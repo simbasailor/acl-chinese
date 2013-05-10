@@ -365,9 +365,9 @@ ul li {
 /* for code */
 
 pre, code {
-  font-size: 125%;
+  font-size: 100%;
   overflow-x: hidden;
-  line-height: 128%;
+  line-height: 103%;
 }
 
 div.highlight-cl {
@@ -377,18 +377,9 @@ div.highlight-cl {
   div.highlight-cl > pre {
     margin-left: 40px; }
 
-div.linenodiv > pre {
-  padding-top: 50%;
-  line-height: 130%;
-}
-
 span.pre {
   color: #468847;
-  padding: 0 3px;
-}
-
-td.linenos {
-  width: 21px; }
+  padding: 0 3px; }
 
 /* different text selection colour */
 
