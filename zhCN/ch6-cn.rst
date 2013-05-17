@@ -100,11 +100,12 @@
 
 ::
 
-  (labels ((len (lst)
-             (if (null lst)
-                 0
-                 (+ (len (cdr lst)) 1))))
-    (len '(a b c)))
+  > (labels ((len (lst)
+               (if (null lst)
+                   0
+                   (+ (len (cdr lst)) 1))))
+      (len '(a b c)))
+  3
 
 5.2 节展示了 ``let`` 表达式如何被理解成函数调用。 ``do`` 表达式同样可以被解释成调用递归函数。这样形式的 ``do`` :
 
@@ -204,7 +205,7 @@
 
   (destructuring-bind ((&key w x) &rest y) '((:w 3) a)
     (list w x y))
-  (3 NIL A)
+  (3 NIL (A))
 
 6.4 示例：实用函数 (Example: Utilities)
 =========================================
@@ -265,7 +266,7 @@
 
 ::
 
-  > (append1 '(a b c)'d)
+  > (append1 '(a b c) 'd)
   (A B C D)
 
 下个实用函数是 ``map-int`` ，接受一个函数与整数 ``n`` ，并返回将函数应用至整数 ``0`` 到 ``n-1`` 的结果的列表。
@@ -576,9 +577,10 @@ Dylan 是 Common Lisp 与 Scheme 的混合物，有着 Pascal 一般的语法。
 
 ::
 
-  (let ((x 20))
-    (declare (special x))
-    (foo))
+  > (let ((x 20))
+      (declare (special x))
+      (foo))
+  20
 
 新的变量被创建出来之後， 一个 ``declare`` 调用可以在代码的任何地方出现。 ``special`` 声明是独一无二的，因为它可以改变程序的行为。 13 章将讨论其它种类的声明。所有其它的声明，只是给编译器的建议；或许可以使程序运行的更快，但不会改变程序的行为。
 

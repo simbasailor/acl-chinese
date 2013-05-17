@@ -100,11 +100,12 @@
 
 ::
 
-  (labels ((len (lst)
-             (if (null lst)
-                 0
-                 (+ (len (cdr lst)) 1))))
-    (len '(a b c)))
+  > (labels ((len (lst)
+               (if (null lst)
+                   0
+                   (+ (len (cdr lst)) 1))))
+      (len '(a b c)))
+  3
 
 5.2 節展示了 ``let`` 表達式如何被理解成函數呼叫。 ``do`` 表達式同樣可以被解釋成呼叫遞迴函數。這樣形式的 ``do`` :
 
@@ -204,7 +205,7 @@
 
   (destructuring-bind ((&key w x) &rest y) '((:w 3) a)
     (list w x y))
-  (3 NIL A)
+  (3 NIL (A))
 
 6.4 範例：實用函數 (Example: Utilities)
 =========================================
@@ -265,7 +266,7 @@
 
 ::
 
-  > (append1 '(a b c)'d)
+  > (append1 '(a b c) 'd)
   (A B C D)
 
 下個實用函數是 ``map-int`` ，接受一個函數與整數 ``n`` ，並返回將函數應用至整數 ``0`` 到 ``n-1`` 的結果的列表。
@@ -576,9 +577,10 @@ Dylan 是 Common Lisp 與 Scheme 的混合物，有著 Pascal 一般的語法。
 
 ::
 
-  (let ((x 20))
-    (declare (special x))
-    (foo))
+  > (let ((x 20))
+      (declare (special x))
+      (foo))
+  20
 
 新的變數被創建出來之後， 一個 ``declare`` 呼叫可以在程式的任何地方出現。 ``special`` 宣告是獨一無二的，因爲它可以改變程式的行爲。 13 章將討論其它種類的宣告。所有其它的宣告，只是給編譯器的建議；或許可以使程式運行的更快，但不會改變程式的行爲。
 
