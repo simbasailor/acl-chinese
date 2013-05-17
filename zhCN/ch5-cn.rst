@@ -103,6 +103,8 @@ Common Lisp 有三个构造区块（block）的基本操作符： ``progn`` 、 
           (y 2))
       (format t "Number")
       (+ x y))
+  Number
+  9
 
 一个像是 ``let`` 的操作符，创造出一个新的词法语境（lexical context）。在这个语境里有两个新变量，然而在外部语境的变量也因此变得不可视了。
 
@@ -121,7 +123,7 @@ Common Lisp 有三个构造区块（block）的基本操作符： ``progn`` 、 
      (format t "Number")
      (+ x y))
    7
-   20)
+   2)
 
 如果有关于 ``let`` 的任何问题，应该是如何把责任交给 ``lambda`` ，因为进入一个 ``let`` 等同于执行一个函数调用。
 

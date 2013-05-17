@@ -103,6 +103,8 @@ Common Lisp 有三個構造區塊（block）的基本運算子： ``progn`` 、 
           (y 2))
       (format t "Number")
       (+ x y))
+  Number
+  9
 
 一個像是 ``let`` 的運算子，創造出一個新的詞法語境（lexical context）。在這個語境裡有兩個新變數，然而在外部語境的變數也因此變得不可視了。
 
@@ -121,7 +123,7 @@ Common Lisp 有三個構造區塊（block）的基本運算子： ``progn`` 、 
      (format t "Number")
      (+ x y))
    7
-   20)
+   2)
 
 如果有關於 ``let`` 的任何問題，應該是如何把責任交給 ``lambda`` ，因爲進入一個 ``let`` 等同於執行一個函數呼叫。
 
