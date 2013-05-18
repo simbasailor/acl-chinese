@@ -367,7 +367,7 @@ ul li {
 pre, code {
   font-size: 97%;
   overflow-x: hidden;
-  line-height: 102%;
+  line-height: 104%;
 }
 
 div.highlight-cl {
@@ -381,6 +381,9 @@ span.pre {
   color: #468847;
   padding: 0 3px; }
 
+.footnote td {
+    line-height: 120%;}
+
 /* different text selection colour */
 
 ::-moz-selection {
@@ -390,6 +393,3 @@ span.pre {
 ::selection {
     background: #ff6600;
     color: #ffffff; }
-
-.footnote td {
-    line-height: 120%;}
