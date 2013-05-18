@@ -367,7 +367,7 @@ ul li {
 pre, code {
   font-size: 97%;
   overflow-x: hidden;
-  line-height: 104%;
+  line-height: 110%;
 }
 
 div.highlight-cl {
