@@ -372,6 +372,11 @@ pre, code {
   line-height: 110%;
 }
 
+span.pre {
+  /* better readablility font for code */
+  font-family: Monaco, Menlo, Consolas, 'Courier New', monospace;
+}
+
 div.highlight-cl {
   margin: 5px 0px 5px 0px; }
   div.highlight-cl strong {
