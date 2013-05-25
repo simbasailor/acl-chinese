@@ -365,6 +365,8 @@ ul li {
 /* for code */
 
 pre, code {
+  /* better readablility font for code */
+  font-family: Monaco, Menlo, Consolas, 'Courier New', monospace;
   font-size: 97%;
   overflow-x: hidden;
   line-height: 110%;
