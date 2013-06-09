@@ -209,7 +209,7 @@ Common Lisp 对象系统，或称为 CLOS，是一组用来实作面向对象编
 	                                :color 'red :radius 3))
 	RED
 
-我们可以使每一个 ``screen-circle`` 有某种缺省的颜色，通过在 ``defclass`` 理替这个槽指定一个 ``:initform`` ：
+我们可以使每一个 ``screen-circle`` 有某种缺省的颜色，通过在 ``defclass`` 里替这个槽指定一个 ``:initform`` ：
 
 ::
 
