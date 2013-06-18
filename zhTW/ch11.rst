@@ -4,7 +4,7 @@
 第十一章：Common Lisp 物件系統
 **************************************************
 
-Common Lisp 物件系統，或稱爲 CLOS，是一組用來實作物件導向程式設計的操作集。由於它們有著同樣的歷史，通常將這些操作視爲一個群組。 `λ <http://acl.readthedocs.org/en/latest/zhTW/notes.html#notes-176>`_ 技術上來說，它們與其他部分的 Common Lisp 沒有不同： ``defmethod`` 只不過和 ``defun`` 一樣是語言中的一個整合部分。
+Common Lisp 物件系統，或稱爲 CLOS，是一組用來實作物件導向程式設計的運算集。由於它們有著同樣的歷史，通常將這些運算子視爲一個群組。 `λ <http://acl.readthedocs.org/en/latest/zhTW/notes.html#notes-176>`_ 技術上來說，它們與其他部分的 Common Lisp 沒什麼大不同： ``defmethod`` 和 ``defun`` 一樣，都是整合在語言中的一部分。
 
 11.1 物件導向程式設計 Object-Oriented Programming
 =====================================================
