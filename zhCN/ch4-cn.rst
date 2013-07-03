@@ -512,7 +512,7 @@ Common Lisp 提供大量的操控、比较字串的函数。收录在附录 D，
 
   > (make-polemic)
   What kind of polemic was it? scathing
-  #S(POLEMIC TYPE SCATHING EFFECT NIL)
+  #S(POLEMIC :TYPE SCATHING :EFFECT NIL)
 
 结构显示的方式也可以控制，以及结构自动产生的存取函数的字首。以下是做了前述两件事的 ``point`` 定义：
 
