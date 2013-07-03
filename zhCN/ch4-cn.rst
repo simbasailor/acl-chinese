@@ -290,8 +290,8 @@ Common Lisp 提供大量的操控、比较字串的函数。收录在附录 D，
 ::
 
   (defun second-word (str)
-    (let ((p1 (+ (position #\ str) 1)))
-      (subseq str p1 (position #\ str :start p1))))
+    (let ((p1 (+ (position #\  str) 1)))
+      (subseq str p1 (position #\  str :start p1))))
 
 返回字串中第一个单字空格后的第二个单字：
 
