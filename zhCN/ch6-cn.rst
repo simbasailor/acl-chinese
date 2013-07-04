@@ -682,7 +682,7 @@ Common Lisp 函数可以独立被编译或挨个文件编译。如果你只是�
 
 第一个例子， ``member`` 函数，我们说某物是列表的成员，需满足：如果它是第一个元素的成员或是 ``member`` 的 ``cdr`` 的成员。但空列表没有任何成员。
 
-第二个例子， ``copy-tree`` 一个 ``cons`` 的 ``copy-tree`` ，是一个由 ``cons`` 的 ``car`` 的 ``copy-tree`` 与 ``cdr`` 的 ``copy-tree`` 所组成的。一个原子的 ``copy-treee`` 是它自己。
+第二个例子， ``copy-tree`` 一个 ``cons`` 的 ``copy-tree`` ，是一个由 ``cons`` 的 ``car`` 的 ``copy-tree`` 与 ``cdr`` 的 ``copy-tree`` 所组成的。一个原子的 ``copy-tree`` 是它自己。
 
 一旦你可以这样描述算法，要写出递归函数只差一步之遥。
 

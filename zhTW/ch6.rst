@@ -682,7 +682,7 @@ Common Lisp 函數可以獨立被編譯或挨個檔案編譯。如果你只是�
 
 第一個例子， ``member`` 函數，我們說某物是列表的成員，需滿足：如果它是第一個元素的成員或是 ``member`` 的 ``cdr`` 的成員。但空列表沒有任何成員。
 
-第二個例子， ``copy-tree`` 一個 ``cons`` 的 ``copy-tree`` ，是一個由 ``cons`` 的 ``car`` 的 ``copy-tree`` 與 ``cdr`` 的 ``copy-tree`` 所組成的。一個原子的 ``copy-treee`` 是它自己。
+第二個例子， ``copy-tree`` 一個 ``cons`` 的 ``copy-tree`` ，是一個由 ``cons`` 的 ``car`` 的 ``copy-tree`` 與 ``cdr`` 的 ``copy-tree`` 所組成的。一個原子的 ``copy-tree`` 是它自己。
 
 一旦你可以這樣描述算法，要寫出遞迴函數只差一步之遙。
 
