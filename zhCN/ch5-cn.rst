@@ -608,7 +608,7 @@ Common Lisp 有三个构造区块（block）的基本操作符： ``progn`` 、 
         (do* ((y yzero (+ y 1))
               (prev 0 d)
               (d (year-days y) (+ d (year-days y))))
-             ((> d n) (values (- n prev))))))
+             ((> d n) (values y (- n prev))))))
 
   (defun num-month (n y)
     (if (leap? y)
