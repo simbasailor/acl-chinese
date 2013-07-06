@@ -1,6 +1,5 @@
 .. highlight:: cl
 
-
 第九章：數字
 ***************************************************
 
@@ -325,7 +324,7 @@ Common Lisp 沒有限制整數的大小。可以塞進一個字（word）記憶�
 
 在給定的實現裡，用十六個全局常數標明了每個格式的限制。它們的名字是這種形式: ``m-s-f`` ，其中 ``m`` 是 ``most`` 或 ``least`` ， ``s`` 是 ``positive`` 或 ``negative`` ，而 ``f`` 是四種浮點數之一。 `λ <http://acl.readthedocs.org/en/latest/zhTW/notes.html#notes-150>`_
 
-浮點數乾涸（underflow）與溢出（overflow），都會被 Common Lisp 視爲錯誤 :
+浮點數下溢（underflow）與溢出（overflow），都會被 Common Lisp 視爲錯誤 :
 
 ::
 

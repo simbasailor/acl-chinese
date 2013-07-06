@@ -324,7 +324,7 @@ Common Lisp 没有限制整数的大小。可以塞进一个字（word）内存�
 
 在给定的实现里，用十六个全局常量标明了每个格式的限制。它们的名字是这种形式: ``m-s-f`` ，其中 ``m`` 是 ``most`` 或 ``least`` ， ``s`` 是 ``positive`` 或 ``negative`` ，而 ``f`` 是四种浮点数之一。 `λ <http://acl.readthedocs.org/en/latest/zhCN/notes-cn.html#notes-150>`_
 
-浮点数乾涸（underflow）与溢出（overflow），都会被 Common Lisp 视为错误 :
+浮点数下溢（underflow）与溢出（overflow），都会被 Common Lisp 视为错误 :
 
 ::
 
