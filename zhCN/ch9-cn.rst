@@ -391,7 +391,7 @@ Common Lisp 没有限制整数的大小。可以塞进一个字（word）内存�
 
 ::
 
-	(defstruct surface  color)
+	(defstruct surface color)
 
 	(defparameter *world* nil)
 	(defconstant eye (make-point :x 0 :y 0 :z 200))
