@@ -366,13 +366,11 @@ Lisp 程式碼是用 Lisp 物件的列表來表示。2.3 節宣稱這讓 Lisp �
 
 Common Lisp 提供了 ``define-modify-macro`` 作爲寫出對於 ``setf`` 限制類別的宏的一種方法 它接受三個參數: 宏的名字，額外的參數 (隱含第一個參數 ``place``)，以及產生出 ``place`` 新數值的函數名。所以我們可以將 ``incf`` 定義爲
 
-(譯註: ``define-modify-macro`` 的定義可以看 `這裡 <https://gist.github.com/2958757>`_ )
-
 ::
 
 	(define-modify-macro our-incf (&optional (y 1)) +)
 
-以及另一版 ``push`` 將元素推至一個列表的尾端可寫爲
+另一版將元素推至列表尾端的 ``push`` 可寫成：
 
 ::
 

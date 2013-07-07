@@ -365,13 +365,11 @@ Lisp 代码是由 Lisp 对象的列表来表示。2.3 节宣称这让 Lisp 可�
 
 Common Lisp 提供了 ``define-modify-macro`` 作为写出对於 ``setf`` 限制类别的宏的一种方法 它接受三个参数: 宏的名字，额外的参数 (隐含第一个参数 ``place``)，以及产生出 ``place`` 新数值的函数名。所以我们可以将 ``incf`` 定义为
 
-(译注: ``define-modify-macro`` 的定义可以看 `这里 <https://gist.github.com/2958757>`_ )
-
 ::
 
 	(define-modify-macro our-incf (&optional (y 1)) +)
 
-以及另一版 ``push`` 將元素推至一个列表的尾端可写为
+另一版将元素推至列表尾端的 ``push`` 可写成：
 
 ::
 
