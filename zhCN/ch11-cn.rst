@@ -363,7 +363,7 @@ Common Lisp 对象系统，或称 CLOS，是一组用来实现面向对象编程
 ::
 
 	(defmethod combine ((x number) (y number))
-	  (+ x y)
+	  (+ x y))
 
 方法甚至可以对单一的对象做特化，用 ``eql`` 来决定：
 

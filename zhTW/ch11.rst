@@ -364,7 +364,7 @@ Common Lisp 物件系統，或稱 CLOS，是一組用來實作物件導向程式
 ::
 
 	(defmethod combine ((x number) (y number))
-	  (+ x y)
+	  (+ x y))
 
 方法甚至可以對單一的物件做特化，用 ``eql`` 來決定：
 
