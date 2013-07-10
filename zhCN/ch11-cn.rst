@@ -524,7 +524,18 @@ Common Lisp 对象系统，或称 CLOS，是一组用来实现面向对象编程
 	(defgeneric price (x)
 	  (:method-combination +))
 
-现在 ``price`` 方法会使用 ``+`` 方法组合；任何替 ``price`` 定义的 ``defmethod`` 必须有 ``+`` 来作为第二个参数。如果我们使用 ``price`` 来定义某些类型：
+现在 ``price`` 方法会使用 ``+`` 方法组合；任何替 ``price`` 定义的 ``defmethod`` 必须有 ``+`` 来作为第二个参数。如果我们使用 ``price`` 来定义某些类型，
+
+::
+
+	(defclass jacket () ())
+	(defclass trousers () ())
+	(defclass suit (jacket trousers) ())
+
+	(defmethod price + ((jk jacket)) 350)
+	(defmethod price + ((tr trousers)) 200)
+
+则可获得一件正装的价钱，也就是所有可用方法的总和：
 
 ::
 
