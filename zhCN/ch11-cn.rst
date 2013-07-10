@@ -404,7 +404,7 @@ Common Lisp 对象系统，或称 CLOS，是一组用来实现面向对象编程
 11.7 辅助方法 (Auxiliary Methods)
 ==================================================
 
-方法可以透过辅助方法来增强，包括 ``:before`` ， ``:after`` 以及 ``:around`` 方法。 ``:before`` 方法允许我们说：“嘿首先，先做这个。” 最具体的 ``:before`` 方法\ **优先**\ 被调用，作为其它方法调用的序幕 (prelude)。 ``:after`` 方法允许我们说 “P.S. 也做这个。” 最具体的 ``:after`` 方法\ **最后**\ 被调用，作为其它方法调用的闭幕 (epilogue)。在这之间，我们运行的是在这之前仅视为方法的方法，而准确地说应该叫做主方法 (\ *primary method*\ )。这个主方法调用所返回的值为方法的返回值，甚至 ``:after`` 方法在之后被调用也不例外。
+方法可以通过如 ``:before`` ， ``:after`` 以及 ``:around`` 等辅助方法来增强。 ``:before`` 方法允许我们说：“嘿首先，先做这个。” 最具体的 ``:before`` 方法\ **优先**\ 被调用，作为其它方法调用的序幕 (prelude)。 ``:after`` 方法允许我们说 “P.S. 也做这个。” 最具体的 ``:after`` 方法\ **最后**\ 被调用，作为其它方法调用的闭幕 (epilogue)。在这之间，我们运行的是在这之前仅视为方法的方法，而准确地说应该叫做主方法 (\ *primary method*\ )。这个主方法调用所返回的值为方法的返回值，甚至 ``:after`` 方法在之后被调用也不例外。
 
 ``:before`` 与 ``:after`` 方法允许我们将新的行为包在调用主方法的周围。 ``:around`` 方法提供了一个更戏剧的方式来办到这件事。如果 ``:around`` 方法存在的话，会调用的是 ``:around`` 方法而不是主方法。则根据它自己的判断， ``:around`` 方法自己可能会调用主方法（通过函数 ``call-next-method`` ，这也是这个函数存在的目的）。
 
@@ -424,8 +424,10 @@ Common Lisp 对象系统，或称 CLOS，是一组用来实现面向对象编程
 
 ::
 
+	(defclass speaker () ())
+
 	(defmethod speak ((s speaker) string)
-	  (format t "~A" string))
+		(format t "~A" string))
 
 则使用 ``speaker`` 实例来调用 ``speak`` 仅印出第二个参数：
 
@@ -439,6 +441,8 @@ Common Lisp 对象系统，或称 CLOS，是一组用来实现面向对象编程
 通过定义一个 ``intellectual`` 子类，将主要的 ``speak`` 方法用 ``:before`` 与 ``:after`` 方法包起来，
 
 ::
+
+	(defclass intellectual (speaker) ())
 
 	(defmethod speak :before ((i intellectual) string)
 	  (princ "Perhaps "))

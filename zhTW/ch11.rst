@@ -405,7 +405,7 @@ Common Lisp 物件系統，或稱 CLOS，是一組用來實作物件導向程式
 11.7 輔助方法 (Auxiliary Methods)
 ==================================================
 
-方法可以透過輔助方法來增強，包括 ``:before`` ， ``:after`` 以及 ``:around`` 方法。 ``:before`` 方法允許我們說：“嘿首先，先做這個。” 最具體的 ``:before`` 方法\ **優先**\ 被呼叫，作爲其它方法呼叫的序幕 (prelude)。 ``:after`` 方法允許我們說 “P.S. 也做這個。” 最具體的 ``:after`` 方法\ **最後**\ 被呼叫，作爲其它方法呼叫的閉幕 (epilogue)。在這之間，我們運行的是在這之前僅視爲方法的方法，而準確地說應該叫做主方法 (\ *primary method*\ )。這個主方法呼叫所返回的值爲方法的返回值，甚至 ``:after`` 方法在之後被呼叫也不例外。
+方法可以透過如 ``:before`` ， ``:after`` 以及 ``:around`` 等輔助方法來增強。 ``:before`` 方法允許我們說：“嘿首先，先做這個。” 最具體的 ``:before`` 方法\ **優先**\ 被呼叫，作爲其它方法呼叫的序幕 (prelude)。 ``:after`` 方法允許我們說 “P.S. 也做這個。” 最具體的 ``:after`` 方法\ **最後**\ 被呼叫，作爲其它方法呼叫的閉幕 (epilogue)。在這之間，我們運行的是在這之前僅視爲方法的方法，而準確地說應該叫做主方法 (\ *primary method*\ )。這個主方法呼叫所返回的值爲方法的返回值，甚至 ``:after`` 方法在之後被呼叫也不例外。
 
 ``:before`` 與 ``:after`` 方法允許我們將新的行爲包在呼叫主方法的周圍。 ``:around`` 方法提供了一個更戲劇的方式來辦到這件事。如果 ``:around`` 方法存在的話，會呼叫的是 ``:around`` 方法而不是主方法。則根據它自己的判斷， ``:around`` 方法自己可能會呼叫主方法（通過函數 ``call-next-method`` ，這也是這個函數存在的目的）。
 
@@ -425,6 +425,8 @@ Common Lisp 物件系統，或稱 CLOS，是一組用來實作物件導向程式
 
 ::
 
+	(defclass speaker () ())
+
 	(defmethod speak ((s speaker) string)
 	  (format t "~A" string))
 
@@ -440,6 +442,8 @@ Common Lisp 物件系統，或稱 CLOS，是一組用來實作物件導向程式
 通過定義一個 ``intellectual`` 子類，將主要的 ``speak`` 方法用 ``:before`` 與 ``:after`` 方法包起來，
 
 ::
+
+	(defclass intellectual (speaker) ())
 
 	(defmethod speak :before ((i intellectual) string)
 	  (princ "Perhaps "))
