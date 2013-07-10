@@ -473,7 +473,7 @@ Common Lisp 物件系統，或稱 CLOS，是一組用來實作物件導向程式
 
 	(defclass courtier (speaker) ())
 
-	(defmethod speak :around ((c courtier) stirng)
+	(defmethod speak :around ((c courtier) string)
 	  (format t "Does the King believe that ~A?" string)
 	  (if (eql (read) 'yes)
 	      (if (next-method-p) (call-next-method))

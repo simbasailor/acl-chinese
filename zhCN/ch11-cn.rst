@@ -472,7 +472,7 @@ Common Lisp 对象系统，或称 CLOS，是一组用来实现面向对象编程
 
 	(defclass courtier (speaker) ())
 
-	(defmethod speak :around ((c courtier) stirng)
+	(defmethod speak :around ((c courtier) string)
 	  (format t "Does the King believe that ~A?" string)
 	  (if (eql (read) 'yes)
 	      (if (next-method-p) (call-next-method))
