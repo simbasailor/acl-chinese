@@ -564,17 +564,17 @@ Lisp 不对程序、过程以及函数作区别。函数做了所有的事情（
 
 ::
 
-  (setf a ‘b
-        c ’d
-        e ‘f)
+  (setf a 'b
+        c 'd
+        e 'f)
 
 等同于依序调用三个单独的 ``setf`` 函数：
 
 ::
 
-   (setf a ’b)
-   (setf c ‘d)
-   (setf e ’f)
+   (setf a 'b)
+   (setf c 'd)
+   (setf e 'f)
 
 2.12 函数式编程 (Functional Programming)
 =============================================

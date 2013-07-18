@@ -564,17 +564,17 @@ Lisp 不對程式、過程以及函數作區別。函數做了所有的事情（
 
 ::
 
-  (setf a b
-        c d
-        e f)
+  (setf a 'b
+        c 'd
+        e 'f)
 
 等同於依序呼叫三個單獨的 ``setf`` 函數：
 
 ::
 
-   (setf a b)
-   (setf c d)
-   (setf e f)
+   (setf a 'b)
+   (setf c 'd)
+   (setf e 'f)
 
 2.12 函數式編程 (Functional Programming)
 =============================================
