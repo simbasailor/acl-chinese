@@ -362,7 +362,7 @@ Common Lisp 有三個構造區塊（block）的基本運算子： ``progn`` 、 
   HIP HOP  FLIP FLOP  SLIP SLOP
   (HIP FLIP SLIP)
 
-總是返回第二個參數。
+總是回傳 ``mapc`` 的第二個參數。
 
 5.5 多值 (Multiple Values)
 =======================================

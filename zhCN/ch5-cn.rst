@@ -362,7 +362,7 @@ Common Lisp 有三个构造区块（block）的基本操作符： ``progn`` 、 
   HIP HOP  FLIP FLOP  SLIP SLOP
   (HIP FLIP SLIP)
 
-总是返回第二个参数。
+总是返回 ``mapc`` 的第二个参数。
 
 5.5 多值 (Multiple Values)
 =======================================
