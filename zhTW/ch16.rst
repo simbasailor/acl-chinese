@@ -59,7 +59,23 @@ HTML 還有不少其他的標籤，但是本章要用到的標籤，基本都包
 16.2 HTML 實用函數 (HTML Utilities)
 ==================================================
 
-.. figure:: ../images/Figure-16.3.png
+.. code-block:: cl
+
+  (defmacro as (tag content)
+    `(format t "<~(~A~)>~A</~(~A~)>"
+             ',tag ,content ',tag))
+
+  (defmacro with (tag &rest body)
+    `(progn
+       (format t "~&<~(~A~)>~%" ',tag)
+       ,@body
+       (format t "~&</~(~A~)>~%" ',tag)))
+
+  (defmacro brs (&optional (n 1))
+    (fresh-line)
+    (dotimes (i n)
+      (princ "<br>"))
+    (terpri))
 
 **圖 16.3 標籤生成例程**
 
@@ -90,13 +106,29 @@ HTML 還有不少其他的標籤，但是本章要用到的標籤，基本都包
 HTML 並不介意標籤是大寫還是小寫，但是在包含許許多多標籤的 HTML 檔案中，小寫字母的標籤可讀性更好一些。
 
 除此之外， ``as`` 傾向於將所有輸出都放在同一行，而 ``with`` 則將標籤和內容都放在不同的行裡。
-（\ 使用 ``~&``` 來進行格式化，以確保輸出從一個新行中開始。）
+（\ 使用 ``~&`` 來進行格式化，以確保輸出從一個新行中開始。）
 以上這些工作都只是爲了讓 HTML 更具可讀性，實際上，標籤之外的空白並不影響頁面的顯示方式。
 
 圖 16.3 中的最後一個例程 ``brs`` 用於創建多個文字行。
 在很多瀏覽器中，這個例程都可以用於控制垂直間距。
 
-.. figure:: ../images/Figure-16.4.png
+.. code-block:: cl
+
+  (defun html-file (base)
+    (format nil "~(~A~).html" base))
+
+  (defmacro page (name title &rest body)
+    (let ((ti (gensym)))
+      `(with-open-file (*standard-output*
+                        (html-file ,name)
+                        :direction :output
+                        :if-exists :supersede)
+         (let ((,ti ,title))
+           (as title ,ti)
+           (with center
+             (as h2 (string-upcase ,ti)))
+           (brs 3)
+           ,@body))))
 
 **圖 16.4 HTML 檔案生成例程**
 
@@ -134,7 +166,24 @@ HTML 並不介意標籤是大寫還是小寫，但是在包含許許多多標籤
 除了 ``title`` 標籤以外，以上輸出的所有 HTML 標簽在前面已經見到過了。
 被 ``<title>`` 標籤包圍的文字並不顯示在網頁之內，它們會顯示在瀏覽器窗口，用作頁面的標題。
 
-.. figure:: ../images/Figure-16.5.png
+.. code-block:: cl
+
+  (defmacro with-link (dest &rest body)
+    `(progn
+       (format t "<a href=\"~A\">" (html-file ,dest))
+       ,@body
+       (princ "</a>")))
+
+  (defun link-item (dest text)
+    (princ "<li>")
+    (with-link dest
+      (princ text)))
+
+  (defun button (dest text)
+    (princ "[ ")
+    (with-link dest
+      (princ text))
+    (format t " ]~%"))
 
 **圖 16.5 生成連結的例程**
 
