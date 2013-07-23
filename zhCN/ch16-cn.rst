@@ -255,7 +255,6 @@ HTML 并不介意标签是大写还是小写，但是在包含许许多多标签
 
 程序员经常会遇到上面的这类问题，但只要花些功夫，定义一些例程来处理它们，就能为后续工作节省不少时间。
 
-
 16.4 生成页面 (Generating Pages)
 ===================================================
 
@@ -280,7 +279,30 @@ HTML 并不介意标签是大写还是小写，但是在包含许许多多标签
 
 图 16.7 展示了生成程序创建的页面所形成的链接结构。
 
-.. figure:: ../images/Figure-16.8.png
+.. code-block:: cl
+
+  (defparameter *sections* nil)
+
+  (defstruct item
+    id title text)
+
+  (defstruct section
+    id title items)
+
+  (defmacro defitem (id title text)
+    `(setf ,id
+           (make-item :id     ',id
+                      :title  ,title
+                      :text   ,text)))
+
+  (defmacro defsection (id title &rest items)
+    `(setf ,id
+           (make-section :id    ',id
+                         :title ,title
+                         :items (list ,@items))))
+
+  (defun defsite (&rest sections)
+    (setf *sections* sections))
 
 **图 16.8 定义一个网站**
 
@@ -294,7 +316,35 @@ HTML 并不介意标签是大写还是小写，但是在包含许许多多标签
 在节点里，项的排列顺序由传给 ``defsection`` 的参数决定。
 与此类似，在目录里，节点的排列顺序由传给 ``defsite`` 的参数决定。
 
-.. figure:: ../images/Figure-16.9.png
+.. code-block:: cl
+
+  (defconstant contents "contents")
+  (defconstant index    "index")
+
+  (defun gen-contents (&optional (sections *sections*))
+    (page contents contents
+      (with ol
+        (dolist (s sections)
+          (link-item (section-id s) (section-title s))
+          (brs 2))
+        (link-item index (string-capitalize index)))))
+
+  (defun gen-index (&optional (sections *sections*))
+    (page index index
+      (with ol
+        (dolist (i (all-items sections))
+          (link-item (item-id i) (item-title i))
+          (brs 2)))))
+
+  (defun all-items (sections)
+    (let ((is nil))
+      (dolist (s sections)
+        (dolist (i (section-items s))
+          (setf is (merge 'list (list i) is #'title<))))
+      is))
+
+  (defun title< (x y)
+    (string-lessp (item-title x) (item-title y)))
 
 **图 16.9 生成索引和目录**
 
@@ -309,7 +359,39 @@ HTML 并不介意标签是大写还是小写，但是在包含许许多多标签
 
 实际程序中的对比操作通常更复杂一些。举个例子，它们需要忽略无意义的句首词汇，比如 ``"a"`` 和 ``"the"`` 。
 
-.. figure:: ../images/Figure-16.10.png
+.. code-block:: cl
+
+  (defun gen-site ()
+    (map3 #'gen-section *sections*)
+    (gen-contents)
+    (gen-index))
+
+  (defun gen-section (sect <sect sect>)
+    (page (section-id sect) (section-title sect)
+      (with ol
+        (map3 #'(lambda (item <item item>)
+                  (link-item (item-id item)
+                             (item-title item))
+                  (brs 2)
+                  (gen-item sect item <item item>))
+              (section-items sect)))
+      (brs 3)
+      (gen-move-buttons (if <sect (section-id <sect))
+                        contents
+                        (if sect> (section-id sect>)))))
+
+  (defun gen-item (sect item <item item>)
+    (page (item-id item) (item-title item)
+      (princ (item-text item))
+      (brs 3)
+      (gen-move-buttons (if <item (item-id <item))
+                        (section-id sect)
+                        (if item> (item-id item>)))))
+
+  (defun gen-move-buttons (back up forward)
+    (if back (button back "Back"))
+    (if up (button up "Up"))
+    (if forward (button forward "Forward")))
 
 **图 16.10 生成网站、节点和项**
 
@@ -330,6 +412,20 @@ HTML 并不介意标签是大写还是小写，但是在包含许许多多标签
 图 16.11 演示了如何手工地定义一个微型网页。
 在这个例子中，列出的项都是 Fortune 饼干公司新推出的产品。
 
-.. figure:: ../images/Figure-16.11.png
+.. code-block:: cl
+
+  (defitem des "Fortune Cookies: Dessert or Fraud?" "...")
+
+  (defitem case "The Case for Pessimism" "...")
+
+  (defsection position "Position Papers" des case)
+
+  (defitem luck "Distribution of Bad Luck" "...")
+
+  (defitem haz "Health Hazards of Optimism" "...")
+
+  (defsection abstract "Research Abstracts" luck haz)
+
+  (defsite position abstract)
 
 **图 16.11 一个微型网站**

@@ -280,7 +280,30 @@ HTML 並不介意標籤是大寫還是小寫，但是在包含許許多多標籤
 
 圖 16.7 展示了生成程式創建的頁面所形成的連結結構。
 
-.. figure:: ../images/Figure-16.8.png
+.. code-block:: cl
+
+  (defparameter *sections* nil)
+
+  (defstruct item
+    id title text)
+
+  (defstruct section
+    id title items)
+
+  (defmacro defitem (id title text)
+    `(setf ,id
+           (make-item :id     ',id
+                      :title  ,title
+                      :text   ,text)))
+
+  (defmacro defsection (id title &rest items)
+    `(setf ,id
+           (make-section :id    ',id
+                         :title ,title
+                         :items (list ,@items))))
+
+  (defun defsite (&rest sections)
+    (setf *sections* sections))
 
 **圖 16.8 定義一個網站**
 
@@ -294,7 +317,35 @@ HTML 並不介意標籤是大寫還是小寫，但是在包含許許多多標籤
 在節點裡，項的排列順序由傳給 ``defsection`` 的參數決定。
 與此類似，在目錄裡，節點的排列順序由傳給 ``defsite`` 的參數決定。
 
-.. figure:: ../images/Figure-16.9.png
+.. code-block:: cl
+
+  (defconstant contents "contents")
+  (defconstant index    "index")
+
+  (defun gen-contents (&optional (sections *sections*))
+    (page contents contents
+      (with ol
+        (dolist (s sections)
+          (link-item (section-id s) (section-title s))
+          (brs 2))
+        (link-item index (string-capitalize index)))))
+
+  (defun gen-index (&optional (sections *sections*))
+    (page index index
+      (with ol
+        (dolist (i (all-items sections))
+          (link-item (item-id i) (item-title i))
+          (brs 2)))))
+
+  (defun all-items (sections)
+    (let ((is nil))
+      (dolist (s sections)
+        (dolist (i (section-items s))
+          (setf is (merge 'list (list i) is #'title<))))
+      is))
+
+  (defun title< (x y)
+    (string-lessp (item-title x) (item-title y)))
 
 **圖 16.9 生成索引和目錄**
 
@@ -309,7 +360,39 @@ HTML 並不介意標籤是大寫還是小寫，但是在包含許許多多標籤
 
 實際程式中的對比操作通常更複雜一些。舉個例子，它們需要忽略無意義的句首詞彙，比如 ``"a"`` 和 ``"the"`` 。
 
-.. figure:: ../images/Figure-16.10.png
+.. code-block:: cl
+
+  (defun gen-site ()
+    (map3 #'gen-section *sections*)
+    (gen-contents)
+    (gen-index))
+
+  (defun gen-section (sect <sect sect>)
+    (page (section-id sect) (section-title sect)
+      (with ol
+        (map3 #'(lambda (item <item item>)
+                  (link-item (item-id item)
+                             (item-title item))
+                  (brs 2)
+                  (gen-item sect item <item item>))
+              (section-items sect)))
+      (brs 3)
+      (gen-move-buttons (if <sect (section-id <sect))
+                        contents
+                        (if sect> (section-id sect>)))))
+
+  (defun gen-item (sect item <item item>)
+    (page (item-id item) (item-title item)
+      (princ (item-text item))
+      (brs 3)
+      (gen-move-buttons (if <item (item-id <item))
+                        (section-id sect)
+                        (if item> (item-id item>)))))
+
+  (defun gen-move-buttons (back up forward)
+    (if back (button back "Back"))
+    (if up (button up "Up"))
+    (if forward (button forward "Forward")))
 
 **圖 16.10 生成網站、節點和項**
 
@@ -330,6 +413,6 @@ HTML 並不介意標籤是大寫還是小寫，但是在包含許許多多標籤
 圖 16.11 示範了如何手工地定義一個微型網頁。
 在這個例子中，列出的項都是 Fortune 餅乾公司新推出的產品。
 
-.. figure:: ../images/Figure-16.11.png
+.. code-block:: cl
 
 **圖 16.11 一個微型網站**
