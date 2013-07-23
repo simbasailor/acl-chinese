@@ -227,13 +227,24 @@ HTML 并不介意标签是大写还是小写，但是在包含许许多多标签
 时间关系，要在这里演示这个开始-完成-又再开始的过程是不太可能的，这里只展示这个迭代式例程的最终形态，需要注意的是，这个程序的编写并不如想象中的那么简单。
 程序通常需要经历多次重写，才会变得简单。
 
-.. figure:: ../images/Figure-16.6.png
+.. code-block:: cl
+
+  (defun map3 (fn lst)
+    (labels ((rec (curr prev next left)
+               (funcall fn curr prev next)
+               (when left
+                 (rec (car left)
+                      curr
+                      (cadr left)
+                      (cdr left)))))
+      (when lst
+        (rec (car lst) nil (cadr lst) (cdr lst)))))
 
 **图 16.6 对树进行迭代**
 
 图 16.6 里定义的新例程是 ``mapc`` 的一个变种。它接受一个函数和一个列表作为参数，对于传入列表中的每个元素，它都会用三个参数来调用传入函数，分别是元素本身，前一个元素，以及后一个元素。（当没有前一个元素或者后一个元素时，使用 ``nil`` 代替。）
 
-::
+.. code-block:: cl
 
   > (map3 #'(lambda (&rest args) (princ args))
           '(a b c d))
@@ -244,7 +255,7 @@ HTML 并不介意标签是大写还是小写，但是在包含许许多多标签
 
 ``map3`` 的一个常见功能是，在列表的两个相邻元素之间进行某些处理：
 
-::
+.. code-block:: cl
 
   > (map3 #'(lambda (c p n)
               (princ c)
