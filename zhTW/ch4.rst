@@ -17,7 +17,7 @@ Common Lisp 還有另一種資料結構：實體（instance）。實體將在 11
   > (setf arr (make-array '(2 3) :initial-element nil))
   #<Simple-Array T (2 3) BFC4FE>
 
-Common Lisp 的陣列至少可以有七個維度，每個維度至少可以有 1023 個元素。
+Common Lisp 的陣列至少可以有七個維度，每個維度至多可以有 1023 個元素。
 
 ``:initial-element`` 實參是選擇性的。如果有提供這個實參，整個陣列會用這個值作爲初始值。若試著取出未初始化的陣列內的元素，其結果爲未定義（undefined）。
 
