@@ -600,7 +600,7 @@ Dylan 是 Common Lisp 与 Scheme 的混合物，有着 Pascal 一般的语法。
 ::
 
   > (let ((*print-base* 16))
-      (princ 32)
+      (princ 32))
   20
   32
 
