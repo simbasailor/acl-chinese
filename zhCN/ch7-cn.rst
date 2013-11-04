@@ -25,7 +25,7 @@ Common Lisp 有两种流 (streams)，字符流与二进制流。本章描述了�
 
 开启一个文件的基本函数是 ``open`` 。它接受一个路径名 [1]_ 以及大量的选择性关键字参数，而若是开启成功时，返回一个指向文件的流。
 
-你可以在创建流时，指定你想要怎么使用它。 无论你是要写入流、从流读取或是两者皆是， ``direction`` 参数都会侦测到。三个对应的数值是 ``:input`` , ``:output`` , ``:io`` 。如果是用来输出的流， ``if-exists`` 参数说明了如果文件已经存在时该怎么做；通常它应该是 ``:supercede`` (译注: 取代)。所以要创建一个可以写至 ``"myfile"`` 文件的流，你可以：
+你可以在创建流时，指定你想要怎么使用它。 无论你是要写入流、从流读取或是两者皆是， ``direction`` 参数都会侦测到。三个对应的数值是 ``:input`` , ``:output`` , ``:io`` 。如果是用来输出的流， ``if-exists`` 参数说明了如果文件已经存在时该怎么做；通常它应该是 ``:supersede`` (译注: 取代)。所以要创建一个可以写至 ``"myfile"`` 文件的流，你可以：
 
 ::
 
@@ -78,7 +78,7 @@ Common Lisp 有两种流 (streams)，字符流与二进制流。本章描述了�
 ::
 
   (with-open-file (str path :direction :output
-                            :if-exists :supercede)
+                            :if-exists :supersede)
     (format str "Something~%"))
 
 ``with-open-file`` 宏将 ``close`` 放在 ``unwind-protect`` 里 (参见 92 页，译注: 5.6 节)，即使一个错误打断了主体的求值，文件是保证会被关闭的。
@@ -312,7 +312,7 @@ Common Lisp 有两种流 (streams)，字符流与二进制流。本章描述了�
 	(defun file-subst (old new file1 file2)
 	  (with-open-file (in file1 :direction :input)
 	     (with-open-file (out file2 :direction :output
-	                                :if-exists :supercede)
+	                                :if-exists :supersede)
 	       (stream-subst old new in out))))
 
 	(defun stream-subst (old new in out)
