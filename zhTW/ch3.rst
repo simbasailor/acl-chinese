@@ -516,27 +516,27 @@ Common Lisp 有幾個內建的操作樹的函數。舉例來說， ``copy-tree``
 
 ::
 
-   > (member-if #'oddp '(2 3 4))
-   (3 4)
+  > (member-if #'oddp '(2 3 4))
+  (3 4)
 
 我們可以想像一個限制性的版本 ``member-if`` 是這樣寫成的：
 
 ::
 
-   defun our-member-if (fn lst)
-     (and (consp lst)
-          (if (funcall fn (car lst))
-              lst
-              (our-member-if fn (cdr lst)))))
+  (defun our-member-if (fn lst)
+    (and (consp lst)
+         (if (funcall fn (car lst))
+             lst
+             (our-member-if fn (cdr lst)))))
 
 函數 ``adjoin`` 像是條件式的 ``cons`` 。它接受一個物件及一個列表，如果物件還不是列表的成員，才構造物件至列表上。
 
 ::
 
-   > (adjoin 'b '(a b c))
-   (A B C)
-   > (adjoin 'z '(a b c))
-   (Z A B C)
+  > (adjoin 'b '(a b c))
+  (A B C)
+  > (adjoin 'z '(a b c))
+  (Z A B C)
 
 通常的情況下它接受與 ``member`` 函數同樣的關鍵字參數。
 

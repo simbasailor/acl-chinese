@@ -516,18 +516,18 @@ Common Lisp 有几个内置的操作树的函数。举例来说， ``copy-tree``
 
 ::
 
-   > (member-if #'oddp '(2 3 4))
-   (3 4)
+  > (member-if #'oddp '(2 3 4))
+  (3 4)
 
 我们可以想像一个限制性的版本 ``member-if`` 是这样写成的：
 
 ::
 
-   defun our-member-if (fn lst)
-     (and (consp lst)
-          (if (funcall fn (car lst))
-              lst
-              (our-member-if fn (cdr lst)))))
+  (defun our-member-if (fn lst)
+    (and (consp lst)
+         (if (funcall fn (car lst))
+             lst
+             (our-member-if fn (cdr lst)))))
 
 函数 ``adjoin`` 像是条件式的 ``cons`` 。它接受一个对象及一个列表，如果对象还不是列表的成员，才构造对象至列表上。
 
