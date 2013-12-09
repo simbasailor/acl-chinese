@@ -602,7 +602,7 @@ Chapter 12 總結 (Summary)
 
 5. 在某些應用中，破壞性的實現更適用。
 
-6. 列表可以是 ``car-circular`` 或 ``cdr-circular``。 Lisp 可以表示圓形結構和共享結構。
+6. 列表可以是 ``car-circular`` 或 ``cdr-circular`` 。 Lisp 可以表示圓形結構和共享結構。
 
 7. 不應該去修改的程式碼段中的常數形式。
 

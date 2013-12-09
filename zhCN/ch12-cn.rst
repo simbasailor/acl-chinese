@@ -602,7 +602,7 @@ Chapter 12 总结 (Summary)
 
 5. 在某些应用中，破坏性的实现更适用。
 
-6. 列表可以是 ``car-circular`` 或 ``cdr-circular``。 Lisp 可以表示圆形结构和共享结构。
+6. 列表可以是 ``car-circular`` 或 ``cdr-circular`` 。 Lisp 可以表示圆形结构和共享结构。
 
 7. 不应该去修改的程序代码段中的常量形式。
 
