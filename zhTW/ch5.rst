@@ -467,7 +467,7 @@ Common Lisp 有三個構造區塊（block）的基本運算子： ``progn`` 、 
 
 一個帶有給定標籤的 ``throw`` ，爲了要到達匹配標籤的 ``catch`` ，會將控制權轉移 (因此殺掉進程)給任何有標籤的 ``catch`` 。如果沒有一個 ``catch`` 符合欲匹配的標籤時， ``throw`` 會產生一個錯誤。
 
-呼叫 ``error`` 同時中斷了執行，本來會將控制權轉移到呼叫樹（calling tree）的更高點，取而代之的是，它將控制權轉移給 Lisp 錯誤處理器（error handler）。通常會導致呼叫一箇中斷迴圈（break loop）。以下是一個假定的 Common Lisp 實現可能會發生的事情：
+呼叫 ``error`` 同時中斷了執行，本來會將控制權轉移到呼叫樹（calling tree）的更高點，取而代之的是，它將控制權轉移給 Lisp 錯誤處理器（error handler）。通常會導致呼叫一個中斷迴圈（break loop）。以下是一個假定的 Common Lisp 實現可能會發生的事情：
 
 ::
 
