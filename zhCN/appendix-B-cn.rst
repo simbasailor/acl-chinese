@@ -9,7 +9,7 @@
 
 ``apply`` ``aref`` ``backquote`` ``block`` ``car`` ``cdr`` ``ceiling`` ``char=`` ``cons`` ``defmacro`` ``documentation`` ``eq`` ``error`` ``expt`` ``fdefinition`` ``function`` ``floor`` ``gensym`` ``get-setf-expansion`` ``if`` ``imagpart`` ``labels`` ``length`` ``multiple-value-bind`` ``nth-value`` ``quote`` ``realpart`` ``symbol-function`` ``tagbody`` ``type-of`` ``typep`` ``=`` ``+`` ``-`` ``/`` ``<`` ``>``
 
-这里给出的代码作为一种解释 Common Lisp 的方式，而不是实现它的方式。在实际的实现上，这些操作符可以更高效，也会做更多的错误检查。为了方便参找，这些操作符本身按字母顺序排列。如果你真的想要这样定义 Lisp，每个宏的定义需要在任何呼叫它们的代码之前。
+这里给出的代码作为一种解释 Common Lisp 的方式，而不是实现它的方式。在实际的实现上，这些操作符可以更高效，也会做更多的错误检查。为了方便参找，这些操作符本身按字母顺序排列。如果你真的想要这样定义 Lisp，每个宏的定义需要在任何调用它们的代码之前。
 
 
 ::
