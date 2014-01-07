@@ -544,7 +544,7 @@ Dylan 是 Common Lisp 與 Scheme 的混合物，有著 Pascal 一般的語法。
 
 最後， ``always`` 函數是 Common Lisp 函數 ``constantly`` 。接受一個參數並原封不動返回此參數的函數。和 ``identity`` 一樣，在很多需要傳入函數參數的情況下很有用。
 
-6.7 動態作用域 (Dynamic Sc​​ope)
+6.7 動態作用域 (Dynamic Scope)
 ====================================================
 
 2.11 小節解釋過區域與全局變數的差別。實際的差別是詞法作用域（lexical scope）的詞法變數（lexical variable），與動態作用域（dynamic scope）的特別變數（special variable）的區別。但這倆幾乎是沒有區別，因爲區域變數幾乎總是是詞法變數，而全局變數總是是特別變數。

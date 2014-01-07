@@ -392,7 +392,7 @@
 
 显示了五个字段里，最后两个的名称。 [2]_
 
-``class`` 宏只是一个 ``class-fn`` 的介面，而 ``class-fn`` 做了实际的工作。它调用 ``inherit-props`` 来汇整所有新对象的父类，汇整成一个列表，创建一个正确长度的向量，并适当地配置前三个字段。（ ``preclist`` 由 ``precedence`` 创建，本质上 ``precedence`` 没什么改变。）类别馀下的字段设置为 ``:nil`` 来指出它们尚未初始化。要检视 ``circle-class`` 的 ``area`` 属性，我们可以：
+``class`` 宏只是一个 ``class-fn`` 的介面，而 ``class-fn`` 做了实际的工作。它调用 ``inherit-props`` 来汇整所有新对象的父类，汇整成一个列表，创建一个正确长度的向量，并适当地配置前三个字段。（ ``preclist`` 由 ``precedence`` 创建，本质上 ``precedence`` 没什么改变。）类别余下的字段设置为 ``:nil`` 来指出它们尚未初始化。要检视 ``circle-class`` 的 ``area`` 属性，我们可以：
 
 ::
 
