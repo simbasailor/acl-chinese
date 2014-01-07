@@ -340,7 +340,7 @@ Common Lisp 定义了函数 ``first`` 直到 ``tenth`` 可以取得列表对应�
 
 ``(second x)`` 等同于 ``(nth 1 x)`` 。
 
-此外， Common Lisp 定义了像是 ``caddr`` 这样的函数，它是 ``cdr`` 的 ``cdr`` 的 ``car`` 的缩写 ( ``car`` of ``cdr`` of ``cdr`` )。所有这样形式的函数 ``cxr`` ，其中 x 是一个字串，最多四个 ``a`` 或 ``d`` ，在 Common Lisp 里都被定义好了。使用 ``cadr`` 可能会有异常 (exception)产生，在所有人都可能会读的代码里使用这样的函数，可能不是个好主意。
+此外， Common Lisp 定义了像是 ``caddr`` 这样的函数，它是 ``cdr`` 的 ``cdr`` 的 ``car`` 的缩写 ( ``car`` of ``cdr`` of ``cdr`` )。所有这样形式的函数 ``cxr`` ，其中 x 是一个字符串，最多四个 ``a`` 或 ``d`` ，在 Common Lisp 里都被定义好了。使用 ``cadr`` 可能会有异常 (exception)产生，在所有人都可能会读的代码里使用这样的函数，可能不是个好主意。
 
 3.7 映射函数 (Mapping Functions)
 ============================================
