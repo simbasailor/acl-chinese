@@ -723,7 +723,7 @@ Common Lisp 函数可以独立被编译或挨个文件编译。如果你只是�
 Chapter 6 总结 (Summary)
 ============================
 
-1. 命名函数是一个存在符号的 ``symbol-function`` 部分的函数。 ``defun`` 宏隐藏了这样的细节。它也允许你定义文档字符串（documentation string），并指定 ``setf`` 要怎麽处理函数调用。
+1. 命名函数是一个存在符号的 ``symbol-function`` 部分的函数。 ``defun`` 宏隐藏了这样的细节。它也允许你定义文档字符串（documentation string），并指定 ``setf`` 要怎么处理函数调用。
 
 2. 定义局部函数是有可能的，与定义局部变量有相似的精神。
 
