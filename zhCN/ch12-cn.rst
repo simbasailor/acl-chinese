@@ -335,7 +335,7 @@ Common Lisp 包含一些允许修改列表结构的函数。为了提高效率�
 ::
 
 	(defun bst-delete (obj bst <)
-	  (if bst (bstd obj bat nil nil <))
+	  (if bst (bstd obj bst nil nil <))
 	  bst)
 
 	(defun bstd (obj bst prev dir <)
