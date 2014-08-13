@@ -56,7 +56,7 @@ Common Lisp 的陣列至少可以有七個維度，每個維度至多可以有 1
 
 ::
 
-  > (setf vec (make-array 4 :initial-elment nil))
+  > (setf vec (make-array 4 :initial-element nil))
   #(NIL NIL NIL NIL)
 
 一維陣列又稱爲向量（\ *vector*\ ）。你可以通過呼叫 ``vector`` 來一步驟構造及填滿向量，向量的元素可以是任何型別：

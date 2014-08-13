@@ -56,7 +56,7 @@ Common Lisp 的数组至少可以达到七个维度，每个维度至少可以�
 
 ::
 
-  > (setf vec (make-array 4 :initial-elment nil))
+  > (setf vec (make-array 4 :initial-element nil))
   #(NIL NIL NIL NIL)
 
 一维数组又称为向量（\ *vector*\ ）。你可以通过调用 ``vector`` 来一步骤构造及填满向量，向量的元素可以是任何类型：
