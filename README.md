@@ -46,15 +46,15 @@
 
 基於 [huangz1990](https://github.com/huangz1990) 所開發的 Sphinx [der](https://github.com/huangz1990/der) 樣式。
 
-## 感谢
+## 感謝
 
-感謝所有給予建議、支持，以及熱心指出錯誤的人。
+感謝所有給予建議、支持以及熱心指出錯誤的朋友。
 
-特别感谢 huangz1990 与馮迪这两个朋友一路以来的鼓励及帮助。
+特別感謝 huangz1990 和馮迪這兩位朋友一路以來的鼓勵與幫助。
 
 ## 其他问题
 
-发送邮件至 huangz1990 或 katehuang0320 的 gmail。
+寄信到 huangz1990 或 katehuang0320 的 gmail。
 
 
 [byv]: https://github.com/byvoid
