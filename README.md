@@ -1,5 +1,7 @@
 # ANSI Common Lisp
 
+[![Documentation Status](https://readthedocs.org/projects/acl/badge/?version=latest)](https://readthedocs.org/projects/acl/?badge=latest)
+
 《ANSI Common Lisp》── 由 Paul Graham 編著的、一本非常棒的 Common Lisp 入門書籍，對於學習 Lisp、或者在《實用 Common Lisp 編程》或《On Lisp》之前閱讀，也非常有價值。
 
 > 《On Lisp》國內知名 Common Lisp 程序員 ── [田春](http://tianchunbinghe.blog.163.com)已翻譯完成。細心的讀者可以在網路輕易地找到。[《實用 Common Lisp 編程》](http://www.ituring.com.cn/book/742)也由田春翻譯完畢，可以考慮購買一本。
