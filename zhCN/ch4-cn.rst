@@ -669,6 +669,11 @@ Common Lisp 提供大量的操控、比较字符串的函数。收录在附录 D
                :l (node-l bst)
                :r (percolate (node-r bst))))
 
+  (defun lperc (bst)
+    (make-node :elt (node-elt (node-l bst))
+               :r (node-r bst)
+               :l (percolate (node-l bst))))
+
 图 4.6 二叉搜索树：移除
 
 **勘误:** 此版 ``bst-remove`` 的定义已被汇报是坏掉的，请参考 `这里 <https://gist.github.com/2868263>`_ 获得修复版。
